@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.manage.bus.dao.GCurrencyDataDAO">
+
+	<!-- 实体和表的映射关系 -->
+	<resultMap type="GCurrencyData" id="responseMap">
+		<result property="data_id" column="data_id"/>
+		<result property="data_text_id" column="data_text_id"/>
+		<result property="data_brief" column="data_brief"/>
+		<result property="remark" column="remark"/>
+		<result property="version" column="version"/>
+		<result property="create_time" column="create_time"/>
+		<result property="updated_time" column="updated_time"/>
+	</resultMap>
+	<!-- 获取分页数据 -->
+	<select id="selectPage" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_currency_data 
+		WHERE 1=1 
+		LIMIT
+		<if test="PSIZE==null">10</if><if test="PSIZE!=null">#{PSIZE}</if>
+		offset
+		<if test="BEGIN==null">0</if><if test="BEGIN!=null">#{BEGIN}</if>
+	</select>
+	<!-- 获取分页数据总条数 -->
+	<select id="selectPageCount" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(1) FROM g_currency_data
+		WHERE 1=1 
+	</select>
+	<!-- 添加单条记录 -->
+	<insert id="add" parameterType="GCurrencyData" useGeneratedKeys="true" keyProperty="data_id">
+		insert into g_currency_data(data_text_id,data_brief,remark,version,create_time,updated_time) values(#{data_text_id},#{data_brief},#{remark},#{version},#{create_time},#{updated_time})
+	</insert>
+	<!-- 获取单条记录 -->
+	<select id="getById" parameterType="long" resultMap="responseMap">
+		SELECT * FROM g_currency_data WHERE 
+		data_id=#{data_id} 
+	</select>
+	<!-- 更新单条记录 -->
+	<update id="update" parameterType="GCurrencyData">
+		update g_currency_data
+		<set>
+				<if test="data_text_id!=null">
+					data_text_id=#{data_text_id},
+				</if>
+				<if test="data_brief!=null">
+					data_brief=#{data_brief},
+				</if>
+				<if test="remark!=null">
+					remark=#{remark},
+				</if>
+				<if test="version!=null">
+					version=#{version},
+				</if>
+				<if test="create_time!=null">
+					create_time=#{create_time},
+				</if>
+				<if test="updated_time!=null">
+					updated_time=#{updated_time}
+				</if>
+		</set>
+		where  
+		data_id=#{data_id} 
+	</update>
+	<!-- 删除单条记录 -->
+	<delete id="deleteById" parameterType="long">
+		delete from g_currency_data where 
+		data_id=#{data_id} 
+	</delete>
+	<!-- 获取所有数据 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_currency_data where 1=1 
+	</select>
+</mapper>

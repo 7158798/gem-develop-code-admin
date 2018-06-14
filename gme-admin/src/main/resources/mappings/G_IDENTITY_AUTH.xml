@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.manage.bus.dao.GIdentityAuthDAO">
+
+	<!-- 实体和表的映射关系 -->
+	<resultMap type="GIdentityAuth" id="responseMap">
+		<result property="auth_id" column="auth_id"/>
+		<result property="uid" column="uid"/>
+		<result property="real_name" column="real_name"/>
+		<result property="certificate_type" column="certificate_type"/>
+		<result property="certificate_number" column="certificate_number"/>
+		<result property="is_auth_supplier" column="is_auth_supplier"/>
+		<result property="reverse_img_id" column="reverse_img_id"/>
+		<result property="front_img_id" column="front_img_id"/>
+		<result property="in_hand_img_id" column="in_hand_img_id"/>
+		<result property="auth_status" column="auth_status"/>
+		<result property="feedback" column="feedback"/>
+		<result property="status" column="status"/>
+		<result property="remark" column="remark"/>
+		<result property="version" column="version"/>
+		<result property="create_time" column="create_time"/>
+		<result property="updated_time" column="updated_time"/>
+	</resultMap>
+	<!-- 获取分页数据 -->
+	<select id="selectPage" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_identity_auth 
+		WHERE 1=1 
+		LIMIT
+		<if test="PSIZE==null">10</if><if test="PSIZE!=null">#{PSIZE}</if>
+		offset
+		<if test="BEGIN==null">0</if><if test="BEGIN!=null">#{BEGIN}</if>
+	</select>
+	<!-- 获取分页数据总条数 -->
+	<select id="selectPageCount" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(1) FROM g_identity_auth
+		WHERE 1=1 
+	</select>
+	<!-- 添加单条记录 -->
+	<insert id="add" parameterType="GIdentityAuth" useGeneratedKeys="true" keyProperty="auth_id">
+		insert into g_identity_auth(uid,real_name,certificate_type,certificate_number,is_auth_supplier,reverse_img_id,front_img_id,in_hand_img_id,auth_status,feedback,status,remark,version,create_time,updated_time) values(#{uid},#{real_name},#{certificate_type},#{certificate_number},#{is_auth_supplier},#{reverse_img_id},#{front_img_id},#{in_hand_img_id},#{auth_status},#{feedback},#{status},#{remark},#{version},#{create_time},#{updated_time})
+	</insert>
+	<!-- 获取单条记录 -->
+	<select id="getById" parameterType="long" resultMap="responseMap">
+		SELECT * FROM g_identity_auth WHERE 
+		auth_id=#{auth_id} 
+	</select>
+	<!-- 更新单条记录 -->
+	<update id="update" parameterType="GIdentityAuth">
+		update g_identity_auth
+		<set>
+				<if test="uid!=null">
+					uid=#{uid},
+				</if>
+				<if test="real_name!=null">
+					real_name=#{real_name},
+				</if>
+				<if test="certificate_type!=null">
+					certificate_type=#{certificate_type},
+				</if>
+				<if test="certificate_number!=null">
+					certificate_number=#{certificate_number},
+				</if>
+				<if test="is_auth_supplier!=null">
+					is_auth_supplier=#{is_auth_supplier},
+				</if>
+				<if test="reverse_img_id!=null">
+					reverse_img_id=#{reverse_img_id},
+				</if>
+				<if test="front_img_id!=null">
+					front_img_id=#{front_img_id},
+				</if>
+				<if test="in_hand_img_id!=null">
+					in_hand_img_id=#{in_hand_img_id},
+				</if>
+				<if test="auth_status!=null">
+					auth_status=#{auth_status},
+				</if>
+				<if test="feedback!=null">
+					feedback=#{feedback},
+				</if>
+				<if test="status!=null">
+					status=#{status},
+				</if>
+				<if test="remark!=null">
+					remark=#{remark},
+				</if>
+				<if test="version!=null">
+					version=#{version},
+				</if>
+				<if test="create_time!=null">
+					create_time=#{create_time},
+				</if>
+				<if test="updated_time!=null">
+					updated_time=#{updated_time}
+				</if>
+		</set>
+		where  
+		auth_id=#{auth_id} 
+	</update>
+	<!-- 删除单条记录 -->
+	<delete id="deleteById" parameterType="long">
+		delete from g_identity_auth where 
+		auth_id=#{auth_id} 
+	</delete>
+	<!-- 获取所有数据 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_identity_auth where 1=1 
+	</select>
+</mapper>

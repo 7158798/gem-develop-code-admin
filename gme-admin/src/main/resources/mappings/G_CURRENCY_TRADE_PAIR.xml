@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.manage.bus.dao.GCurrencyTradePairDAO">
+
+	<!-- 实体和表的映射关系 -->
+	<resultMap type="GCurrencyTradePair" id="responseMap">
+		<result property="pair_id" column="pair_id"/>
+		<result property="pair_sn" column="pair_sn"/>
+		<result property="pair_symbol" column="pair_symbol"/>
+		<result property="pair_desc" column="pair_desc"/>
+		<result property="currency_id" column="currency_id"/>
+		<result property="service_charge" column="service_charge"/>
+		<result property="currency_token_id" column="currency_token_id"/>
+		<result property="token_service_charge" column="token_service_charge"/>
+		<result property="trade_max_price" column="trade_max_price"/>
+		<result property="trade_min_price" column="trade_min_price"/>
+		<result property="trade_number_lower_limit" column="trade_number_lower_limit"/>
+		<result property="is_enable" column="is_enable"/>
+		<result property="is_elite" column="is_elite"/>
+		<result property="remark" column="remark"/>
+		<result property="version" column="version"/>
+		<result property="create_time" column="create_time"/>
+		<result property="updated_time" column="updated_time"/>
+	</resultMap>
+	<!-- 获取分页数据 -->
+	<select id="selectPage" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_currency_trade_pair 
+		WHERE 1=1 
+		LIMIT
+		<if test="PSIZE==null">10</if><if test="PSIZE!=null">#{PSIZE}</if>
+		offset
+		<if test="BEGIN==null">0</if><if test="BEGIN!=null">#{BEGIN}</if>
+	</select>
+	<!-- 获取分页数据总条数 -->
+	<select id="selectPageCount" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(1) FROM g_currency_trade_pair
+		WHERE 1=1 
+	</select>
+	<!-- 添加单条记录 -->
+	<insert id="add" parameterType="GCurrencyTradePair" useGeneratedKeys="true" keyProperty="pair_id">
+		insert into g_currency_trade_pair(pair_sn,pair_symbol,pair_desc,currency_id,service_charge,currency_token_id,token_service_charge,trade_max_price,trade_min_price,trade_number_lower_limit,is_enable,is_elite,remark,version,create_time,updated_time) values(#{pair_sn},#{pair_symbol},#{pair_desc},#{currency_id},#{service_charge},#{currency_token_id},#{token_service_charge},#{trade_max_price},#{trade_min_price},#{trade_number_lower_limit},#{is_enable},#{is_elite},#{remark},#{version},#{create_time},#{updated_time})
+	</insert>
+	<!-- 获取单条记录 -->
+	<select id="getById" parameterType="long" resultMap="responseMap">
+		SELECT * FROM g_currency_trade_pair WHERE 
+		pair_id=#{pair_id} 
+	</select>
+	<!-- 更新单条记录 -->
+	<update id="update" parameterType="GCurrencyTradePair">
+		update g_currency_trade_pair
+		<set>
+				<if test="pair_sn!=null">
+					pair_sn=#{pair_sn},
+				</if>
+				<if test="pair_symbol!=null">
+					pair_symbol=#{pair_symbol},
+				</if>
+				<if test="pair_desc!=null">
+					pair_desc=#{pair_desc},
+				</if>
+				<if test="currency_id!=null">
+					currency_id=#{currency_id},
+				</if>
+				<if test="service_charge!=null">
+					service_charge=#{service_charge},
+				</if>
+				<if test="currency_token_id!=null">
+					currency_token_id=#{currency_token_id},
+				</if>
+				<if test="token_service_charge!=null">
+					token_service_charge=#{token_service_charge},
+				</if>
+				<if test="trade_max_price!=null">
+					trade_max_price=#{trade_max_price},
+				</if>
+				<if test="trade_min_price!=null">
+					trade_min_price=#{trade_min_price},
+				</if>
+				<if test="trade_number_lower_limit!=null">
+					trade_number_lower_limit=#{trade_number_lower_limit},
+				</if>
+				<if test="is_enable!=null">
+					is_enable=#{is_enable},
+				</if>
+				<if test="is_elite!=null">
+					is_elite=#{is_elite},
+				</if>
+				<if test="remark!=null">
+					remark=#{remark},
+				</if>
+				<if test="version!=null">
+					version=#{version},
+				</if>
+				<if test="create_time!=null">
+					create_time=#{create_time},
+				</if>
+				<if test="updated_time!=null">
+					updated_time=#{updated_time}
+				</if>
+		</set>
+		where  
+		pair_id=#{pair_id} 
+	</update>
+	<!-- 删除单条记录 -->
+	<delete id="deleteById" parameterType="long">
+		delete from g_currency_trade_pair where 
+		pair_id=#{pair_id} 
+	</delete>
+	<!-- 获取所有数据 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_currency_trade_pair where 1=1 
+	</select>
+</mapper>
