@@ -105,22 +105,6 @@ public class GIdentityAuthService{
     }
     
     
-    /**
-     * 
-     * @Title: hiddenIDNumber
-     * @Description: 隐藏证件数字，只显示前两位和后两位
-     * @param @param oldNumber
-     * @param @return
-     * @return String
-     * @throws
-     */
-    private String hiddenIDNumber(String oldNumber) {
-    	String start = oldNumber.substring(0,2);
-    	String end = oldNumber.substring(oldNumber.length()-2,oldNumber.length());
-    	String newNumber = start + "*****" + end;
-    	return newNumber;
-    }
-    
     
     /**
      * 
@@ -184,14 +168,6 @@ public class GIdentityAuthService{
         	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
-        		// 隐藏用户的证件号码
-        		List<GIdentityAuth> list = (List<GIdentityAuth>) pageInfo.getData();
-        		if (null != list  && list.size() > 0) {
-        			for (int i = 0; i < list.size(); i ++) {
-        				// 隐藏证件号码
-        				list.get(i).setCertificate_number(hiddenIDNumber(list.get(i).getCertificate_number()));
-        			}
-        		}
                 return pageInfo;
             }else {
             	return new PageInfo(g_identity_auth_vo.getRows(), g_identity_auth_vo.getPage(), 0, new ArrayList<GIdentityAuth>());

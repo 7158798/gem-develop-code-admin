@@ -39,12 +39,6 @@
 						align : 'center'
 					},
 					{
-						title : '币种简介',
-						field : 'data_brief',
-						width : 150,
-						align : 'center'
-					},
-					{
 						title : '备注',
 						field : 'remark',
 						width : 150,

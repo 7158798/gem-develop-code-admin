@@ -76,7 +76,7 @@
 					formatter:function (value, row, index){
                         var a = '';var b = '';var c = '';
                         var div = '<div class="dropdown-table" data-row="'+index+'"><a class="dropdown-toggle" href="javascript:;"><i class="fa fa-gear"></i></a>';
-						<shiro:hasPermission name="bus:g_currency_circulate_statistics:view">
+						<shiro:hasPermission name="bus:g_currency_circulate_statistics:add">
 							a = '<li><a href="javaScript:void(0);" onclick="detail(\'详情\',\'${ctx}/bus/g_currency_circulate_statistics/info?id='+row.volume_id+'\',null,null)"><i class="fa fa-info-circle"></i>详情</a></li>';
 						</shiro:hasPermission>
 						<shiro:hasPermission name="bus:g_currency_circulate_statistics:update">

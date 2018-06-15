@@ -2,14 +2,14 @@
 <proxool-config>
 	<proxool>
 		<alias>db</alias>
-		<!-- <driver-url>jdbc:mysql://47.106.171.23:3306/gme_db?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</driver-url> -->
+		<driver-url>jdbc:mysql://47.106.171.23:3306/gme_db?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</driver-url>
 		<!-- <driver-url>jdbc:mysql://192.168.0.194:3306/gme_db_test?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</driver-url> -->
 		<driver-class>com.mysql.jdbc.Driver</driver-class>
 		<driver-properties>    
-			<!-- <property name="user" value="yyctdbuser" />
-			<property name="password" value="Ab1234567." /> -->
-			<property name="user" value="root" />
-			<property name="password" value="root" />
+			<property name="user" value="yyctdbuser" />
+			<property name="password" value="Ab1234567." />
+			<!-- <property name="user" value="root" />
+			<property name="password" value="root" /> -->
 		</driver-properties> 
 		<house-keeping-sleep-time>60000</house-keeping-sleep-time>
 		<maximum-connection-count>100</maximum-connection-count>

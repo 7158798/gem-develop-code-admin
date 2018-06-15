@@ -40,13 +40,14 @@ public class Model {
 	 */
 	public static void main(String[] args) throws Exception{
 		String driver="com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://192.168.0.194:3306/gme_db_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
+		/*String url="jdbc:mysql://192.168.0.194:3306/gme_db_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";*/
+		String url="jdbc:mysql://47.106.171.23:3306/gme_db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
 		String username="yyctdbuser";
 
 		String password="Ab1234567.";
-		String basePath="E:/java/tools/eclipse/code/gme-develop-code/gme-admin/";//工程 路径
+		String basePath="F:/opsigte/data/yyct/gme-develop-code/admin/gme-admin/";//工程 路径
 		
-		String tableName="g_identity_auth";//表名
+		String tableName="g_account";//表名  
 		String modelName="bus";//模块名称 
 
 		boolean isCEntity=true;//是否生成实体 

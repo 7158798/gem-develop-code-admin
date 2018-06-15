@@ -103,7 +103,7 @@ public class GCurrencyCirculateStatisticsService{
         try {
            /* String method = SERVICE_BASE_PARAM + "g_currency_circulate_statistics_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyCirculateStatisticsService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
@@ -124,7 +124,7 @@ public class GCurrencyCirculateStatisticsService{
         try {
 			/*String method = SERVICE_BASE_PARAM + "g_currency_circulate_statistics_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyCirculateStatisticsService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
@@ -189,7 +189,7 @@ public class GCurrencyCirculateStatisticsService{
 			map.put("GCurrencyCirculateStatistics", g_currency_circulate_statistics);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_circulate_statistics_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyCirculateStatisticsService.testAdd();
+			String json = this.testAdd();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;
@@ -221,7 +221,7 @@ public class GCurrencyCirculateStatisticsService{
 			map.put("GCurrencyCirculateStatistics", g_currency_circulate_statistics);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_circulate_statistics_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyCirculateStatisticsService.testUpdate();
+			String json = this.testUpdate();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;
