@@ -63,11 +63,7 @@
 	</dependency>
 	
 	<!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring -->
-	<dependency>
-	    <groupId>org.activiti</groupId>
-	    <artifactId>activiti-spring</artifactId>
-	    <version>5.15.1</version>
-	</dependency>
+	
 	 <dependency>
           <groupId>org.activiti</groupId>
           <artifactId>activiti-bpmn-converter</artifactId>
@@ -85,7 +81,11 @@
           <artifactId>activiti-bpmn-model</artifactId>
           <version>5.15.1</version>
       </dependency>
-
+	<dependency>
+	    <groupId>org.activiti</groupId>
+	    <artifactId>activiti-spring</artifactId>
+	    <version>5.15.1</version>
+	</dependency>
       <!-- https://mvnrepository.com/artifact/org.activiti/activiti-engine -->
       <dependency>
           <groupId>org.activiti</groupId>
