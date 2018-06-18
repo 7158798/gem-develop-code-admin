@@ -45,9 +45,9 @@ public class Model {
 		String username="yyctdbuser";
 
 		String password="Ab1234567.";
-		String basePath="F:/opsigte/data/yyct/gme-develop-code/admin/gme-admin/";//工程 路径
+		String basePath="F:/work/yyct/gme-develop-code/admin/gme-admin/";//工程 路径
 		
-		String tableName="g_account";//表名  
+		String tableName="g_otc_order";//表名  
 		String modelName="bus";//模块名称 
 
 		boolean isCEntity=true;//是否生成实体 

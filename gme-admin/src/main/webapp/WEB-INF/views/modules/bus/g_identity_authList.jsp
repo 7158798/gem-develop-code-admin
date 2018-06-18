@@ -90,24 +90,6 @@
 						}
 					},
 					{
-						title : '证件背面图片编号',
-						field : 'reverse_img_id',
-						width : 150,
-						align : 'center'
-					},
-					{
-						title : '证件正面图片编号',
-						field : 'front_img_id',
-						width : 150,
-						align : 'center'
-					},
-					{
-						title : '手持证件图片编号',
-						field : 'in_hand_img_id',
-						width : 150,
-						align : 'center'
-					},
-					{
 						title : '认证状态',
 						field : 'auth_status',
 						width : 150,

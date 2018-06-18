@@ -97,7 +97,7 @@
 	        </div>
       	</div>
   		<div class="control-group">
-        	<label class="control-label Validform_label">账户状态1-正常;2-冻结;：</label>
+        	<label class="control-label Validform_label">账户状态：</label>
 	        <div class="controls">
 	        	<c:if test="${item.account_status == 1}">
 	        		<input disabled="disabled" value="正常" class="inputxt" type="text">
@@ -111,12 +111,6 @@
         	<label class="control-label Validform_label">备注：</label>
 	        <div class="controls">
 	        	<input disabled="disabled" value="${item.remark}" class="inputxt" type="text">
-	        </div>
-      	</div>
-  		<div class="control-group">
-        	<label class="control-label Validform_label">数据表版本：</label>
-	        <div class="controls">
-	        	<input disabled="disabled" value="${item.version}" class="inputxt" type="text">
 	        </div>
       	</div>
   		<div class="control-group">
