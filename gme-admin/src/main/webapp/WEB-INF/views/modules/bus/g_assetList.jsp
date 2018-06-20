@@ -84,22 +84,30 @@
 						}
 					},
 					{
-						title : '备注',
-						field : 'remark',
-						width : 150,
-						align : 'center'
-					},
-					{
 						title : '创建时间',
 						field : 'create_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 					{
 						title : '更新时间',
 						field : 'updated_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 				{
 					title : '操作',
@@ -109,12 +117,12 @@
 					formatter:function (value, row, index){
                         var a = '';var b = '';var c = '';
                         var div = '<div class="dropdown-table" data-row="'+index+'"><a class="dropdown-toggle" href="javascript:;"><i class="fa fa-gear"></i></a>';
-                        <%--<shiro:hasPermission name="bus:g_asset:view">--%>
+                        <shiro:hasPermission name="bus:g_asset:view">
 							a = '<li><a href="javaScript:void(0);" onclick="detail(\'详情\',\'${ctx}/bus/g_asset/info?id='+row.asset_id+'\',null,null)"><i class="fa fa-info-circle"></i>详情</a></li>';
-						<%--</shiro:hasPermission> */--%>
-						<%--<shiro:hasPermission name="bus:g_asset:update"> */--%>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="bus:g_asset:update">
 							b = '<li><a href="javaScript:void(0);" onclick="update(\'修改\',\'${ctx}/bus/g_asset/toUpdate?id='+row.asset_id+'\',\'dataGrid\',null,null);"><i class="fa fa-edit"></i>修改</a></li>';
-						<%--</shiro:hasPermission> */--%>
+						</shiro:hasPermission>
 						<shiro:hasPermission name="bus:g_asset:delete">
 							c = '<li><a href="javaScript:void(0);" onclick="deleterow('+row.asset_id+')"><i class="fa fa-trash-o"></i>删除</a></li>';
 						</shiro:hasPermission>
@@ -158,11 +166,12 @@
 	  	<table id="dataGrid"></table>
 		<div id="toolDiv" style="padding:2px 5px;">
 			<div class="psflow-panpel-maintitle">
-				<h2 class="psflow-panpel-title"><span>资产信息管理</span></h2>
+				<h2 class="psflow-panpel-title"><span>资产信息列表</span></h2>
 			</div>
 			<div class="psflow-panpel-tooldiv">
 				<div class="tooldiv" id="toolDivNew">
-		   			<%-- <shiro:hasPermission name="bus:g_asset:view"> --%>
+		   			<shiro:hasPermission name="bus:g_asset:view">
+		   			<span>用户编号:</span><input name="g_asset_vo.uid"/>
 		   			<span>资产状态:</span>
 		   			<select name="g_asset_vo.status">
 		   				<option value="">--请选择--</option>
@@ -171,7 +180,7 @@
 		   			</select>
 		   			<a href="javaScript:void(0);" class="u-btn" onclick="bustripsearch();"><i class="fa fa-search"></i>查询</a>
 	        		<a href="javaScript:void(0);" class="u-btn u-btn-cgray" onclick="searchReset();" ><i class="fa fa-refresh"></i>重置</a>
-		   			<%-- </shiro:hasPermission> --%>
+		   			</shiro:hasPermission>
 		   			<shiro:hasPermission name="bus:g_asset:add">
 			      		<a href="javaScript:void(0);" class="u-btn u-btn-cg" plain="true" id="addBtn" onclick="toAdd();"><i class="fa  fa-fw fa-plus"></i>添加</a>
 			      	</shiro:hasPermission>

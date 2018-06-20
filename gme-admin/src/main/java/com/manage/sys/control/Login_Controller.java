@@ -47,7 +47,7 @@ public class Login_Controller {
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,HttpServletRequest request, HttpServletResponse response, Model model) {
 		Sys_user user = UserUtil.getCurUser();
-		// 如果已经登录，则跳转到管理首页
+		// 如果没有登录，则跳转到登录首页
 		if(user != null){
 			return "redirect:"+Global.getAdminPath();
 		}else{

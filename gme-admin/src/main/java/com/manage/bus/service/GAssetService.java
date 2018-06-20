@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import com.manage.bus.dao.GAssetDAO;
 import com.manage.bus.entity.GAccount;
 import com.manage.bus.entity.GAsset;
 import com.manage.bus.vo.GAssetVO;
+import com.manage.util.StringUtil;
 
 /**
  * 
@@ -93,6 +95,11 @@ public class GAssetService {
 		map.put("PSIZE", g_asset_vo.getRows());
 		map.put("BEGIN", (g_asset_vo.getPage() - 1) * g_asset_vo.getRows());
 
+		if (null != g_asset_vo.getUid() && !StringUtils.isBlank(g_asset_vo.getUid())) {
+			if (StringUtil.isNumeric(g_asset_vo.getUid())) {
+				map.put("uid", g_asset_vo.getUid());
+			}
+		}
 		if (null != g_asset_vo.getStatus()) {
 			map.put("status", g_asset_vo.getStatus());
 		}
@@ -142,6 +149,17 @@ public class GAssetService {
 	}
 
 	
+	/**
+	 * 
+	 * @Title: get
+	 * @Description: 查询一条记录
+	 * @param @param request
+	 * @param @param asset_id
+	 * @param @return
+	 * @param @throws Exception
+	 * @return GAsset
+	 * @throws
+	 */
 	public GAsset get(HttpServletRequest request,String asset_id) throws Exception {
 		try {
     		Map<String,Object> map = new HashMap<String, Object>();

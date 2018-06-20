@@ -58,13 +58,21 @@
 							}
 							return value;
 						}
-						
 					},
 					{
 						title : '媒介币种',
 						field : 'currency_id',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value == 1) {
+								return "<font>usdt</font>";
+							}
+							if (value == 2) {
+								return "<font>eos</font>";
+							}
+							return value;
+						}
 					},
 					{
 						title : '人民币价格',
@@ -102,7 +110,7 @@
 							if (value == 4) {
 								return "<font>撤销</font>";
 							}
-							if (value == 4) {
+							if (value == 5) {
 								return "<font>挂单超时</font>";
 							}
 							return value;
@@ -135,7 +143,7 @@
 							if (value == "020102") {
 								return "<font>支付宝</font>";
 							}
-							if (value == "020102") {
+							if (value == "020101") {
 								return "<font>支付宝|微信</font>";
 							}
 							if (value == "020201") {
@@ -157,13 +165,27 @@
 						title : '创建时间',
 						field : 'create_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 					{
 						title : '更新时间',
 						field : 'updated_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 				{
 					title : '操作',
@@ -174,13 +196,13 @@
                         var a = '';var b = '';var c = '';
                         var div = '<div class="dropdown-table" data-row="'+index+'"><a class="dropdown-toggle" href="javascript:;"><i class="fa fa-gear"></i></a>';
 						<shiro:hasPermission name="bus:g_otc_order:view">
-							a = '<li><a href="javaScript:void(0);" onclick="detail(\'详情\',\'${ctx}/bus/g_otc_order/info?id='+row.id+'\',null,null)"><i class="fa fa-info-circle"></i>详情</a></li>';
+							a = '<li><a href="javaScript:void(0);" onclick="detail(\'详情\',\'${ctx}/bus/g_otc_order/info?id='+row.entry_order_id+'\',null,null)"><i class="fa fa-info-circle"></i>详情</a></li>';
 						</shiro:hasPermission>
 						<shiro:hasPermission name="bus:g_otc_order:update">
-							b = '<li><a href="javaScript:void(0);" onclick="update(\'修改\',\'${ctx}/bus/g_otc_order/toUpdate?id='+row.id+'\',\'dataGrid\',null,null);"><i class="fa fa-edit"></i>修改</a></li>';
+							b = '<li><a href="javaScript:void(0);" onclick="update(\'修改\',\'${ctx}/bus/g_otc_order/toUpdate?id='+row.entry_order_id+'\',\'dataGrid\',null,null);"><i class="fa fa-edit"></i>修改</a></li>';
 						</shiro:hasPermission>
 						<shiro:hasPermission name="bus:g_otc_order:delete">
-							c = '<li><a href="javaScript:void(0);" onclick="deleterow('+row.id+')"><i class="fa fa-trash-o"></i>删除</a></li>';
+							c = '<li><a href="javaScript:void(0);" onclick="deleterow('+row.entry_order_id+')"><i class="fa fa-trash-o"></i>删除</a></li>';
 						</shiro:hasPermission>
                         div = '<div class="dropdown-table" data-row="'+index+'"><a class="dropdown-toggle" href="javascript:;"><i class="fa fa-gear"></i></a><ul class="u-menu">' + a + b + c + '</ul></div>';
             			return div;
@@ -222,13 +244,28 @@
 	  	<table id="dataGrid"></table>
 		<div id="toolDiv" style="padding:2px 5px;">
 			<div class="psflow-panpel-maintitle">
-				<h2 class="psflow-panpel-title"><span>OTC订单表（g_otc_order）
-功能描述：存储OTC订单信息。
-管理</span></h2>
+				<h2 class="psflow-panpel-title"><span>OTC订单列表</span></h2>
 			</div>
 			<div class="psflow-panpel-tooldiv">
 				<div class="tooldiv" id="toolDivNew">
 		   			<shiro:hasPermission name="bus:g_otc_order:view">
+		   			<span>订单号:</span><input name = "g_otc_order_vo.order_id"/>
+		   			<span>挂单用户编号:</span><input name = "g_otc_order_vo.uid">
+		   			<span>业务类型:</span>
+		   			<select name = "g_otc_order_vo.order_type">
+		   				<option value = "">--请选择--</option>
+		   				<option value = "1">买家</option>
+		   				<option value = "2">卖家</option>
+		   			</select>
+		   			<span>订单状态:</span>
+		   			<select name = "g_otc_order_vo.order_status">
+		   				<option value = "">--请选择--</option>
+		   				<option value = "1">挂单中</option>
+		   				<option value = "2">全部成交</option>
+		   				<option value = "3">部分成交</option>
+		   				<option value = "4">撤销</option>
+		   				<option value = "5">挂单超时</option>
+		   			</select>
 		   			<a href="javaScript:void(0);" class="u-btn" onclick="bustripsearch();"><i class="fa fa-search"></i>查询</a>
 	        		<a href="javaScript:void(0);" class="u-btn u-btn-cgray" onclick="searchReset();" ><i class="fa fa-refresh"></i>重置</a>
 		   			</shiro:hasPermission>

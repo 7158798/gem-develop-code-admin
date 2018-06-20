@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.manage.bus.dao.GOtcOrderRecordDAO">
+
+	<!-- 实体和表的映射关系 -->
+	<resultMap type="GOtcOrderRecord" id="responseMap">
+		<result property="entry_order_id" column="entry_order_id"/>
+		<result property="order_id" column="order_id"/>
+		<result property="uid" column="uid"/>
+		<result property="order_type" column="order_type"/>
+		<result property="currency_id" column="currency_id"/>
+		<result property="order_price" column="order_price"/>
+		<result property="order_number" column="order_number"/>
+		<result property="order_amount" column="order_amount"/>
+		<result property="order_status" column="order_status"/>
+		<result property="object_uid" column="object_uid"/>
+		<result property="object_name" column="object_name"/>
+		<result property="remark" column="remark"/>
+		<result property="version" column="version"/>
+		<result property="create_time" column="create_time"/>
+		<result property="updated_time" column="updated_time"/>
+	</resultMap>
+	<!-- 获取分页数据 -->
+	<select id="selectPage" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_otc_order_record 
+		WHERE 1=1 
+		LIMIT
+		<if test="PSIZE==null">10</if><if test="PSIZE!=null">#{PSIZE}</if>
+		offset
+		<if test="BEGIN==null">0</if><if test="BEGIN!=null">#{BEGIN}</if>
+	</select>
+	<!-- 获取分页数据总条数 -->
+	<select id="selectPageCount" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(1) FROM g_otc_order_record
+		WHERE 1=1 
+	</select>
+	<!-- 添加单条记录 -->
+	<insert id="add" parameterType="GOtcOrderRecord" useGeneratedKeys="true" keyProperty="entry_order_id">
+		insert into g_otc_order_record(order_id,uid,order_type,currency_id,order_price,order_number,order_amount,order_status,object_uid,object_name,remark,version,create_time,updated_time) values(#{order_id},#{uid},#{order_type},#{currency_id},#{order_price},#{order_number},#{order_amount},#{order_status},#{object_uid},#{object_name},#{remark},#{version},#{create_time},#{updated_time})
+	</insert>
+	<!-- 获取单条记录 -->
+	<select id="getById" parameterType="long" resultMap="responseMap">
+		SELECT * FROM g_otc_order_record WHERE 
+		entry_order_id=#{entry_order_id} 
+	</select>
+	<!-- 更新单条记录 -->
+	<update id="update" parameterType="GOtcOrderRecord">
+		update g_otc_order_record
+		<set>
+				<if test="order_id!=null">
+					order_id=#{order_id},
+				</if>
+				<if test="uid!=null">
+					uid=#{uid},
+				</if>
+				<if test="order_type!=null">
+					order_type=#{order_type},
+				</if>
+				<if test="currency_id!=null">
+					currency_id=#{currency_id},
+				</if>
+				<if test="order_price!=null">
+					order_price=#{order_price},
+				</if>
+				<if test="order_number!=null">
+					order_number=#{order_number},
+				</if>
+				<if test="order_amount!=null">
+					order_amount=#{order_amount},
+				</if>
+				<if test="order_status!=null">
+					order_status=#{order_status},
+				</if>
+				<if test="object_uid!=null">
+					object_uid=#{object_uid},
+				</if>
+				<if test="object_name!=null">
+					object_name=#{object_name},
+				</if>
+				<if test="remark!=null">
+					remark=#{remark},
+				</if>
+				<if test="version!=null">
+					version=#{version},
+				</if>
+				<if test="create_time!=null">
+					create_time=#{create_time},
+				</if>
+				<if test="updated_time!=null">
+					updated_time=#{updated_time}
+				</if>
+		</set>
+		where  
+		entry_order_id=#{entry_order_id} 
+	</update>
+	<!-- 删除单条记录 -->
+	<delete id="deleteById" parameterType="long">
+		delete from g_otc_order_record where 
+		entry_order_id=#{entry_order_id} 
+	</delete>
+	<!-- 获取所有数据 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_otc_order_record where 1=1 
+	</select>
+</mapper>

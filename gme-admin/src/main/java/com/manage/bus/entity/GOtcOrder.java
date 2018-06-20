@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
  
 public class GOtcOrder implements Serializable{
+	private static final long serialVersionUID = 1L;
 	/**OTC编号*/	
 	private java.lang.String entry_order_id;
 	/**订单号;无重复32位订单号*/	

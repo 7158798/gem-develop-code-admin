@@ -90,6 +90,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 		}
 	}
 	
+	
 	/**
 	 * 获取系统业务对象
 	 */

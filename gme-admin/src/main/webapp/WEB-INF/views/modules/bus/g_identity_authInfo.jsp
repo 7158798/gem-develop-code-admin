@@ -132,7 +132,7 @@
       	<div class="control-group">
         	<label class="control-label Validform_label">证件正面图片：</label>
 	        <div class="controls">
-	        	<img id="bigImg"  alt="front" src="${item.front_img}"  width="100px" height="100px">
+	        	<img alt="front" src="${item.front_img}"  width="100px" height="100px">
 	        </div>
       	</div>
   		<div class="control-group">

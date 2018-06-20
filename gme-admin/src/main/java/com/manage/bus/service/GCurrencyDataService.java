@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
-import com.manage.bus.entity.GCurrency;
 import com.manage.bus.entity.GCurrencyData;
 import com.manage.bus.vo.GCurrencyDataVO;
 
@@ -100,7 +99,7 @@ public class GCurrencyDataService{
         try {
            /* String method = SERVICE_BASE_PARAM + "g_currency_data_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyDataService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
@@ -121,7 +120,7 @@ public class GCurrencyDataService{
         try {
 			/*String method = SERVICE_BASE_PARAM + "g_currency_data_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyDataService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
@@ -183,7 +182,7 @@ public class GCurrencyDataService{
 			map.put("GCurrencyData", g_currency_data);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_data_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyDataService.testAdd();
+			String json = this.testAdd();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;
@@ -214,7 +213,7 @@ public class GCurrencyDataService{
 			map.put("GCurrencyData", g_currency_data);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_data_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyDataService.testUpdate();
+			String json = this.testUpdate();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;

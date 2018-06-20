@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.bus.entity.GCurrencyCirculateStatistics;
 import com.manage.bus.vo.GCurrencyCirculateStatisticsVO;
+import com.manage.util.StringUtil;
 
 
 /**
@@ -92,7 +93,9 @@ public class GCurrencyCirculateStatisticsService{
         String currency_id = g_currency_circulate_statistics_vo.getCurrency_id();
         String currency_symbol = g_currency_circulate_statistics_vo.getCurrency_symbol();
         if (null != currency_id && !StringUtils.isBlank(currency_id)) {
-        	map.put("currencyId", currency_id);
+        	if (StringUtil.isNumeric(currency_id)) {
+        		map.put("currencyId", currency_id);
+        	}
         }
         if (null != currency_symbol && !StringUtils.isBlank(currency_symbol)) {
         	map.put("currencySymbol", currency_symbol);
@@ -253,7 +256,7 @@ public class GCurrencyCirculateStatisticsService{
 			map.put("volumeId", volume_id);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_circulate_statistics_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyCirculateStatisticsService.testDelete();
+			String json = this.testDelete();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;

@@ -1,6 +1,8 @@
 package com.manage.bus.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.bus.entity.GCurrency;
+import com.manage.bus.entity.GCurrencyData;
+import com.manage.bus.entity.GWorkOrder;
 import com.manage.bus.vo.GCurrencyVO;
 
 /**
@@ -38,25 +42,26 @@ public class GCurrencyService{
     @Value("${SERVICE_BASE_PARAM}")
     private String SERVICE_BASE_PARAM;
 
-    
-    // 测试分页查询
+ // 测试分页查询
     public static String testPage() {
-		List<GCurrency> list = new ArrayList<GCurrency>();
-		GCurrency g = new GCurrency();
-		g.setCurrency_id("1");
-		g.setIs_enable(1);
-		g.setIs_open("0101");
+		List<GCurrencyData> list = new ArrayList<GCurrencyData>();
+		GCurrencyData g = new GCurrencyData();
+		g.setData_id("1");
+		g.setData_text_id("2");
+		g.setRemark("备注");
+		g.setData_brief("aaaadafdfdasfd");
 		list.add(g);
 		PageInfo pageInfo = new PageInfo(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
-    
-    // 测试查询一条记录
+
+ // 测试查询一条记录
     public static String testOne() {
-    	GCurrency g = new GCurrency();
-    	g.setCurrency_id("2");
-		g.setIs_enable(1);
-		g.setIs_open("0101");
+    	GCurrencyData g = new GCurrencyData();
+    	g.setData_id("1");
+		g.setData_text_id("2");
+		g.setRemark("备注");
+		g.setData_brief("aaaadafdfdasfd");
 		return JSON.toJSONString(g);
     }
     
@@ -114,7 +119,7 @@ public class GCurrencyService{
         try {
            /* String method = SERVICE_BASE_PARAM + "g_currency_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
@@ -135,7 +140,7 @@ public class GCurrencyService{
         try {
 			/*String method = SERVICE_BASE_PARAM + "g_currency_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
@@ -166,7 +171,7 @@ public class GCurrencyService{
     		map.put("currencyId", currency_id);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-    		String json = GCurrencyService.testOne();
+    		String json = this.testOne();
 			if (null != json) {
 				GCurrency gCurrency = JSON.parseObject(json, GCurrency.class);
 				return gCurrency;
@@ -198,7 +203,7 @@ public class GCurrencyService{
 			map.put("GCurrency", g_currency);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyService.testAdd();
+			String json = this.testAdd();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;
@@ -262,7 +267,7 @@ public class GCurrencyService{
 			map.put("currencyId", currency_id);
 			/*String method = SERVICE_BASE_PARAM + "g_currency_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyService.testDelete();
+			String json = this.testDelete();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;

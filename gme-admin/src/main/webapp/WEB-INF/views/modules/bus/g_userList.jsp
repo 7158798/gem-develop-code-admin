@@ -79,7 +79,14 @@
 						title : '最后登录时间',
 						field : 'last_login_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 					{
 						title : '推广码',
@@ -117,7 +124,27 @@
 						title : '创建时间',
 						field : 'create_time',
 						width : 150,
-						align : 'center'
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
+					},
+					{
+						title : '更新时间',
+						field : 'updated_time',
+						width : 150,
+						align : 'center',
+						formatter :function (value,row,index){
+							if (value != null) {
+								var currentDate = new Date(value);
+								return currentDate.toLocaleDateString();
+							}
+							return value;
+						}
 					},
 				{
 					title : '操作',

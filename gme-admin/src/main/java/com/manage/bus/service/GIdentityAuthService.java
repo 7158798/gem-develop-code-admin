@@ -231,7 +231,7 @@ public class GIdentityAuthService{
 			map.put("GCurrencyData", g_currency_data);
 			String method = SERVICE_BASE_PARAM + "g_currency_data_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);
-			String json = GCurrencyDataService.testAdd();
+			String json = this.testAdd();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;

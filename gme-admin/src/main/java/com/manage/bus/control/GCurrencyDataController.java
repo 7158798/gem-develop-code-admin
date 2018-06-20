@@ -20,6 +20,7 @@ import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
 import com.manage.bus.entity.GCurrencyData;
 import com.manage.bus.service.GCurrencyDataService;
+import com.manage.bus.service.GEntrustOrderRecordUsdtService;
 import com.manage.bus.vo.GCurrencyDataVO;
 /**
  * 币种资料表（g_currency_data）控制类
@@ -29,9 +30,9 @@ import com.manage.bus.vo.GCurrencyDataVO;
 public class GCurrencyDataController{
 	private static final Log log = LogFactory.getLog(GCurrencyDataController.class);
 
-    @Resource(name = "GCurrencyDataService")
-    private GCurrencyDataService g_currency_data_service;
-
+	 @Resource(name = "GCurrencyDataService")
+	 private GCurrencyDataService g_currency_data_service;
+	
 	/**
      * 去分页
      */

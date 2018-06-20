@@ -110,7 +110,7 @@ public class GCurrencyTradePairService{
         try {
            /* String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyTradePairService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
@@ -131,7 +131,7 @@ public class GCurrencyTradePairService{
         try {
 			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-        	String json = GCurrencyTradePairService.testPage();
+        	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;

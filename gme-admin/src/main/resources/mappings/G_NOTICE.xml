@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.manage.bus.dao.GNoticeDAO">
+
+	<!-- 实体和表的映射关系 -->
+	<resultMap type="GNotice" id="responseMap">
+		<result property="notice_id" column="notice_id"/>
+		<result property="type" column="type"/>
+		<result property="title_cn" column="title_cn"/>
+		<result property="title_en" column="title_en"/>
+		<result property="txt_id_cn" column="txt_id_cn"/>
+		<result property="txt_id_en" column="txt_id_en"/>
+		<result property="source" column="source"/>
+		<result property="sys_uid" column="sys_uid"/>
+		<result property="sys_name" column="sys_name"/>
+		<result property="remark" column="remark"/>
+		<result property="version" column="version"/>
+		<result property="create_time" column="create_time"/>
+		<result property="updated_time" column="updated_time"/>
+	</resultMap>
+	<!-- 获取分页数据 -->
+	<select id="selectPage" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_notice 
+		WHERE 1=1 
+		LIMIT
+		<if test="PSIZE==null">10</if><if test="PSIZE!=null">#{PSIZE}</if>
+		offset
+		<if test="BEGIN==null">0</if><if test="BEGIN!=null">#{BEGIN}</if>
+	</select>
+	<!-- 获取分页数据总条数 -->
+	<select id="selectPageCount" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(1) FROM g_notice
+		WHERE 1=1 
+	</select>
+	<!-- 添加单条记录 -->
+	<insert id="add" parameterType="GNotice" useGeneratedKeys="true" keyProperty="notice_id">
+		insert into g_notice(type,title_cn,title_en,txt_id_cn,txt_id_en,source,sys_uid,sys_name,remark,version,create_time,updated_time) values(#{type},#{title_cn},#{title_en},#{txt_id_cn},#{txt_id_en},#{source},#{sys_uid},#{sys_name},#{remark},#{version},#{create_time},#{updated_time})
+	</insert>
+	<!-- 获取单条记录 -->
+	<select id="getById" parameterType="long" resultMap="responseMap">
+		SELECT * FROM g_notice WHERE 
+		notice_id=#{notice_id} 
+	</select>
+	<!-- 更新单条记录 -->
+	<update id="update" parameterType="GNotice">
+		update g_notice
+		<set>
+				<if test="type!=null">
+					type=#{type},
+				</if>
+				<if test="title_cn!=null">
+					title_cn=#{title_cn},
+				</if>
+				<if test="title_en!=null">
+					title_en=#{title_en},
+				</if>
+				<if test="txt_id_cn!=null">
+					txt_id_cn=#{txt_id_cn},
+				</if>
+				<if test="txt_id_en!=null">
+					txt_id_en=#{txt_id_en},
+				</if>
+				<if test="source!=null">
+					source=#{source},
+				</if>
+				<if test="sys_uid!=null">
+					sys_uid=#{sys_uid},
+				</if>
+				<if test="sys_name!=null">
+					sys_name=#{sys_name},
+				</if>
+				<if test="remark!=null">
+					remark=#{remark},
+				</if>
+				<if test="version!=null">
+					version=#{version},
+				</if>
+				<if test="create_time!=null">
+					create_time=#{create_time},
+				</if>
+				<if test="updated_time!=null">
+					updated_time=#{updated_time}
+				</if>
+		</set>
+		where  
+		notice_id=#{notice_id} 
+	</update>
+	<!-- 删除单条记录 -->
+	<delete id="deleteById" parameterType="long">
+		delete from g_notice where 
+		notice_id=#{notice_id} 
+	</delete>
+	<!-- 获取所有数据 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="responseMap">
+		SELECT * FROM g_notice where 1=1 
+	</select>
+</mapper>

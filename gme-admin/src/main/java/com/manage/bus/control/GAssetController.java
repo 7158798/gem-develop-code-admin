@@ -165,13 +165,15 @@ public class GAssetController{
 		}
         return jsonMap;
     }*/
+    
+    
     /**
      * 查看详情
      */
-    /*@RequiresPermissions("bus:g_asset:view")
+    @RequiresPermissions("bus:g_asset:view")
     @RequestMapping(value = "info")
     public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String asset_id) throws Exception {
-        model.addAttribute("item", g_asset_service.get(asset_id));
+        model.addAttribute("item", g_asset_service.get(request,asset_id));
         return "modules/bus/g_assetInfo";
-    }*/
+    }
 }

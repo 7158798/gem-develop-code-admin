@@ -3,8 +3,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>资产表（g_asset）
-功能描述：存储用户币种资产信息。详情</title>
+    <title>资产信息详情</title>
     <%@ include file="/WEB-INF/views/include/head.jsp"%>  
   </head>
   <body>
@@ -16,7 +15,7 @@
 	        </div>
       	</div>
   		<div class="control-group">
-        	<label class="control-label Validform_label">账号ID；用户账号ID，全局唯一：</label>
+        	<label class="control-label Validform_label">账号ID：</label>
 	        <div class="controls">
 	        	<input disabled="disabled" value="${item.account_id}" class="inputxt" type="text">
 	        </div>
@@ -46,15 +45,14 @@
 	        </div>
       	</div>
   		<div class="control-group">
-        	<label class="control-label Validform_label">0-正常;1-冻结;：</label>
+        	<label class="control-label Validform_label">资产状态：</label>
 	        <div class="controls">
-	        	<input disabled="disabled" value="${item.status}" class="inputxt" type="text">
-	        </div>
-      	</div>
-  		<div class="control-group">
-        	<label class="control-label Validform_label">token生成规则：MD5(key+uid+account_id+currency_id+total_assets+：</label>
-	        <div class="controls">
-	        	<input disabled="disabled" value="${item.token}" class="inputxt" type="text">
+	        	<c:if test="${item.status == 0}">
+		        	<input disabled="disabled" value="正常" class="inputxt" type="text">
+	        	</c:if>
+	        	<c:if test="${item.status == 1}">
+		        	<input disabled="disabled" value="冻结" class="inputxt" type="text">
+	        	</c:if>
 	        </div>
       	</div>
   		<div class="control-group">
@@ -64,19 +62,13 @@
 	        </div>
       	</div>
   		<div class="control-group">
-        	<label class="control-label Validform_label">数据表版本,默认1：</label>
-	        <div class="controls">
-	        	<input disabled="disabled" value="${item.version}" class="inputxt" type="text">
-	        </div>
-      	</div>
-  		<div class="control-group">
-        	<label class="control-label Validform_label">创建时间格式:yyyy-MM-dd HH:ss:mm：</label>
+        	<label class="control-label Validform_label">创建时间：</label>
 	        <div class="controls">
 	        	<input disabled="disabled" value="${item.create_time}" class="inputxt" type="text">
 	        </div>
       	</div>
   		<div class="control-group">
-        	<label class="control-label Validform_label">更新时间格式:yyyy-MM-dd HH:ss:mm：</label>
+        	<label class="control-label Validform_label">更新时间：</label>
 	        <div class="controls">
 	        	<input disabled="disabled" value="${item.updated_time}" class="inputxt" type="text">
 	        </div>

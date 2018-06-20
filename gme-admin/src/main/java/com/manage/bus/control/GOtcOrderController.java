@@ -9,7 +9,10 @@ import com.manage.bus.service.GOtcOrderService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +60,7 @@ public class GOtcOrderController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = g_otc_order_service.selectPage(g_otc_order_vo);
+        	PageInfo pageInfo = g_otc_order_service.selectPage(request,g_otc_order_vo);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());
@@ -79,7 +82,7 @@ public class GOtcOrderController{
     /**
      * 新增
      */
-    @RequiresPermissions("bus:g_otc_order:add")
+    /*@RequiresPermissions("bus:g_otc_order:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
@@ -100,22 +103,22 @@ public class GOtcOrderController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }
+    }*/
 
     /**
      * 去修改
      */
-    @RequiresPermissions("bus:g_otc_order:update")
+    /*@RequiresPermissions("bus:g_otc_order:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.String entry_order_id) throws Exception {
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entry_order_id) throws Exception {
         model.addAttribute("item", g_otc_order_service.get(entry_order_id));
         return "modules/bus/g_otc_orderUpdate";
-    }
+    }*/
 
     /**
      * 修改
      */
-    @RequiresPermissions("bus:g_otc_order:update")
+    /*@RequiresPermissions("bus:g_otc_order:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
@@ -136,16 +139,16 @@ public class GOtcOrderController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }
+    }*/
 
 	/**
      * 删除
      */
-    @RequiresPermissions("bus:g_otc_order:delete")
+    /*@RequiresPermissions("bus:g_otc_order:delete")
     @RequestMapping(value = "delete")
     @ResponseBody
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-                         java.lang.String entry_order_id) throws Exception {
+    		@RequestParam(name = "id") String entry_order_id) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
         	boolean result = g_otc_order_service.delete(entry_order_id);
@@ -162,14 +165,14 @@ public class GOtcOrderController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }
+    }*/
     /**
      * 查看详情
      */
     @RequiresPermissions("bus:g_otc_order:view")
     @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.String entry_order_id) throws Exception {
-        model.addAttribute("item", g_otc_order_service.get(entry_order_id));
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entry_order_id) throws Exception {
+        model.addAttribute("item", g_otc_order_service.get(request,entry_order_id));
         return "modules/bus/g_otc_orderInfo";
     }
 }

@@ -33,7 +33,6 @@
 	           }});  
 	    });  
 	</script>  
-	
   </head>
   <body>
   	<form id="formobj" action="${ctx}/bus/g_currency_data/add" name="formobj" method="post" class="form-horizontal">
