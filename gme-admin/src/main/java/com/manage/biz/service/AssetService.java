@@ -30,7 +30,7 @@ import com.manage.util.StringUtil;
  * @version
  */
 @Transactional(readOnly = true)
-@Service("GAssetService")
+@Service("AssetService")
 public class AssetService {
 	
 
