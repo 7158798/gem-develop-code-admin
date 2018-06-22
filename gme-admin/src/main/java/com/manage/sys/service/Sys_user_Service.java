@@ -7,6 +7,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -73,6 +76,11 @@ public class Sys_user_Service{
      */
     @Transactional(readOnly = false, isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public boolean update(Sys_user ll_sys_user) throws Exception {
+    	String userpwd = ll_sys_user.getUserpwd();
+    	if (null != userpwd && !StringUtils.isBlank(userpwd)) {
+    		//使用shiro 的加密方式
+    		ll_sys_user.setUserpwd(md5_salt(ll_sys_user));
+    	}
         Integer result = sys_user_dao.update(ll_sys_user);
         return result > 0 ? true : false;
     }
@@ -101,5 +109,23 @@ public class Sys_user_Service{
 		return sys_user_dao.selectAll(map);
 	} 
 
+	
+	/**
+	 * 
+	 * @Title: md5_salt
+	 * @Description: md5盐值加密 
+	 * @param @param pwd
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	private String md5_salt (Sys_user ll_sys_user){
+		String algorithmName = "MD5";
+		String source = ll_sys_user.getUserpwd();
+		int hashIterations = 2;
+		ByteSource credentialsSalt = ByteSource.Util.bytes(ll_sys_user.getUsername().toLowerCase());
+		Object obj = new SimpleHash(algorithmName, source, credentialsSalt, hashIterations);
+		return obj.toString();
+	}
 
 }

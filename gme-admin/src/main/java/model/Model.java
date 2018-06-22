@@ -23,8 +23,16 @@ import freemarker.template.Template;
 
 public class Model {
 	
-	// 将表名转换成对应的java规范类名
-	private static String tableName(String tableName) {
+	/**
+	 * 
+	 * @Title: turnTableName
+	 * @Description: 将数据库表名命名格式转换成对应的java规范
+	 * @param @param tableName
+	 * @param @return  
+	 * @return String 
+	 * @throws
+	 */
+	private static String turnTableName(String tableName) {
 		String[] names = tableName.split("_");
 		StringBuffer sb = new StringBuffer();
 		for (String s :names) {
@@ -36,20 +44,69 @@ public class Model {
 	}
 	
 	/**
+	 * 
+	 * @Title: turnFeildName
+	 * @Description: 将数据库字段命名格式转换成对应的java规范
+	 * @param @param feildName
+	 * @param @return  
+	 * @return String 
+	 * @throws
+	 */
+	private static String turnFeildName(String feildName) {
+		String[] names = feildName.split("_");
+		StringBuffer sb = new StringBuffer();
+		int i = 0;
+		for (String s :names) {
+			String first = "";
+			if (i != 0) {
+				first = s.substring(0, 1).toUpperCase();
+			}else {
+				first = s.substring(0, 1);
+			}
+			String surplus = s.substring(1, s.length());
+			sb.append(first + surplus);
+			i++;
+		}
+		return sb.toString();
+	}
+	
+	
+	/**
+	 * 
+	 * @Title: turnType
+	 * @Description: 将数据库类型命名格式转换成对应的java规范
+	 * @param @param type
+	 * @param @return  
+	 * @return String 
+	 * @throws
+	 */
+	private static String turnType(String type){
+		String newType = null;
+		if (null != type) {
+			StringBuffer sb = new StringBuffer(type);
+			newType = sb.substring(sb.lastIndexOf(".")+1,sb.length());
+		}
+		
+		return newType;
+	}
+	
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
 		String driver="com.mysql.jdbc.Driver";
 		/*String url="jdbc:mysql://192.168.0.194:3306/gme_db_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";*/
-		String url="jdbc:mysql://47.106.171.23:3306/gme_db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
-		String username="yyctdbuser";
+//		String url="jdbc:mysql://47.106.171.23:3306/gme_db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
+		String url="jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
+		String username="root";
 
-		String password="Ab1234567.";
+		String password="root";
 //		String basePath="F:/work/yyct/gme-develop-code/admin/gme-admin/";//工程 路径
-		String basePath="F:/opsigte/data/yyct/gme-develop-code/admin/gme-admin/";//工程 路径
+		String basePath="F:";//工程 路径
 		
-		String tableName="g_message_state";//表名  
-		String modelName="bus";//模块名称 
+		String tableName="coin_market_order_info_log";//表名  
+		String modelName="biz";//模块名称 
 
 		boolean isCEntity=true;//是否生成实体 
 		boolean isCDao=true;//是否生成dao
@@ -62,7 +119,7 @@ public class Model {
 		boolean isCInfoJsp=true;//是否生成详情jsp322
 
 		
-		String entityName=tableName(tableName);
+		String entityName=turnTableName(tableName);
 		String daoName=entityName+"DAO";
 		String controllerName=entityName+"Controller";
 		String voName=entityName+"VO";
@@ -106,7 +163,7 @@ public class Model {
 			String type=metaData.getColumnClassName(i);
 			String[]field=new String[5];
 			field[0]=type;
-			field[1]=name;
+			field[1]=turnFeildName(name);
 			fields.add(field);
 		}
 		resultSet.close();
@@ -167,7 +224,7 @@ public class Model {
 		
 		
 		Map<String, Object> modelParam = new HashMap<String, Object>();
-		modelParam.put("tableName", tableName);
+		modelParam.put("tableName", turnTableName(tableName));
 		modelParam.put("tableComment", tableComment);
 		
 		modelParam.put("fields", fields);
@@ -200,7 +257,7 @@ public class Model {
 		}
 		if(isCDao){
 			createFile(cfg, "dao.ftl", modelParam, daoPath+daoName+".java");
-            createFile(cfg, "mybatis.ftl", modelParam, mybatisPath + tableName.toUpperCase() + ".xml");
+            createFile(cfg, "mybatis.ftl", modelParam, mybatisPath + turnTableName(tableName) + ".xml");
 		}
 		if(isCService){
 			createFile(cfg, "service.ftl", modelParam, servicePath+serviceName+".java");
@@ -212,16 +269,16 @@ public class Model {
 			createFile(cfg, "vo.ftl", modelParam, voPath+voName+".java");
 		}
 		if(isCListJsp){
-			createFile(cfg, "listJsp.ftl", modelParam, jspPath+tableName+"List.jsp");
+			createFile(cfg, "listJsp.ftl", modelParam, jspPath+turnTableName(tableName)+"List.jsp");
 		}
 		if(isCAddJsp){
-			createFile(cfg, "addJsp.ftl", modelParam, jspPath+tableName+"Add.jsp");
+			createFile(cfg, "addJsp.ftl", modelParam, jspPath+turnTableName(tableName)+"Add.jsp");
 		}
 		if(isCUpdateJsp){
-			createFile(cfg, "updateJsp.ftl", modelParam, jspPath+tableName+"Update.jsp");
+			createFile(cfg, "updateJsp.ftl", modelParam, jspPath+turnTableName(tableName)+"Update.jsp");
 		}
 		if(isCInfoJsp){
-			createFile(cfg, "infoJsp.ftl", modelParam, jspPath+tableName+"Info.jsp");
+			createFile(cfg, "infoJsp.ftl", modelParam, jspPath+turnTableName(tableName)+"Info.jsp");
 		}
 		System.out.println("已经生成完成.....");
 	}

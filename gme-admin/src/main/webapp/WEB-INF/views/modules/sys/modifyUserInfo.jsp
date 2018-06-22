@@ -28,6 +28,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 	  });
 	</script>
+	<script type="text/javascript">
+		function checkPasswork(){
+			var userpwd = $("#sys_user.userpwd").val();
+			var reUserpwd = $("#reUserpwd").val();
+			if (userpwd == reUserpwd) {
+				alert("正确");
+				document.form[0].submit;
+			}
+		}
+	</script>
   </head>
   <body style="overflow:hidden;">
   	<div class="easyui-panel" data-options="fit:true">
@@ -45,6 +55,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	<label class="control-label Validform_label">真实姓名<font color="red">*</font>：</label>
 		        <div class="controls">
 		        	<input name="sys_user.truename" value="${item.truename}" datatype="*0-100" class="inputxt" type="text">
+		        </div>
+	      	</div>
+	      	<div class="control-group">
+	        	<label class="control-label Validform_label">密码<font color="red">*</font>：</label>
+		        <div class="controls">
+		        	<input id="sys_user.userpwd" name="sys_user.userpwd"  datatype="n1-200" class="inputxt" type="password">
+		        </div>
+	      	</div>
+	      	<div class="control-group">
+	        	<label class="control-label Validform_label">确认密码<font color="red">*</font>：</label>
+		        <div class="controls">
+		        	<input id="reUserpwd" name="reUserpwd"  datatype="n1-200" class="inputxt" type="password">
 		        </div>
 	      	</div>
 	      	<div class="control-group">
@@ -68,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<div class="control-group">
 	        	<label class="control-label Validform_label">&nbsp;</label>
 		        <div class="controls">
-		        	<input type="submit" value="确定" id="btn_sub" class="btn_sub u-btn u-btn-cg" style="width:85px; margin-right:12px; color:#fff;">
+		        	<input type="button" onclick="javascript:checkPasswork();" value="确定" id="btn_sub" class="btn_sub u-btn u-btn-cg" style="width:85px; margin-right:12px; color:#fff;">
 					<input type="reset" value="重置" id="btn_reset" class="btn_sub u-btn u-btn-cgray" style="width:85px;">
 		        </div>
 	      	</div>

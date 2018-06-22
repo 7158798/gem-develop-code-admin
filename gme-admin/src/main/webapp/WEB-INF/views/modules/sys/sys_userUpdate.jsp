@@ -70,6 +70,18 @@
 	        	<input name="sys_user.username" value="${item.username}" class="inputxt" datatype="*1-100" type="text" id="userName">
 	        </div>
       	</div>   
+      	<div class="control-group">
+	        	<label class="control-label Validform_label">密码<font color="red">*</font>：</label>
+		        <div class="controls">
+		        	<input id="sys_user.userpwd" name="sys_user.userpwd"  datatype="n1-200" class="inputxt" type="password">
+		        </div>
+	      	</div>
+	      	<div class="control-group">
+	        	<label class="control-label Validform_label">确认密码<font color="red">*</font>：</label>
+		        <div class="controls">
+		        	<input id="reUserpwd" name="reUserpwd" recheck="sys_user.userpwd" datatype="n1-200" class="inputxt" type="password">
+		        </div>
+	      	</div>
 		<div class="control-group"> 
 			<label class="control-label Validform_label">
 				手机号：

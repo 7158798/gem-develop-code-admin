@@ -91,6 +91,15 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 	}
 	
 	
+	public static void main(String[] args) {
+		String algorithmName = "MD5";
+		String source = "*****";
+		int hashIterations = 2;
+		ByteSource credentialsSalt = ByteSource.Util.bytes("admin");
+		Object obj = new SimpleHash(algorithmName, source, credentialsSalt, hashIterations);
+		System.out.println(obj);
+	}
+	
 	/**
 	 * 获取系统业务对象
 	 */
