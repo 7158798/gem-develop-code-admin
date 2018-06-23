@@ -25,54 +25,54 @@
 	</script>
   </head>
   <body>
-  	<form id="formobj" action="${ctx}/bus/g_currency_trade_pair/add" name="formobj" method="post" class="form-horizontal">
+  	<form id="formobj" action="${ctx}/biz/currencyTradePair/add" name="formobj" method="post" class="form-horizontal">
  		<input type="hidden" id="btn_sub" class="btn_sub">
  		<div class="control-group">
         	<label class="control-label Validform_label">交易对 如：ltc_usdt<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.pair_symbol" value="" class="inputxt" datatype="*1-20"  type="text">
+	        	<input name="currencyTradePair.pairSymbol" value="" class="inputxt" datatype="*1-20"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">描述<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.pair_desc" value="" class="inputxt" datatype="*1-200"  type="text">
+	        	<input name="currencyTradePair.pairDesc" value="" class="inputxt" datatype="*1-200"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">币种平台交易手续费<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.service_charge" value="0.002" datatype="n1-10" class="inputxt" type="text">
+	        	<input name="currencyTradePair.serviceCharge" value="0.002" datatype="n1-10" class="inputxt" type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">媒介币平台服务手续费<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.token_service_charge" value="0.002" datatype="n1-10" class="inputxt"  type="text">
+	        	<input name="currencyTradePair.tokenServiceCharge" value="0.002" datatype="n1-10" class="inputxt"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">交易价格上限<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.trade_max_price" value="" class="inputxt" datatype="n1-10"  type="text">
+	        	<input name="currencyTradePair.tradeMaxPrice" value="" class="inputxt" datatype="n1-10"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">交易价格下限<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.trade_min_price" value="" class="inputxt" datatype="n1-10"  type="text">
+	        	<input name="currencyTradePair.tradeMinPrice" value="" class="inputxt" datatype="n1-10"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">交易数量下限<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.trade_number_lower_limit" value="" class="inputxt" datatype="n1-10"  type="text">
+	        	<input name="currencyTradePair.tradeNumberLowerLimit" value="" class="inputxt" datatype="n1-10"  type="text">
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">是否启用<font color='red'>*</font>：</label>
 	        <div class="controls">
-	         	<select name="g_currency_trade_pair.is_enable">
+	         	<select name="currencyTradePair.isEnable">
    					<option value="1">是</option>
    					<option value="0">否</option>
 			   	</select>
@@ -81,7 +81,7 @@
  		<div class="control-group">
         	<label class="control-label Validform_label">是否推荐<font color='red'>*</font>：</label>
 	        <div class="controls">
-	         	<select name="g_currency_trade_pair.is_elite">
+	         	<select name="currencyTradePair.isElite">
    					<option value="1">是</option>
    					<option value="0">否</option>
 			   	</select>
@@ -90,7 +90,7 @@
  		<div class="control-group">
         	<label class="control-label Validform_label">备注<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_trade_pair.remark" value="" class="inputxt" datatype="*1-50"  type="text">
+	        	<input name="currencyTradePair.remark" value="" class="inputxt" datatype="*1-50"  type="text">
 	        </div>
       	</div>
 	</form>

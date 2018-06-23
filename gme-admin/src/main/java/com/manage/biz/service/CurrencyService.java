@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.entity.Currency;
-import com.manage.biz.entity.GCurrencyData;
+import com.manage.biz.entity.CurrencyData;
 import com.manage.biz.vo.CurrencyVO;
 
 /**

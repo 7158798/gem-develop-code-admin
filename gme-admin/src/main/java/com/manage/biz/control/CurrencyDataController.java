@@ -18,47 +18,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
-import com.manage.biz.entity.GCurrencyTradePair;
-import com.manage.biz.service.GCurrencyTradePairService;
-import com.manage.biz.vo.GCurrencyTradePairVO;
+import com.manage.biz.entity.CurrencyData;
+import com.manage.biz.service.CurrencyDataService;
+import com.manage.biz.vo.CurrencyDataVO;
 /**
- * 币种交易对表控制类
+ * 币种资料表（currencyData）控制类
  */
 @Controller
-@RequestMapping(value = "${adminPath}/bus/g_currency_trade_pair")
-public class GCurrencyTradePairController{
-	private static final Log log = LogFactory.getLog(GCurrencyTradePairController.class);
+@RequestMapping(value = "${adminPath}/biz/currencyData")
+public class CurrencyDataController{
+	private static final Log log = LogFactory.getLog(CurrencyDataController.class);
 
-    @Resource(name = "GCurrencyTradePairService")
-    private GCurrencyTradePairService g_currency_trade_pair_service;
-
+	 @Resource(name = "CurrencyDataService")
+	 private CurrencyDataService currencyDataService;
+	
 	/**
      * 去分页
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:view")
+    @RequiresPermissions("biz:currencyData:view")
     @RequestMapping(value = "toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-    	return "modules/bus/g_currency_trade_pairList";
+    	return "modules/biz/currencyDataList";
     }
     /**
      * 分页
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:view")
+    @RequiresPermissions("biz:currencyData:view")
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-    		@FormModel("g_currency_trade_pair_vo") GCurrencyTradePairVO g_currency_trade_pair_vo) throws Exception {
-        if (g_currency_trade_pair_vo == null) {
-            g_currency_trade_pair_vo = new GCurrencyTradePairVO();
+                       @FormModel("currencyDataVO") CurrencyDataVO currencyDataVO) throws Exception {
+        if (currencyDataVO == null) {
+            currencyDataVO = new CurrencyDataVO();
         }
         if (request.getParameter("page") != null) {
-            g_currency_trade_pair_vo.setPage(Integer.parseInt(request.getParameter("page")));
+            currencyDataVO.setPage(Integer.parseInt(request.getParameter("page")));
         }if (request.getParameter("rows") != null) {
-            g_currency_trade_pair_vo.setRows(Integer.parseInt(request.getParameter("rows")));
+            currencyDataVO.setRows(Integer.parseInt(request.getParameter("rows")));
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = g_currency_trade_pair_service.selectPage(request,g_currency_trade_pair_vo);
+        	PageInfo pageInfo = currencyDataService.selectPage(request,currencyDataVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());
@@ -71,23 +71,23 @@ public class GCurrencyTradePairController{
     /**
      * 去新增
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:add")
+    @RequiresPermissions("biz:currencyData:add")
     @RequestMapping(value = "toAdd")
     public String toAdd(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        return "modules/bus/g_currency_trade_pairAdd";
+        return "modules/biz/currencyDataAdd";
     }
 
     /**
      * 新增
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:add")
+    @RequiresPermissions("biz:currencyData:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                      @FormModel("g_currency_trade_pair") GCurrencyTradePair g_currency_trade_pair) throws Exception {
+                     	@FormModel("currencyData") CurrencyData currencyData) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = g_currency_trade_pair_service.add(request,g_currency_trade_pair);
+        	boolean result = currencyDataService.add(request,currencyData);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -106,24 +106,24 @@ public class GCurrencyTradePairController{
     /**
      * 去修改
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:update")
+    @RequiresPermissions("biz:currencyData:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String pair_id) throws Exception {
-        model.addAttribute("item", g_currency_trade_pair_service.get(request,pair_id));
-        return "modules/bus/g_currency_trade_pairUpdate";
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String dataId) throws Exception {
+        model.addAttribute("item", currencyDataService.get(request,dataId));
+        return "modules/biz/currencyDataUpdate";
     }
 
     /**
      * 修改
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:update")
+    @RequiresPermissions("biz:currencyData:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
-                         @FormModel("g_currency_trade_pair") GCurrencyTradePair g_currency_trade_pair) throws Exception {
+                         @FormModel("currencyData") CurrencyData currencyData) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = g_currency_trade_pair_service.update(request,g_currency_trade_pair);
+        	boolean result = currencyDataService.update(request,currencyData);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -142,14 +142,14 @@ public class GCurrencyTradePairController{
 	/**
      * 删除
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:delete")
+    @RequiresPermissions("biz:currencyData:delete")
     @RequestMapping(value = "delete")
     @ResponseBody
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-    		@RequestParam(name = "id") String pair_id) throws Exception {
+    		@RequestParam(name = "id") String dataId) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = g_currency_trade_pair_service.delete(request,pair_id);
+        	boolean result = currencyDataService.delete(request,dataId);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -167,10 +167,10 @@ public class GCurrencyTradePairController{
     /**
      * 查看详情
      */
-    @RequiresPermissions("bus:g_currency_trade_pair:view")
+    @RequiresPermissions("biz:currencyData:view")
     @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String pair_id) throws Exception {
-        model.addAttribute("item", g_currency_trade_pair_service.get(request,pair_id));
-        return "modules/bus/g_currency_trade_pairInfo";
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String dataId) throws Exception {
+        model.addAttribute("item", currencyDataService.get(request,dataId));
+        return "modules/biz/currencyDataInfo";
     }
 }

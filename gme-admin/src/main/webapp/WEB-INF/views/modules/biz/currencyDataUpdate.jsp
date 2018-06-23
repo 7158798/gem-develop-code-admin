@@ -3,8 +3,8 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>币种资料新增</title>
-	<%@ include file="/WEB-INF/views/include/head.jsp"%> 
+    <title>币种资料修改</title>
+	<%@ include file="/WEB-INF/views/include/head.jsp"%>  
 	<script type="text/javascript">
 	  $(function(){$("#formobj").Validform({
 		  tiptype:4,
@@ -16,39 +16,43 @@
 		   if(data.success==true){
 			  frameElement.api.close();win.tip(data.msg);
 		   }else{
-		   	 tip(data.msg);
-			 return false;
+		   	  tip(data.msg);
+			  return false;
 		   }
 		   win.reloadTable();
 		 }
 		});});
 	</script>
+	
 	<script type="text/javascript">  
     	var editor;  
 	    $(function() {  
-	          editor = KindEditor.create('textarea[name="g_currency_data.data_brief"]',{resizeType : 1,width:"115%",height:"200px",afterChange:function(){  
-	              this.sync();  
+	          editor = KindEditor.create('textarea[name="currencyData.dataBrief"]',{resizeType : 1,width:"115%",height:"200px",afterChange:function(){  
+	               this.sync();
 	           },afterBlur:function(){  
 	               this.sync();  
 	           }});  
+	          editor.html(document.getElementById("currencyDescBak").value);
 	    });  
 	</script>  
   </head>
   <body>
-  	<form id="formobj" action="${ctx}/bus/g_currency_data/add" name="formobj" method="post" class="form-horizontal">
+  	<form id="formobj" action="${ctx}/biz/currencyData/update" name="formobj" method="post" class="form-horizontal">
  		<input type="hidden" id="btn_sub" class="btn_sub">
  		<div class="control-group">
         	<label class="control-label Validform_label">币种简介<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	 <textarea rows="3" style="width:400px;" name="g_currency_data.data_brief"></textarea>  
+	        	 <input name="currencyDescBak" id="currencyDescBak" disabled="disabled" value="${item.dataBrief}" class="inputxt" type="hidden">
+	        	 <textarea rows="3" style="width:700px;" id="currencyData.dataBrief" name="currencyData.dataBrief"></textarea>  
 	        </div>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">备注<font color='red'>*</font>：</label>
 	        <div class="controls">
-	        	<input name="g_currency_data.remark" value="" class="inputxt" datatype="*1-50"  type="text">
+	        	<input name="currencyData.remark" value="${item.remark}" class="inputxt"  datatype="*1-50"  type="text">
 	        </div>
       	</div>
+		<input type="hidden" name="currencyData.dataId" value="${item.dataId}"/>
 	</form>
   </body>
 </html>

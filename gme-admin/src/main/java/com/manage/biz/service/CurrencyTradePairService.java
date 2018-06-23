@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
-import com.manage.biz.entity.GCurrencyTradePair;
-import com.manage.biz.vo.GCurrencyTradePairVO;
+import com.manage.biz.entity.CurrencyTradePair;
+import com.manage.biz.vo.CurrencyTradePairVO;
 
 
 
@@ -28,12 +28,11 @@ import com.manage.biz.vo.GCurrencyTradePairVO;
  * @Date：2018年6月12日 下午6:03:12   
  * @version V1.0
  */
-@Transactional(readOnly = true)
-@Service("GCurrencyTradePairService")
-public class GCurrencyTradePairService{
+@Service("CurrencyTradePairService")
+public class CurrencyTradePairService{
 
 	
-	private Logger logger = Logger.getLogger(GCurrencyTradePairService.class);
+	private Logger logger = Logger.getLogger(CurrencyTradePairService.class);
 	
 	@Value("${SERVICE_BASE_PARAM}")
     private String SERVICE_BASE_PARAM;
@@ -41,12 +40,12 @@ public class GCurrencyTradePairService{
 
  // 测试分页查询
     public static String testPage() {
-		List<GCurrencyTradePair> list = new ArrayList<GCurrencyTradePair>();
-		GCurrencyTradePair g = new GCurrencyTradePair();
-		g.setCurrency_id("1");
-		g.setIs_elite(1);
-		g.setPair_sn(2);
-		g.setIs_enable(1);
+		List<CurrencyTradePair> list = new ArrayList<CurrencyTradePair>();
+		CurrencyTradePair g = new CurrencyTradePair();
+		g.setCurrencyId("1");
+		g.setIsElite(1);
+		g.setPairSn(2);
+		g.setIsEnable(1);
 		list.add(g);
 		PageInfo pageInfo = new PageInfo(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
@@ -54,11 +53,11 @@ public class GCurrencyTradePairService{
 
     // 测试查询一条记录
     public static String testOne() {
-    	GCurrencyTradePair g = new GCurrencyTradePair();
-    	g.setCurrency_id("1");
-		g.setIs_elite(1);
-		g.setPair_sn(2);
-		g.setIs_enable(1);
+    	CurrencyTradePair g = new CurrencyTradePair();
+		g.setCurrencyId("1");
+		g.setIsElite(1);
+		g.setPairSn(2);
+		g.setIsEnable(1);
 		return JSON.toJSONString(g);
     }
     
@@ -86,62 +85,62 @@ public class GCurrencyTradePairService{
      * 
      * @Title: selectPage
      * @Description: 分页查询
-     * @param @param g_currency_trade_pair_vo
+     * @param @param currencyTradePairVO
      * @param @return
      * @param @throws Exception
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,GCurrencyTradePairVO g_currency_trade_pair_vo) throws Exception {
+    public PageInfo selectPage(HttpServletRequest request,CurrencyTradePairVO currencyTradePairVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("PSIZE", g_currency_trade_pair_vo.getRows());
-        map.put("BEGIN", (g_currency_trade_pair_vo.getPage() - 1) * g_currency_trade_pair_vo.getRows());
+        map.put("PSIZE", currencyTradePairVO.getRows());
+        map.put("BEGIN", (currencyTradePairVO.getPage() - 1) * currencyTradePairVO.getRows());
         
-        if (null != g_currency_trade_pair_vo.getIs_enable()) {
-        	map.put("isEnable", g_currency_trade_pair_vo.getIs_enable());
+        if (null != currencyTradePairVO.getIsEnable()) {
+        	map.put("isEnable", currencyTradePairVO.getIsEnable());
         }
-        if (null != g_currency_trade_pair_vo.getIs_elite()) {
-        	map.put("isElite", g_currency_trade_pair_vo.getIs_elite());
+        if (null != currencyTradePairVO.getIsElite()) {
+        	map.put("isElite", currencyTradePairVO.getIsElite());
         }
         
         
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_getPageCount";
+           /* String method = SERVICE_BASE_PARAM + "currencyTradePair_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(g_currency_trade_pair_vo.getRows(), g_currency_trade_pair_vo.getPage(), count, new ArrayList<GCurrencyTradePair>());
+                	return new PageInfo(currencyTradePairVO.getRows(), currencyTradePairVO.getPage(), count, new ArrayList<CurrencyTradePair>());
                 }
         	}else {
-            	return new PageInfo(g_currency_trade_pair_vo.getRows(), g_currency_trade_pair_vo.getPage(), count, new ArrayList<GCurrencyTradePair>());
+            	return new PageInfo(currencyTradePairVO.getRows(), currencyTradePairVO.getPage(), count, new ArrayList<CurrencyTradePair>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种交易对-查询总记录条数]请求后台出错",e);
-			return new PageInfo(g_currency_trade_pair_vo.getRows(), g_currency_trade_pair_vo.getPage(), count, new ArrayList<GCurrencyTradePair>());
+			return new PageInfo(currencyTradePairVO.getRows(), currencyTradePairVO.getPage(), count, new ArrayList<CurrencyTradePair>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_getList";
+			/*String method = SERVICE_BASE_PARAM + "currencyTradePair_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(g_currency_trade_pair_vo.getRows(), g_currency_trade_pair_vo.getPage(), 0, new ArrayList<GCurrencyTradePair>());
+            	return new PageInfo(currencyTradePairVO.getRows(), currencyTradePairVO.getPage(), 0, new ArrayList<CurrencyTradePair>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种交易对-查询所有记录]请求后台出错",e);
-			return new PageInfo(g_currency_trade_pair_vo.getRows(), g_currency_trade_pair_vo.getPage(), 0, new ArrayList<GCurrencyTradePair>());
+			return new PageInfo(currencyTradePairVO.getRows(), currencyTradePairVO.getPage(), 0, new ArrayList<CurrencyTradePair>());
 		}
         
     }
@@ -151,29 +150,29 @@ public class GCurrencyTradePairService{
      * 
      * @Title: get
      * @Description: 查询一条记录
-     * @param @param pair_id
+     * @param @param pairId
      * @param @return
      * @param @throws Exception
      * @return GCurrencyTradePair
      * @throws
      */
-    public GCurrencyTradePair get(HttpServletRequest request,String pair_id) throws Exception {
+    public CurrencyTradePair get(HttpServletRequest request,String pairId) throws Exception {
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
-    		map.put("pairId", pair_id);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_getOne";
+    		map.put("pairId", pairId);
+			/*String method = SERVICE_BASE_PARAM + "currencyTradePair_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-    		String json = GCurrencyTradePairService.testOne();
+    		String json = CurrencyTradePairService.testOne();
 			if (null != json) {
-				GCurrencyTradePair gCurrencyTradePair = JSON.parseObject(json, GCurrencyTradePair.class);
+				CurrencyTradePair gCurrencyTradePair = JSON.parseObject(json, CurrencyTradePair.class);
 				return gCurrencyTradePair;
 			}else {
-				return new GCurrencyTradePair();
+				return new CurrencyTradePair();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种交易对-查询一条记录]请求后台出错",e);
-			return new GCurrencyTradePair();
+			return new CurrencyTradePair();
 		}
     }
 
@@ -183,17 +182,17 @@ public class GCurrencyTradePairService{
      * @Title: add
      * @Description: 新增一条记录
      * @param @param request
-     * @param @param g_currency_trade_pair
+     * @param @param currencyTradePair
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean add(HttpServletRequest request,GCurrencyTradePair g_currency_trade_pair) throws Exception {
+    public boolean add(HttpServletRequest request,CurrencyTradePair currencyTradePair) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("GCurrencyTradePair", g_currency_trade_pair);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_add";
+			map.put("GCurrencyTradePair", currencyTradePair);
+			/*String method = SERVICE_BASE_PARAM + "currencyTradePair_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testAdd();
 			if (null != json) {
@@ -215,17 +214,17 @@ public class GCurrencyTradePairService{
      * @Title: update
      * @Description: 修改一条数据
      * @param @param request
-     * @param @param g_currency_trade_pair
+     * @param @param currencyTradePair
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean update(HttpServletRequest request,GCurrencyTradePair g_currency_trade_pair) throws Exception {
+    public boolean update(HttpServletRequest request,CurrencyTradePair currencyTradePair) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("GCurrencyTradePair", g_currency_trade_pair);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_update";
+			map.put("GCurrencyTradePair", currencyTradePair);
+			/*String method = SERVICE_BASE_PARAM + "currencyTradePair_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -248,17 +247,17 @@ public class GCurrencyTradePairService{
      * @Title: delete
      * @Description: 删除一条记录
      * @param @param request
-     * @param @param pair_id
+     * @param @param pairId
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean delete(HttpServletRequest request,String pair_id) throws Exception {
+    public boolean delete(HttpServletRequest request,String pairId) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("pairId", pair_id);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_trade_pair_delete";
+			map.put("pairId", pairId);
+			/*String method = SERVICE_BASE_PARAM + "currencyTradePair_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testDelete();
 			if (null != json) {
@@ -276,9 +275,9 @@ public class GCurrencyTradePairService{
     /**
 	 * 获取所有数据
 	 */
-	/*public List<GCurrencyTradePair> selectAll(GCurrencyTradePairVO g_currency_trade_pair_vo) throws Exception{
+	/*public List<GCurrencyTradePair> selectAll(GCurrencyTradePairVO currencyTradePairVO) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
-		return g_currency_trade_pair_dao.selectAll(map);
+		return currencyTradePair_dao.selectAll(map);
 	} */
 
 

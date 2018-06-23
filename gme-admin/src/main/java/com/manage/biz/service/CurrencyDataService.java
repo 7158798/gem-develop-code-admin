@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
-import com.manage.biz.entity.GCurrencyData;
-import com.manage.biz.vo.GCurrencyDataVO;
+import com.manage.biz.entity.CurrencyData;
+import com.manage.biz.vo.CurrencyDataVO;
 
 
 /**
@@ -27,24 +27,23 @@ import com.manage.biz.vo.GCurrencyDataVO;
  * @Date：2018年6月12日 上午11:58:55   
  * @version V1.0
  */
-@Transactional(readOnly = true)
-@Service("GCurrencyDataService")
-public class GCurrencyDataService{
+@Service("CurrencyDataService")
+public class CurrencyDataService{
 
 	
-	private  Logger logger = Logger.getLogger(GCurrencyDataService.class);
+	private  Logger logger = Logger.getLogger(CurrencyDataService.class);
 	
 	@Value("${SERVICE_BASE_PARAM}")
     private String SERVICE_BASE_PARAM;
     
     // 测试分页查询
     public static String testPage() {
-		List<GCurrencyData> list = new ArrayList<GCurrencyData>();
-		GCurrencyData g = new GCurrencyData();
-		g.setData_id("1");
-		g.setData_text_id("2");
+		List<CurrencyData> list = new ArrayList<CurrencyData>();
+		CurrencyData g = new CurrencyData();
+		g.setDataId("1");
+		g.setDataTextId("2");
 		g.setRemark("备注");
-		g.setData_brief("aaaadafdfdasfd");
+		g.setDataBrief("aaaadafdfdasfd");
 		list.add(g);
 		PageInfo pageInfo = new PageInfo(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
@@ -52,11 +51,11 @@ public class GCurrencyDataService{
 
  // 测试查询一条记录
     public static String testOne() {
-    	GCurrencyData g = new GCurrencyData();
-    	g.setData_id("1");
-		g.setData_text_id("2");
+    	CurrencyData g = new CurrencyData();
+		g.setDataId("1");
+		g.setDataTextId("2");
 		g.setRemark("备注");
-		g.setData_brief("aaaadafdfdasfd");
+		g.setDataBrief("aaaadafdfdasfd");
 		return JSON.toJSONString(g);
     }
     
@@ -83,54 +82,54 @@ public class GCurrencyDataService{
      * 
      * @Title: selectPage
      * @Description: 分页查询
-     * @param @param g_currency_data_vo
+     * @param @param currencyDataVO
      * @param @return
      * @param @throws Exception
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,GCurrencyDataVO g_currency_data_vo) throws Exception {
+    public PageInfo selectPage(HttpServletRequest request,CurrencyDataVO currencyDataVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("PSIZE", g_currency_data_vo.getRows());
-        map.put("BEGIN", (g_currency_data_vo.getPage() - 1) * g_currency_data_vo.getRows());
+        map.put("PSIZE", currencyDataVO.getRows());
+        map.put("BEGIN", (currencyDataVO.getPage() - 1) * currencyDataVO.getRows());
         
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_currency_data_getPageCount";
+           /* String method = SERVICE_BASE_PARAM + "currencyData_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(g_currency_data_vo.getRows(), g_currency_data_vo.getPage(), count, new ArrayList<GCurrencyData>());
+                	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
                 }
         	}else {
-            	return new PageInfo(g_currency_data_vo.getRows(), g_currency_data_vo.getPage(), count, new ArrayList<GCurrencyData>());
+            	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种资料-查询记录条数]请求后台出错",e);
-			return new PageInfo(g_currency_data_vo.getRows(), g_currency_data_vo.getPage(), count, new ArrayList<GCurrencyData>());
+			return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_currency_data_getList";
+			/*String method = SERVICE_BASE_PARAM + "currencyData_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(g_currency_data_vo.getRows(), g_currency_data_vo.getPage(), 0, new ArrayList<GCurrencyData>());
+            	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种资料-查询所有记录]请求后台出错",e);
-			return new PageInfo(g_currency_data_vo.getRows(), g_currency_data_vo.getPage(), 0, new ArrayList<GCurrencyData>());
+			return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
 		}
     }
 
@@ -139,29 +138,29 @@ public class GCurrencyDataService{
      * 
      * @Title: get
      * @Description: 查询一条记录
-     * @param @param data_id
+     * @param @param dataId
      * @param @return
      * @param @throws Exception
      * @return GCurrencyData
      * @throws
      */
-    public GCurrencyData get(HttpServletRequest request,String data_id) throws Exception {
+    public CurrencyData get(HttpServletRequest request,String dataId) throws Exception {
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
-    		map.put("dataId", data_id);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_data_getOne";
+    		map.put("dataId", dataId);
+			/*String method = SERVICE_BASE_PARAM + "currencyData_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-    		String json = GCurrencyDataService.testOne();
+    		String json = CurrencyDataService.testOne();
 			if (null != json) {
-				GCurrencyData gCurrencyData = JSON.parseObject(json, GCurrencyData.class);
+				CurrencyData gCurrencyData = JSON.parseObject(json, CurrencyData.class);
 				return gCurrencyData;
 			}else {
-				return new GCurrencyData();
+				return new CurrencyData();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种资料-查询一条记录]请求后台出错",e);
-			return new GCurrencyData();
+			return new CurrencyData();
 		}
     }
 
@@ -170,17 +169,17 @@ public class GCurrencyDataService{
      * 
      * @Title: add
      * @Description: 新增一条记录
-     * @param @param g_currency_data
+     * @param @param currencyData
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean add(HttpServletRequest request,GCurrencyData g_currency_data) throws Exception {
+    public boolean add(HttpServletRequest request,CurrencyData currencyData) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("GCurrencyData", g_currency_data);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_data_add";
+			map.put("GCurrencyData", currencyData);
+			/*String method = SERVICE_BASE_PARAM + "currencyData_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testAdd();
 			if (null != json) {
@@ -201,17 +200,17 @@ public class GCurrencyDataService{
      * 
      * @Title: update
      * @Description: 修改一条数据
-     * @param @param g_currency_data
+     * @param @param currencyData
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean update(HttpServletRequest request,GCurrencyData g_currency_data) throws Exception {
+    public boolean update(HttpServletRequest request,CurrencyData currencyData) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("GCurrencyData", g_currency_data);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_data_update";
+			map.put("GCurrencyData", currencyData);
+			/*String method = SERVICE_BASE_PARAM + "currencyData_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -232,19 +231,19 @@ public class GCurrencyDataService{
      * 
      * @Title: delete
      * @Description: 删除一条数据
-     * @param @param data_id
+     * @param @param dataId
      * @param @return
      * @param @throws Exception
      * @return boolean
      * @throws
      */
-    public boolean delete(HttpServletRequest request,String data_id) throws Exception {
+    public boolean delete(HttpServletRequest request,String dataId) throws Exception {
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("dataId", data_id);
-			/*String method = SERVICE_BASE_PARAM + "g_currency_data_delete";
+			map.put("dataId", dataId);
+			/*String method = SERVICE_BASE_PARAM + "currencyData_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-			String json = GCurrencyDataService.testDelete();
+			String json = CurrencyDataService.testDelete();
 			if (null != json) {
 				Boolean flag = JSON.parseObject(json,Boolean.class);
 				return flag;
@@ -260,9 +259,9 @@ public class GCurrencyDataService{
     /**
 	 * 获取所有数据
 	 */
-/*	public List<GCurrencyData> selectAll(GCurrencyDataVO g_currency_data_vo) throws Exception{
+/*	public List<GCurrencyData> selectAll(GCurrencyDataVO currencyDataVO) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
-		return g_currency_data_dao.selectAll(map);
+		return currencyData_dao.selectAll(map);
 	} */
 
 

@@ -8,12 +8,12 @@
     <script type="text/javascript">  
     	var editor;  
 	    $(function() {  
-	          editor = KindEditor.create('textarea[name="data_brief"]',{resizeType : 1,width:"115%",height:"200px",afterChange:function(){  
+	          editor = KindEditor.create('textarea[name="dataBrief"]',{resizeType : 1,width:"115%",height:"200px",afterChange:function(){  
 	              this.sync();  
 	           },afterBlur:function(){  
 	               this.sync();  
 	           }});  
-	          editor.html(document.getElementById("data_brief_bak").value);
+	          editor.html(document.getElementById("dataBriefBak").value);
 	    });  
 	</script>  
   </head>
@@ -22,14 +22,14 @@
   		<div class="control-group">
         	<label class="control-label Validform_label">文本编号：</label>
 	        <div class="controls">
-	        	<input disabled="disabled" value="${item.data_text_id}" class="inputxt" type="text">
+	        	<input disabled="disabled" value="${item.dataTextId}" class="inputxt" type="text">
 	        </div>
       	</div>
   		<div class="control-group">
         	<label class="control-label Validform_label">币种简介：</label>
 	        <div class="controls">
-	        	 <input name="data_brief_bak" id="data_brief_bak" disabled="disabled" value="${item.data_brief}" class="inputxt" type="hidden">
-	        	 <textarea rows="3" style="width:700px;" id="data_brief" name="data_brief"></textarea>  
+	        	 <input name="dataBriefBak" id="dataBriefBak" disabled="disabled" value="${item.dataBrief}" class="inputxt" type="hidden">
+	        	 <textarea rows="3" style="width:700px;" id="dataBrief" name="dataBrief"></textarea>  
 	        </div>
       	</div>
   		<div class="control-group">
@@ -41,13 +41,13 @@
   		<div class="control-group">
         	<label class="control-label Validform_label">创建时间：</label>
 	        <div class="controls">
-	        	<input disabled="disabled" value="${item.create_time}" class="inputxt" type="text">
+	        	<input disabled="disabled" value="${item.createTime}" class="inputxt" type="text">
 	        </div>
       	</div>
   		<div class="control-group">
         	<label class="control-label Validform_label">更新时间：</label>
 	        <div class="controls">
-	        	<input disabled="disabled" value="${item.updated_time}" class="inputxt" type="text">
+	        	<input disabled="disabled" value="${item.updatedTime}" class="inputxt" type="text">
 	        </div>
       	</div>
   	</div>
