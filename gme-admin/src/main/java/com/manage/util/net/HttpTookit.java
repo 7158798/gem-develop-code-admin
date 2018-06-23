@@ -92,6 +92,8 @@ public final class HttpTookit {
                 client.getHttpConnectionManager().getParams().setConnectionTimeout(TIME_OUT); //指的是连接一个url的连接等待时间。    
                 client.getHttpConnectionManager().getParams().setSoTimeout(TIME_OUT); //指的是连接上一个url，获取response的返回等待时间  
                 method.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");    
+//                method.setRequestHeader("Content-Type","application/json;charset=UTF-8");    
+                
                 method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, charset);
                 //设置Http Post数据 
                 if (params != null) { 

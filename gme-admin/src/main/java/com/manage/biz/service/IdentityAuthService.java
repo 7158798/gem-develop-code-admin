@@ -98,14 +98,14 @@ public class IdentityAuthService{
     	identityAuthAdminDTO.setFrontImgUrl("1");
     	identityAuthAdminDTO.setId("1");
     	identityAuthAdminDTO.setInHandImgId("1");
-    	identityAuthAdminDTO.setInHandImgPreview("1");
-    	identityAuthAdminDTO.setInHandImgUrl("1");
+    	identityAuthAdminDTO.setInHandImgPreview("http://img.zcool.cn/community/010a1b554c01d1000001bf72a68b37.jpg@1280w_1l_2o_100sh.png");
+    	identityAuthAdminDTO.setInHandImgUrl("http://img.zcool.cn/community/010a1b554c01d1000001bf72a68b37.jpg@1280w_1l_2o_100sh.png");
     	identityAuthAdminDTO.setIsAuthSupplier(1);
     	identityAuthAdminDTO.setRealName("1");
     	identityAuthAdminDTO.setRemark("1");
     	identityAuthAdminDTO.setReverseImgId("1");
-    	identityAuthAdminDTO.setReverseImgPreview("1");
-    	identityAuthAdminDTO.setReverseImgUrl("1");
+    	identityAuthAdminDTO.setReverseImgPreview("http://img.zcool.cn/community/010f87596f13e6a8012193a363df45.jpg@1280w_1l_2o_100sh.jpg");
+    	identityAuthAdminDTO.setReverseImgUrl("http://img.zcool.cn/community/010f87596f13e6a8012193a363df45.jpg@1280w_1l_2o_100sh.jpg");
     	identityAuthAdminDTO.setStatus(1);
     	identityAuthAdminDTO.setUid("1");
     	identityAuthAdminDTO.setUpdatedTime(new Date());
@@ -213,6 +213,8 @@ public class IdentityAuthService{
 
 
     
+    
+    
     /**
      * 
      * @Title: get
@@ -228,22 +230,15 @@ public class IdentityAuthService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("authId", authId);
-			/*String method = SERVICE_BASE_PARAM + "identityAuth/getById";
-			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
-    		String json = this.testOne();
-			if (null != json) {
-				ResponseResult responseResult = JSON.parseObject(json, ResponseResult.class);
-				if (responseResult.getData() != null) {
-//					IdentityAuthImage identityAuthImage = (IdentityAuthImage) responseResult.getData();
-					Object obj = responseResult.getData();
-					System.out.println(obj.toString());
-					IdentityAuthAdminDTO identityAuthImage = (IdentityAuthAdminDTO) JSON.parse(obj.toString());
-					return null;
-				}
-				return null;
-			}else {
-				return new IdentityAuthImage();
+    		// admin-web的url
+			String method = SERVICE_BASE_PARAM + "identityAuth/getById.json";
+			ResponseResult result = SendRequestUtil.sendRequestReceiveResponse(request, map, method);
+			if (null != result && null != result.getData()) {
+				Object obj = result.getData();
+				IdentityAuthImage identityAuthImage = (IdentityAuthImage) JSON.parseObject(obj.toString(),IdentityAuthImage.class);
+				return identityAuthImage;
 			}
+			return new IdentityAuthImage();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-实名认证-查询一条记录]请求后台出错",e);

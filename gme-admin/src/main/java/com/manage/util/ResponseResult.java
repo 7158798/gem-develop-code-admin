@@ -1,5 +1,7 @@
 package com.manage.util;
 
+import java.util.Map;
+
 /**
  * 
  * @Project：gme-admin   
@@ -20,9 +22,13 @@ public class ResponseResult {
      */
 	private String message;
 	/**
-     * 其他内容
+     * 返回内容
      */
 	private Object data;
+	/**
+	 * 其他内容
+	 */
+	private Map<String, Object> ext;
 	public String getStatus() {
 		return status;
 	}
@@ -40,5 +46,11 @@ public class ResponseResult {
 	}
 	public void setData(Object data) {
 		this.data = data;
+	}
+	public Map<String, Object> getExt() {
+		return ext;
+	}
+	public void setExt(Map<String, Object> ext) {
+		this.ext = ext;
 	}
 }

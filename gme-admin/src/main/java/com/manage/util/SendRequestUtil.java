@@ -1,5 +1,6 @@
 package com.manage.util;
 
+import com.alibaba.fastjson.JSON;
 import com.manage.util.net.CommonUtil;
 import com.manage.util.net.JsonUtil;
 import com.manage.util.net.modle.ResultJson;
@@ -21,6 +22,34 @@ import java.util.Map.Entry;
 public class SendRequestUtil {
 
     private static Logger logger = Logger.getLogger(SendRequestUtil.class);
+    
+    
+    /**
+     * 
+     * @Title: sendRequestReceiveResponse
+     * @Description: TODO 封装发送http请求到admin-web,接收返回的响应
+     * @param @param request
+     * @param @param map
+     * @param @param method
+     * @param @return
+     * @return ResponseResult
+     * @throws
+     */
+    public static ResponseResult sendRequestReceiveResponse(HttpServletRequest request,Map<String,Object> map,String method){
+		String json = SendRequestUtil.sendMapRequest(request, map, method);
+		if (null != json) {
+			ResponseResult responseResult = JSON.parseObject(json, ResponseResult.class);
+			if (responseResult.getStatus().equals("200")) {
+				return responseResult;
+			}
+			return null;
+		}else {
+			return null;
+		}
+    }
+    
+    
+    
 
     // 发送带有java pojo参数的post请求
     public static String sendPojoRequest(HttpServletRequest request, Object object, String method) {
@@ -49,7 +78,7 @@ public class SendRequestUtil {
             e.printStackTrace();
             logger.error("发送请求失败:" + e.toString());
         }
-        if (null == resultJson) {
+        if (null == resultJson.getData()) {
             return null;
         }
         return resultJson.getData().toString();
