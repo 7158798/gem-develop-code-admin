@@ -36,14 +36,19 @@ public class SendRequestUtil {
      * @throws
      */
     public static ResponseResult sendRequestReceiveResponse(HttpServletRequest request,Map<String,Object> map,String method){
-		String json = SendRequestUtil.sendMapRequest(request, map, method);
-		if (null != json) {
-			ResponseResult responseResult = JSON.parseObject(json, ResponseResult.class);
-			if (responseResult.getStatus().equals("200")) {
-				return responseResult;
-			}
-			return null;
-		}else {
+    	try {
+    		String json = SendRequestUtil.sendMapRequest(request, map, method);
+    		if (null != json) {
+    			ResponseResult responseResult = JSON.parseObject(json, ResponseResult.class);
+    			if (null != responseResult && responseResult.getCode().equals("200")) {
+    				return responseResult;
+    			}
+    			return null;
+    		}else {
+    			return null;
+    		}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
     }

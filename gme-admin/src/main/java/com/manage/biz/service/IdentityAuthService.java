@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.gme.common.core.utils.Resp;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.dto.IdentityAuthAdminDTO;
 import com.manage.biz.entity.IdentityAuth;

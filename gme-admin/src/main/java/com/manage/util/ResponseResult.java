@@ -16,7 +16,7 @@ public class ResponseResult {
 	/**
      * 返回状态码
      */
-	private String status;
+	private String code;
 	/**
      * 返回内容
      */
@@ -29,11 +29,12 @@ public class ResponseResult {
 	 * 其他内容
 	 */
 	private Map<String, Object> ext;
-	public String getStatus() {
-		return status;
+	
+	public String getCode() {
+		return code;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getMessage() {
 		return message;

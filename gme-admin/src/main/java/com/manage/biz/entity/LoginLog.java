@@ -18,7 +18,7 @@ public class LoginLog implements Serializable{
 	/**IP*/	
 	private java.lang.String loginIp;
 	/**IP归属地址*/	
-	private java.lang.String home_address;
+	private java.lang.String homeAddress;
 	/**登录客户端pc / ios / ard*/	
 	private java.lang.String clientType;
 	/**HTTP信息	*/	
@@ -59,11 +59,12 @@ public class LoginLog implements Serializable{
 	public void setLoginIp(java.lang.String loginIp) {
 		this.loginIp = loginIp;
 	}
-	public java.lang.String getHome_address() {
-		return home_address;
+	
+	public java.lang.String getHomeAddress() {
+		return homeAddress;
 	}
-	public void setHome_address(java.lang.String home_address) {
-		this.home_address = home_address;
+	public void setHomeAddress(java.lang.String homeAddress) {
+		this.homeAddress = homeAddress;
 	}
 	public java.lang.String getClientType() {
 		return clientType;

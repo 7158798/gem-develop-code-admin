@@ -30,7 +30,7 @@ public class EntrustOrderUsdt implements Serializable{
 	/**未成交数量；*/	
 	private java.math.BigDecimal unfinishedAmount;
 	/**订单状态；1-委托中;2-全部成交;3-部分成交;4撤销;*/	
-	private java.lang.Integer order_status;
+	private java.lang.Integer orderStatus;
 	/**订单完成日期；委托下单日期 / 格式:yyyy-MM-dd HH:ss:mm*/	
 	private java.sql.Timestamp orderFinishedTime;
 	/**备注*/	
@@ -101,11 +101,12 @@ public class EntrustOrderUsdt implements Serializable{
 	public void setUnfinishedAmount(java.math.BigDecimal unfinishedAmount) {
 		this.unfinishedAmount = unfinishedAmount;
 	}
-	public java.lang.Integer getOrder_status() {
-		return order_status;
+	
+	public java.lang.Integer getOrderStatus() {
+		return orderStatus;
 	}
-	public void setOrder_status(java.lang.Integer order_status) {
-		this.order_status = order_status;
+	public void setOrderStatus(java.lang.Integer orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	public java.sql.Timestamp getOrderFinishedTime() {
 		return orderFinishedTime;

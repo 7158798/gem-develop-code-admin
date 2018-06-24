@@ -30,7 +30,7 @@ import com.manage.biz.vo.EntrustOrderUsdtVO;
 public class EntrustOrderUsdtController{
 	private static final Log log = LogFactory.getLog(EntrustOrderUsdtController.class);
 
-    @Resource(name = "GEntrustOrderUsdtService")
+    @Resource(name = "EntrustOrderUsdtService")
     private EntrustOrderUsdtService entrustOrderUsdtService;
 
 	/**

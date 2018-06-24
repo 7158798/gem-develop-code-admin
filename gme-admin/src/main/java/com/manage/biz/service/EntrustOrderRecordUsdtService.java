@@ -99,9 +99,9 @@ public class EntrustOrderRecordUsdtService{
         map.put("PSIZE", entrustOrderRecordUsdtVO.getRows());
         map.put("BEGIN", (entrustOrderRecordUsdtVO.getPage() - 1) * entrustOrderRecordUsdtVO.getRows());
         
-        if (null != entrustOrderRecordUsdtVO.getOrder_id() && !StringUtils.isBlank(entrustOrderRecordUsdtVO.getOrder_id())) {
-        	if (StringUtil.isNumeric(entrustOrderRecordUsdtVO.getOrder_id())) {
-        		map.put("orderId", entrustOrderRecordUsdtVO.getOrder_id());
+        if (null != entrustOrderRecordUsdtVO.getOrderId() && !StringUtils.isBlank(entrustOrderRecordUsdtVO.getOrderId())) {
+        	if (StringUtil.isNumeric(entrustOrderRecordUsdtVO.getOrderId())) {
+        		map.put("orderId", entrustOrderRecordUsdtVO.getOrderId());
         	}
         }
         if (null != entrustOrderRecordUsdtVO.getUid() && !StringUtils.isBlank(entrustOrderRecordUsdtVO.getUid())) {
@@ -109,14 +109,14 @@ public class EntrustOrderRecordUsdtService{
         		map.put("uid", entrustOrderRecordUsdtVO.getUid());
         	}
         }
-        if (null != entrustOrderRecordUsdtVO.getEntrust_type()) {
-        	map.put("objectUid", entrustOrderRecordUsdtVO.getEntrust_type());
+        if (null != entrustOrderRecordUsdtVO.getEntrustType()) {
+        	map.put("objectUid", entrustOrderRecordUsdtVO.getEntrustType());
         }
-        if (null != entrustOrderRecordUsdtVO.getOrder_status()) {
-        	map.put("orderStatus", entrustOrderRecordUsdtVO.getOrder_status());
+        if (null != entrustOrderRecordUsdtVO.getOrderStatus()) {
+        	map.put("orderStatus", entrustOrderRecordUsdtVO.getOrderStatus());
         }
-        if (null != entrustOrderRecordUsdtVO.getDeal_status()) {
-        	map.put("dealStatus", entrustOrderRecordUsdtVO.getDeal_status());
+        if (null != entrustOrderRecordUsdtVO.getDealStatus()) {
+        	map.put("dealStatus", entrustOrderRecordUsdtVO.getDealStatus());
         }
         
         Integer count = 0;

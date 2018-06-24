@@ -6,7 +6,7 @@
   <packaging>war</packaging>
   
   <dependencies>
- 	 <dependency>
+ 	<!--  <dependency>
 			<groupId>gme-common</groupId>
 			<artifactId>gme-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
@@ -20,7 +20,7 @@
 			<groupId>com.gme</groupId>
 			<artifactId>gme-common-config</artifactId>
 			<version>1.0</version>
-		</dependency>
+		</dependency> -->
 	<dependency>
 		<groupId>gme-3rdParty</groupId>
 		<artifactId>aes</artifactId>
