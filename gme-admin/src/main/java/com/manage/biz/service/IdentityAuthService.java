@@ -87,7 +87,7 @@ public class IdentityAuthService{
 		g.setReverseImgUrl("http://img.zcool.cn/community/010f87596f13e6a8012193a363df45.jpg@1280w_1l_2o_100sh.jpg");
 		g.setReverseImgPreview("http://img.zcool.cn/community/010f87596f13e6a8012193a363df45.jpg@1280w_1l_2o_100sh.jpg");
 		return JSON.toJSONString(g);*/
-    	IdentityAuthAdminDTO identityAuthAdminDTO = new IdentityAuthAdminDTO();
+    	/*IdentityAuthAdminDTO identityAuthAdminDTO = new IdentityAuthAdminDTO();
     	identityAuthAdminDTO.setAuthStatus(1);
     	identityAuthAdminDTO.setCertificateNumber("1");
     	identityAuthAdminDTO.setCertificateType(1);
@@ -112,9 +112,9 @@ public class IdentityAuthService{
     	
     	Resp<IdentityAuthAdminDTO> success = Resp.success("成功", identityAuthAdminDTO);
     	String json = JSON.toJSONString(success);
-    	System.out.println(json);
+    	System.out.println(json);*/
     	
-    	return json;
+    	return null;
     	
     }
     

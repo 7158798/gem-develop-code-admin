@@ -19,11 +19,11 @@ public class GOperationLogVO extends BaseVO{
 	/**
 	 * 业务编号
 	 */
-	private String biz_id;
+	private String bizId;
 	/**
 	 * 业务类型 1-提现;2-充值;3-交易
 	 */
-	private Integer biz_type;
+	private Integer bizType;
 	/**
 	 * 状态success  / failed.
 	 */
@@ -34,17 +34,17 @@ public class GOperationLogVO extends BaseVO{
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	public String getBiz_id() {
-		return biz_id;
+	public String getBizId() {
+		return bizId;
 	}
-	public void setBiz_id(String biz_id) {
-		this.biz_id = biz_id;
+	public void setBizId(String bizId) {
+		this.bizId = bizId;
 	}
-	public Integer getBiz_type() {
-		return biz_type;
+	public Integer getBizType() {
+		return bizType;
 	}
-	public void setBiz_type(Integer biz_type) {
-		this.biz_type = biz_type;
+	public void setBizType(Integer bizType) {
+		this.bizType = bizType;
 	}
 	public String getStatus() {
 		return status;
@@ -52,4 +52,5 @@ public class GOperationLogVO extends BaseVO{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 }

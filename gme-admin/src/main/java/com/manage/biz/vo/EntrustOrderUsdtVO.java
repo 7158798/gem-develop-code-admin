@@ -4,28 +4,27 @@ package com.manage.biz.vo;
 import com.manage.base.entity.BaseVO;
 
 /**
-* OTC订单表（g_otc_order）
-功能描述：存储OTC订单信息。
+* 委托订单表（g_entrust_order_usdt）
+功能描述：存储币币交易的委托单历史记录。每个交易区生成一张委托订单表。entrust_order_id
 查询bean
 */
-public class GOtcOrderVO extends BaseVO{
+public class EntrustOrderUsdtVO extends BaseVO{
 
 	private static final long serialVersionUID = 1L;
-
 	/**
-	 * 订单号
+	 * 委托单号
 	 */
 	private String orderId;
 	/**
-	 * 挂单用户编号
+	 * 用户编号
 	 */
 	private String uid;
 	/**
-	 * 业务类型:1-买家;2-卖家;
+	 * 交易类型；1-买入;2-卖出;
 	 */
-	private Integer orderType;
+	private Integer entrustType;
 	/**
-	 * 订单状态：1挂单中;2-全部成交;3-部分成交;4-撤销;5-挂单超时;
+	 * 订单状态；1-委托中;2-全部成交;3-部分成交;4撤销;
 	 */
 	private Integer orderStatus;
 	public String getOrderId() {
@@ -40,11 +39,11 @@ public class GOtcOrderVO extends BaseVO{
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	public Integer getOrderType() {
-		return orderType;
+	public Integer getEntrustType() {
+		return entrustType;
 	}
-	public void setOrderType(Integer orderType) {
-		this.orderType = orderType;
+	public void setEntrustType(Integer entrustType) {
+		this.entrustType = entrustType;
 	}
 	public Integer getOrderStatus() {
 		return orderStatus;
@@ -52,6 +51,5 @@ public class GOtcOrderVO extends BaseVO{
 	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	
 	
 }

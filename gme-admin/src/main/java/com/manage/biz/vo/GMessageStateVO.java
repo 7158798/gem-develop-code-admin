@@ -14,7 +14,7 @@ public class GMessageStateVO extends BaseVO{
 	/**
 	 * 业务编号
 	 */
-	private String biz_id;
+	private String bizId;
 	/**
 	 * 用户编号
 	 */
@@ -23,12 +23,6 @@ public class GMessageStateVO extends BaseVO{
 	 * 业务类型1短信验证码；2邮箱验证码；3邮箱激活码
 	 */
 	private Integer type;
-	public String getBiz_id() {
-		return biz_id;
-	}
-	public void setBiz_id(String biz_id) {
-		this.biz_id = biz_id;
-	}
 	public String getUid() {
 		return uid;
 	}
@@ -41,4 +35,11 @@ public class GMessageStateVO extends BaseVO{
 	public void setType(Integer type) {
 		this.type = type;
 	}
+	public String getBizId() {
+		return bizId;
+	}
+	public void setBizId(String bizId) {
+		this.bizId = bizId;
+	}
+	
 }
