@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.entity.OperationLog;
-import com.manage.biz.vo.GOperationLogVO;
+import com.manage.biz.vo.OperationLogVO;
 import com.manage.util.StringUtil;
 
 
@@ -95,7 +95,7 @@ public class OperationLogService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,GOperationLogVO operationLogVO) throws Exception {
+    public PageInfo selectPage(HttpServletRequest request,OperationLogVO operationLogVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", operationLogVO.getRows());
         map.put("BEGIN", (operationLogVO.getPage() - 1) * operationLogVO.getRows());

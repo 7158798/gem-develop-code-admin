@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.service.MessageStateService;
-import com.manage.biz.vo.GMessageStateVO;
+import com.manage.biz.vo.MessageStateVO;
 /**
  * 短信邮件发送状态表（g_messageState）
 功能描述：存储短信邮件发送状态信息。
@@ -48,9 +48,9 @@ public class MessageStateController{
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("messageStateVO") GMessageStateVO messageStateVO) throws Exception {
+                       @FormModel("messageStateVO") MessageStateVO messageStateVO) throws Exception {
         if (messageStateVO == null) {
-            messageStateVO = new GMessageStateVO();
+            messageStateVO = new MessageStateVO();
         }
         if (request.getParameter("page") != null) {
             messageStateVO.setPage(Integer.parseInt(request.getParameter("page")));

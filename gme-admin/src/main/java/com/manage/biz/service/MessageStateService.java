@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.entity.MessageState;
-import com.manage.biz.vo.GMessageStateVO;
+import com.manage.biz.vo.MessageStateVO;
 import com.manage.util.StringUtil;
 
 
@@ -96,7 +96,7 @@ public class MessageStateService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,GMessageStateVO messageStateVO) throws Exception {
+    public PageInfo selectPage(HttpServletRequest request,MessageStateVO messageStateVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", messageStateVO.getRows());
         map.put("BEGIN", (messageStateVO.getPage() - 1) * messageStateVO.getRows());

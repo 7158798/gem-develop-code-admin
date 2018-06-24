@@ -18,48 +18,48 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
-import com.manage.biz.service.OtcOrderService;
-import com.manage.biz.vo.OtcOrderVO;
+import com.manage.biz.entity.SupplierInfo;
+import com.manage.biz.service.SupplierInfoService;
+import com.manage.biz.vo.SupplierInfoVO;
 /**
- * OTC订单表（g_otcOrder）
-功能描述：存储OTC订单信息。
-控制类
+ * 商家信息表（supplierInfo）
+功能描述：存储商家统计数据信息。控制类
  */
 @Controller
-@RequestMapping(value = "${adminPath}/biz/otcOrder")
-public class OtcOrderController{
-	private static final Log log = LogFactory.getLog(OtcOrderController.class);
+@RequestMapping(value = "${adminPath}/biz/supplierInfo")
+public class SupplierInfoController{
+	private static final Log log = LogFactory.getLog(SupplierInfoController.class);
 
-    @Resource(name = "OtcOrderService")
-    private OtcOrderService otcOrderService;
+    @Resource(name = "SupplierInfoService")
+    private SupplierInfoService supplierInfoService;
 
 	/**
      * 去分页
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:supplierInfo:view")
     @RequestMapping(value = "toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-    	return "modules/biz/otcOrderList";
+    	return "modules/biz/supplierInfoList";
     }
     /**
      * 分页
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:supplierInfo:view")
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("otcOrderVO") OtcOrderVO otcOrderVO) throws Exception {
-        if (otcOrderVO == null) {
-            otcOrderVO = new OtcOrderVO();
+                       @FormModel("supplierInfoVO") SupplierInfoVO supplierInfoVO) throws Exception {
+        if (supplierInfoVO == null) {
+            supplierInfoVO = new SupplierInfoVO();
         }
         if (request.getParameter("page") != null) {
-            otcOrderVO.setPage(Integer.parseInt(request.getParameter("page")));
+            supplierInfoVO.setPage(Integer.parseInt(request.getParameter("page")));
         }if (request.getParameter("rows") != null) {
-            otcOrderVO.setRows(Integer.parseInt(request.getParameter("rows")));
+            supplierInfoVO.setRows(Integer.parseInt(request.getParameter("rows")));
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = otcOrderService.selectPage(request,otcOrderVO);
+        	PageInfo pageInfo = supplierInfoService.selectPage(request,supplierInfoVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());
@@ -72,23 +72,23 @@ public class OtcOrderController{
     /**
      * 去新增
      */
-    /*@RequiresPermissions("biz:otcOrder:add")
+    /*@RequiresPermissions("biz:supplierInfo:add")
     @RequestMapping(value = "toAdd")
     public String toAdd(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        return "modules/biz/otcOrderAdd";
+        return "modules/biz/supplierInfoAdd";
     }*/
 
     /**
      * 新增
      */
-    /*@RequiresPermissions("biz:otcOrder:add")
+    /*@RequiresPermissions("biz:supplierInfo:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                      @FormModel("g_otcOrder") GOtcOrder g_otcOrder) throws Exception {
+                      @FormModel("supplierInfo") GSupplierInfo supplierInfo) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.add(g_otcOrder);
+        	boolean result = supplierInfoService.add(supplierInfo);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -107,24 +107,24 @@ public class OtcOrderController{
     /**
      * 去修改
      */
-    /*@RequiresPermissions("biz:otcOrder:update")
+    @RequiresPermissions("biz:supplierInfo:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderService.get(entryOrderId));
-        return "modules/biz/otcOrderUpdate";
-    }*/
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String uid) throws Exception {
+        model.addAttribute("item", supplierInfoService.get(request,uid));
+        return "modules/biz/supplierInfoUpdate";
+    }
 
     /**
      * 修改
      */
-    /*@RequiresPermissions("biz:otcOrder:update")
+    @RequiresPermissions("biz:supplierInfo:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
-                         @FormModel("g_otcOrder") GOtcOrder g_otcOrder) throws Exception {
+                         @FormModel("supplierInfo") SupplierInfo supplierInfo) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.update(g_otcOrder);
+        	boolean result = supplierInfoService.update(request,supplierInfo);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -138,19 +138,19 @@ public class OtcOrderController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }*/
+    }
 
 	/**
      * 删除
      */
-    /*@RequiresPermissions("biz:otcOrder:delete")
+    /*@RequiresPermissions("biz:supplierInfo:delete")
     @RequestMapping(value = "delete")
     @ResponseBody
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-    		@RequestParam(name = "id") String entryOrderId) throws Exception {
+                         java.lang.String uid) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.delete(entryOrderId);
+        	boolean result = supplierInfoService.delete(uid);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -165,13 +165,14 @@ public class OtcOrderController{
 		}
         return jsonMap;
     }*/
+    
     /**
      * 查看详情
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:supplierInfo:view")
     @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderService.get(request,entryOrderId));
-        return "modules/biz/otcOrderInfo";
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String uid) throws Exception {
+        model.addAttribute("item", supplierInfoService.get(request,uid));
+        return "modules/biz/supplierInfoInfo";
     }
 }

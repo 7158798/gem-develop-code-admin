@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.service.OtcOrderRecordService;
-import com.manage.biz.vo.GOtcOrderRecordVO;
+import com.manage.biz.vo.OtcOrderRecordVO;
 /**
  * OTC历史订单表（g_otcOrderRecord）控制类
  */
@@ -46,9 +46,9 @@ public class OtcOrderRecordController{
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("otcOrderRecordVO") GOtcOrderRecordVO otcOrderRecordVO) throws Exception {
+                       @FormModel("otcOrderRecordVO") OtcOrderRecordVO otcOrderRecordVO) throws Exception {
         if (otcOrderRecordVO == null) {
-            otcOrderRecordVO = new GOtcOrderRecordVO();
+            otcOrderRecordVO = new OtcOrderRecordVO();
         }
         if (request.getParameter("page") != null) {
             otcOrderRecordVO.setPage(Integer.parseInt(request.getParameter("page")));

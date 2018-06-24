@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.service.OperationLogService;
-import com.manage.biz.vo.GOperationLogVO;
+import com.manage.biz.vo.OperationLogVO;
 /**
  * 操作日志表（g_operationLog）
 功能描述：存储用户业务操作日志信息。
@@ -48,9 +48,9 @@ public class OperationLogController{
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("operationLogVO") GOperationLogVO operationLogVO) throws Exception {
+                       @FormModel("operationLogVO") OperationLogVO operationLogVO) throws Exception {
         if (operationLogVO == null) {
-            operationLogVO = new GOperationLogVO();
+            operationLogVO = new OperationLogVO();
         }
         if (request.getParameter("page") != null) {
             operationLogVO.setPage(Integer.parseInt(request.getParameter("page")));

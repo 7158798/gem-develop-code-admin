@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.entity.OtcOrderRecord;
-import com.manage.biz.vo.GOtcOrderRecordVO;
+import com.manage.biz.vo.OtcOrderRecordVO;
 import com.manage.util.StringUtil;
 
 
@@ -42,23 +42,23 @@ public class OtcOrderRecordService{
 		List<OtcOrderRecord> list = new ArrayList<OtcOrderRecord>();
 		OtcOrderRecord g = new OtcOrderRecord();
 		g.setUid("1");
-		g.setOrder_id("1");
-		g.setOrder_type(1);
-		g.setCurrency_id("1");
-		g.setOrder_status(1);
-		g.setCurrency_symbol("USDT");
-		g.setOrder_amount(new BigDecimal(100));
-		g.setOrder_price(new BigDecimal(22332));
+		g.setOrderId("1");
+		g.setOrderType(1);
+		g.setCurrencyId("1");
+		g.setOrderStatus(1);
+		g.setCurrencySymbol("USDT");
+		g.setOrderAmount(new BigDecimal(100));
+		g.setOrderPrice(new BigDecimal(22332));
 		
 		OtcOrderRecord g1 = new OtcOrderRecord();
 		g1.setUid("2");
-		g1.setOrder_id("2");
-		g1.setCurrency_symbol("EOS");
-		g1.setOrder_type(2);
-		g1.setCurrency_id("2");
-		g1.setOrder_status(3);
-		g1.setOrder_amount(new BigDecimal(300));
-		g1.setOrder_price(new BigDecimal(22));
+		g1.setOrderId("2");
+		g1.setCurrencySymbol("EOS");
+		g1.setOrderType(2);
+		g1.setCurrencyId("2");
+		g1.setOrderStatus(3);
+		g1.setOrderAmount(new BigDecimal(300));
+		g1.setOrderPrice(new BigDecimal(22));
 		list.add(g);
 		list.add(g1);
 
@@ -68,13 +68,15 @@ public class OtcOrderRecordService{
 
     // 测试查询一条记录
     public static String testOne() {
-    	OtcOrderRecord g = new OtcOrderRecord();
+		OtcOrderRecord g = new OtcOrderRecord();
 		g.setUid("1");
-		g.setOrder_id("1");
-		g.setCurrency_symbol("USDT");
-		g.setOrder_type(1);
-		g.setCurrency_id("1");
-		g.setOrder_status(1);
+		g.setOrderId("1");
+		g.setOrderType(1);
+		g.setCurrencyId("1");
+		g.setOrderStatus(1);
+		g.setCurrencySymbol("USDT");
+		g.setOrderAmount(new BigDecimal(100));
+		g.setOrderPrice(new BigDecimal(22332));
 		return JSON.toJSONString(g);
     }
    	
@@ -84,37 +86,37 @@ public class OtcOrderRecordService{
    	 * @Title: selectPage
    	 * @Description: 分页查询
    	 * @param @param request
-   	 * @param @param g_otc_order_record_vo
+   	 * @param @param otcOrderRecordVO
    	 * @param @return
    	 * @param @throws Exception
    	 * @return PageInfo
    	 * @throws
    	 */
-    public PageInfo selectPage(HttpServletRequest request,GOtcOrderRecordVO g_otc_order_record_vo) throws Exception {
+    public PageInfo selectPage(HttpServletRequest request,OtcOrderRecordVO otcOrderRecordVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("PSIZE", g_otc_order_record_vo.getRows());
-        map.put("BEGIN", (g_otc_order_record_vo.getPage() - 1) * g_otc_order_record_vo.getRows());
+        map.put("PSIZE", otcOrderRecordVO.getRows());
+        map.put("BEGIN", (otcOrderRecordVO.getPage() - 1) * otcOrderRecordVO.getRows());
         
-        if (null != g_otc_order_record_vo.getOrder_id() && !StringUtils.isBlank(g_otc_order_record_vo.getOrder_id())) {
-        	if (StringUtil.isNumeric(g_otc_order_record_vo.getOrder_id())) {
-        		map.put("orderId", g_otc_order_record_vo.getOrder_id());
+        if (null != otcOrderRecordVO.getOrderId() && !StringUtils.isBlank(otcOrderRecordVO.getOrderId())) {
+        	if (StringUtil.isNumeric(otcOrderRecordVO.getOrderId())) {
+        		map.put("orderId", otcOrderRecordVO.getOrderId());
         	}
         }
-        if (null != g_otc_order_record_vo.getUid() && !StringUtils.isBlank(g_otc_order_record_vo.getUid())) {
-        	if (StringUtil.isNumeric(g_otc_order_record_vo.getUid())) {
-        		map.put("uid", g_otc_order_record_vo.getUid());
+        if (null != otcOrderRecordVO.getUid() && !StringUtils.isBlank(otcOrderRecordVO.getUid())) {
+        	if (StringUtil.isNumeric(otcOrderRecordVO.getUid())) {
+        		map.put("uid", otcOrderRecordVO.getUid());
         	}
         }
-        if (null != g_otc_order_record_vo.getObject_uid() && !StringUtils.isBlank(g_otc_order_record_vo.getObject_uid())) {
-        	if (StringUtil.isNumeric(g_otc_order_record_vo.getObject_uid())) {
-        		map.put("objectUid", g_otc_order_record_vo.getUid());
+        if (null != otcOrderRecordVO.getObjectUid() && !StringUtils.isBlank(otcOrderRecordVO.getObjectUid())) {
+        	if (StringUtil.isNumeric(otcOrderRecordVO.getObjectUid())) {
+        		map.put("objectUid", otcOrderRecordVO.getObjectUid());
         	}
         }
-        if (null != g_otc_order_record_vo.getOrder_status()) {
-        	map.put("orderStatus", g_otc_order_record_vo.getOrder_status());
+        if (null != otcOrderRecordVO.getOrderStatus()) {
+        	map.put("orderStatus", otcOrderRecordVO.getOrderStatus());
         }
-        if (null != g_otc_order_record_vo.getOrder_type()) {
-        	map.put("orderType", g_otc_order_record_vo.getOrder_type());
+        if (null != otcOrderRecordVO.getOrderType()) {
+        	map.put("orderType", otcOrderRecordVO.getOrderType());
         }
         
         
@@ -128,15 +130,15 @@ public class OtcOrderRecordService{
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(g_otc_order_record_vo.getRows(), g_otc_order_record_vo.getPage(), count, new ArrayList<OtcOrderRecord>());
+                	return new PageInfo(otcOrderRecordVO.getRows(), otcOrderRecordVO.getPage(), count, new ArrayList<OtcOrderRecord>());
                 }
         	}else {
-            	return new PageInfo(g_otc_order_record_vo.getRows(), g_otc_order_record_vo.getPage(), count, new ArrayList<OtcOrderRecord>());
+            	return new PageInfo(otcOrderRecordVO.getRows(), otcOrderRecordVO.getPage(), count, new ArrayList<OtcOrderRecord>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-otc历史订单记录-查询总记录条数]请求后台出错",e);
-			return new PageInfo(g_otc_order_record_vo.getRows(), g_otc_order_record_vo.getPage(), count, new ArrayList<OtcOrderRecord>());
+			return new PageInfo(otcOrderRecordVO.getRows(), otcOrderRecordVO.getPage(), count, new ArrayList<OtcOrderRecord>());
 		}
         
         
@@ -149,12 +151,12 @@ public class OtcOrderRecordService{
         		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(g_otc_order_record_vo.getRows(), g_otc_order_record_vo.getPage(), 0, new ArrayList<OtcOrderRecord>());
+            	return new PageInfo(otcOrderRecordVO.getRows(), otcOrderRecordVO.getPage(), 0, new ArrayList<OtcOrderRecord>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-otc历史订单记录-查询所有记录]请求后台出错",e);
-			return new PageInfo(g_otc_order_record_vo.getRows(), g_otc_order_record_vo.getPage(), 0, new ArrayList<OtcOrderRecord>());
+			return new PageInfo(otcOrderRecordVO.getRows(), otcOrderRecordVO.getPage(), 0, new ArrayList<OtcOrderRecord>());
 		}
     }
 
@@ -163,16 +165,16 @@ public class OtcOrderRecordService{
      * @Title: get
      * @Description: 查询一条记录
      * @param @param request
-     * @param @param entry_order_id
+     * @param @param entryOrderId
      * @param @return
      * @param @throws Exception
      * @return GOtcOrderRecord
      * @throws
      */
-    public OtcOrderRecord get(HttpServletRequest request,String entry_order_id) throws Exception {
+    public OtcOrderRecord get(HttpServletRequest request,String entryOrderId) throws Exception {
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
-    		map.put("entryOrderId", entry_order_id);
+    		map.put("entryOrderId", entryOrderId);
 			/*String method = SERVICE_BASE_PARAM + "g_otc_order_record_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
@@ -208,15 +210,15 @@ public class OtcOrderRecordService{
 	 /**
      * 删除
      */
-    /*public boolean delete(java.lang.String entry_order_id) throws Exception {
-        Integer result = g_otc_order_record_dao.deleteById(entry_order_id);
+    /*public boolean delete(java.lang.String entryOrderId) throws Exception {
+        Integer result = g_otc_order_record_dao.deleteById(entryOrderId);
         return result > 0 ? true : false;
     }*/
     
     /**
 	 * 获取所有数据
 	 */
-	/*public List<GOtcOrderRecord> selectAll(GOtcOrderRecordVO g_otc_order_record_vo) throws Exception{
+	/*public List<GOtcOrderRecord> selectAll(GOtcOrderRecordVO otcOrderRecordVO) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
 		return g_otc_order_record_dao.selectAll(map);
 	} */

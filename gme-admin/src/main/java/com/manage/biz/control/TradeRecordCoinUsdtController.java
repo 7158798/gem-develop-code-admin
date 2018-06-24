@@ -18,48 +18,46 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
-import com.manage.biz.service.OtcOrderService;
-import com.manage.biz.vo.OtcOrderVO;
+import com.manage.biz.service.TradeRecordCoinUsdtService;
+import com.manage.biz.vo.TradeRecordCoinUsdtVO;
 /**
- * OTC订单表（g_otcOrder）
-功能描述：存储OTC订单信息。
-控制类
+ * 委托交易记录表（g_tradeRecordCoinUsdt）控制类
  */
 @Controller
-@RequestMapping(value = "${adminPath}/biz/otcOrder")
-public class OtcOrderController{
-	private static final Log log = LogFactory.getLog(OtcOrderController.class);
+@RequestMapping(value = "${adminPath}/biz/tradeRecordCoinUsdt")
+public class TradeRecordCoinUsdtController{
+	private static final Log log = LogFactory.getLog(TradeRecordCoinUsdtController.class);
 
-    @Resource(name = "OtcOrderService")
-    private OtcOrderService otcOrderService;
+    @Resource(name = "TradeRecordCoinUsdtService")
+    private TradeRecordCoinUsdtService tradeRecordCoinUsdtService;
 
 	/**
      * 去分页
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:tradeRecordCoinUsdt:view")
     @RequestMapping(value = "toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-    	return "modules/biz/otcOrderList";
+    	return "modules/biz/tradeRecordCoinUsdtList";
     }
     /**
      * 分页
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:tradeRecordCoinUsdt:view")
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("otcOrderVO") OtcOrderVO otcOrderVO) throws Exception {
-        if (otcOrderVO == null) {
-            otcOrderVO = new OtcOrderVO();
+                       @FormModel("tradeRecordCoinUsdtVO") TradeRecordCoinUsdtVO tradeRecordCoinUsdtVO) throws Exception {
+        if (tradeRecordCoinUsdtVO == null) {
+            tradeRecordCoinUsdtVO = new TradeRecordCoinUsdtVO();
         }
         if (request.getParameter("page") != null) {
-            otcOrderVO.setPage(Integer.parseInt(request.getParameter("page")));
+            tradeRecordCoinUsdtVO.setPage(Integer.parseInt(request.getParameter("page")));
         }if (request.getParameter("rows") != null) {
-            otcOrderVO.setRows(Integer.parseInt(request.getParameter("rows")));
+            tradeRecordCoinUsdtVO.setRows(Integer.parseInt(request.getParameter("rows")));
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = otcOrderService.selectPage(request,otcOrderVO);
+        	PageInfo pageInfo = tradeRecordCoinUsdtService.selectPage(request,tradeRecordCoinUsdtVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());
@@ -72,23 +70,23 @@ public class OtcOrderController{
     /**
      * 去新增
      */
-    /*@RequiresPermissions("biz:otcOrder:add")
+    /*@RequiresPermissions("biz:tradeRecordCoinUsdt:add")
     @RequestMapping(value = "toAdd")
     public String toAdd(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        return "modules/biz/otcOrderAdd";
+        return "modules/biz/tradeRecordCoinUsdtAdd";
     }*/
 
     /**
      * 新增
      */
-    /*@RequiresPermissions("biz:otcOrder:add")
+    /*@RequiresPermissions("biz:tradeRecordCoinUsdt:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                      @FormModel("g_otcOrder") GOtcOrder g_otcOrder) throws Exception {
+                      @FormModel("g_tradeRecordCoinUsdt") GTradeRecordCoinUsdt g_tradeRecordCoinUsdt) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.add(g_otcOrder);
+        	boolean result = tradeRecordCoinUsdtService.add(g_tradeRecordCoinUsdt);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -107,24 +105,24 @@ public class OtcOrderController{
     /**
      * 去修改
      */
-    /*@RequiresPermissions("biz:otcOrder:update")
+    /*@RequiresPermissions("biz:tradeRecordCoinUsdt:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderService.get(entryOrderId));
-        return "modules/biz/otcOrderUpdate";
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.String id) throws Exception {
+        model.addAttribute("item", tradeRecordCoinUsdtService.get(id));
+        return "modules/biz/tradeRecordCoinUsdtUpdate";
     }*/
 
     /**
      * 修改
      */
-    /*@RequiresPermissions("biz:otcOrder:update")
+    /*@RequiresPermissions("biz:tradeRecordCoinUsdt:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
-                         @FormModel("g_otcOrder") GOtcOrder g_otcOrder) throws Exception {
+                         @FormModel("g_tradeRecordCoinUsdt") GTradeRecordCoinUsdt g_tradeRecordCoinUsdt) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.update(g_otcOrder);
+        	boolean result = tradeRecordCoinUsdtService.update(g_tradeRecordCoinUsdt);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -143,14 +141,14 @@ public class OtcOrderController{
 	/**
      * 删除
      */
-    /*@RequiresPermissions("biz:otcOrder:delete")
+    /*@RequiresPermissions("biz:tradeRecordCoinUsdt:delete")
     @RequestMapping(value = "delete")
     @ResponseBody
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-    		@RequestParam(name = "id") String entryOrderId) throws Exception {
+                         java.lang.String id) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderService.delete(entryOrderId);
+        	boolean result = tradeRecordCoinUsdtService.delete(id);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -168,10 +166,10 @@ public class OtcOrderController{
     /**
      * 查看详情
      */
-    @RequiresPermissions("biz:otcOrder:view")
+    @RequiresPermissions("biz:tradeRecordCoinUsdt:view")
     @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderService.get(request,entryOrderId));
-        return "modules/biz/otcOrderInfo";
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String id) throws Exception {
+        model.addAttribute("item", tradeRecordCoinUsdtService.get(request,id));
+        return "modules/biz/tradeRecordCoinUsdtInfo";
     }
 }
