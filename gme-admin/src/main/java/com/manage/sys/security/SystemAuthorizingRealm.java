@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
 import com.manage.base.util.Constants;
 import com.manage.base.util.SpringContextUtil;
 import com.manage.base.util.UserUtil;
-import com.manage.sys.entity.Sys_user;
-import com.manage.sys.service.Sys_user_Service;
-import com.manage.sys.vo.Sys_user_VO;
+import com.manage.sys.entity.SysUser;
+import com.manage.sys.service.SysUserService;
+import com.manage.sys.vo.SysUserVO;
 
 
 /**
@@ -37,10 +37,10 @@ import com.manage.sys.vo.Sys_user_VO;
 @Service("systemAuthorizingRealm")
 public class SystemAuthorizingRealm extends AuthorizingRealm{
 	private static final Log LOG = LogFactory.getLog(SystemAuthorizingRealm.class);
-	private  Sys_user_Service service;
+	private  SysUserService service;
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalcollection) {
-		Sys_user ll_sys_user=(Sys_user)principalcollection.getPrimaryPrincipal();
+		SysUser ll_sys_user=(SysUser)principalcollection.getPrimaryPrincipal();
 		if(ll_sys_user==null){
 			return null;
 		}
@@ -68,13 +68,13 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 			throw new CaptchaException("验证码错误.");
 		}
 		try{
-			Sys_user_VO ll_sys_user_VO=new Sys_user_VO();
+			SysUserVO ll_sys_user_VO=new SysUserVO();
 			ll_sys_user_VO.setUserName(token.getUsername());
-			List<Sys_user> list= getService().selectAll(ll_sys_user_VO);
+			List<SysUser> list= getService().selectAll(ll_sys_user_VO);
 			if (list == null || list.size()==0 || list.get(0)==null) {
 				return null;
 			} else {
-				Sys_user user=list.get(0);
+				SysUser user=list.get(0);
 				user.setLanguage(token.getLanguage());
 				SimpleAuthenticationInfo authenticationInfo= new SimpleAuthenticationInfo(
 						user,
@@ -103,9 +103,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 	/**
 	 * 获取系统业务对象
 	 */
-	public Sys_user_Service getService() {
+	public SysUserService getService() {
 		if (service == null){
-			service = (Sys_user_Service)SpringContextUtil.getBean("Sys_user_Service");
+			service = (SysUserService)SpringContextUtil.getBean("Sys_user_Service");
 		}
 		return service;
 	}

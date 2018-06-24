@@ -8,14 +8,14 @@ import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.manage.base.cache.Sys_menu_cache;
-import com.manage.base.cache.Sys_role_cache;
-import com.manage.sys.entity.Sys_menu;
-import com.manage.sys.entity.Sys_persion;
-import com.manage.sys.entity.Sys_rmenu;
-import com.manage.sys.entity.Sys_role;
-import com.manage.sys.entity.Sys_rpersion;
-import com.manage.sys.entity.Sys_user;
+import com.manage.base.cache.SysMenuCache;
+import com.manage.base.cache.SysRoleCache;
+import com.manage.sys.entity.SysMenu;
+import com.manage.sys.entity.SysPersion;
+import com.manage.sys.entity.SysRmenu;
+import com.manage.sys.entity.SysRole;
+import com.manage.sys.entity.SysRpersion;
+import com.manage.sys.entity.SysUser;
 
 /**
  * 登录用户帮助类
@@ -28,15 +28,15 @@ public class UserUtil {
 	 * @return
 	 */
 	public static List<String> getUserStringPermission(Long roleId){
-		List<Sys_rmenu> list = Sys_role_cache.getOneRoleMenusFromCache(roleId);
-		List<Sys_rpersion> list2 = Sys_role_cache.getRoleMenusPersionFromCache();
-		List<Sys_persion> list3 = Sys_menu_cache.getPersionListFromCache();
+		List<SysRmenu> list = SysRoleCache.getOneRoleMenusFromCache(roleId);
+		List<SysRpersion> list2 = SysRoleCache.getRoleMenusPersionFromCache();
+		List<SysPersion> list3 = SysMenuCache.getPersionListFromCache();
 		List<String> permissions = new ArrayList<String>();
-		for (Sys_rmenu Ll_sys_rmenu_entiy : list) {
+		for (SysRmenu Ll_sys_rmenu_entiy : list) {
 			String rmid = Ll_sys_rmenu_entiy.getId().toString();
-			for (Sys_rpersion ll_sys_rpersion : list2) {
+			for (SysRpersion ll_sys_rpersion : list2) {
 				if(ll_sys_rpersion.getRolemenuid().toString().equals(rmid)){
-					for (Sys_persion ll_sys_persion : list3) {
+					for (SysPersion ll_sys_persion : list3) {
 						if(ll_sys_persion.getId().toString().equals(ll_sys_rpersion.getPerssionid().toString())){
 							permissions.add(ll_sys_persion.getPersion());
 							break;
@@ -51,19 +51,19 @@ public class UserUtil {
 	/**
 	 * 获取当前登录用户
 	 */
-	public static Sys_user getCurUser(){
-		Sys_user user = (Sys_user)SecurityUtils.getSubject().getPrincipal();
+	public static SysUser getCurUser(){
+		SysUser user = (SysUser)SecurityUtils.getSubject().getPrincipal();
 		return user;
 	}
 	
 	/**
 	 * 获取当前登录用户角色
 	 */
-	public static Sys_role getCurUserRol(){
-		Sys_user user = (Sys_user)SecurityUtils.getSubject().getPrincipal();
-		Sys_role ll_sys_role = Sys_role_cache.getOneRoleFromCache(user.getRoleid());
+	public static SysRole getCurUserRol(){
+		SysUser user = (SysUser)SecurityUtils.getSubject().getPrincipal();
+		SysRole ll_sys_role = SysRoleCache.getOneRoleFromCache(user.getRoleid());
 		if(ll_sys_role == null){
-			return new Sys_role();
+			return new SysRole();
 		}
 		return ll_sys_role;
 	}
@@ -72,21 +72,21 @@ public class UserUtil {
 	 * 获取当前用户的 一级菜单列表
 	 * @return
 	 */
-	public static List<Sys_menu> getUserFirstMenus(){
+	public static List<SysMenu> getUserFirstMenus(){
 		try{
-			Sys_user user = getCurUser();
+			SysUser user = getCurUser();
 			if(user == null){
-				return new ArrayList<Sys_menu>();
+				return new ArrayList<SysMenu>();
 			}
-			List<Sys_rmenu> list = Sys_role_cache.getOneRoleMenusFromCache(user.getRoleid());
-			List<Sys_menu> menus = new ArrayList<Sys_menu>();
+			List<SysRmenu> list = SysRoleCache.getOneRoleMenusFromCache(user.getRoleid());
+			List<SysMenu> menus = new ArrayList<SysMenu>();
 			Map<Long,Long> map = new HashMap<Long,Long>();
-			for (Sys_rmenu ll_sys_rmenu : list) {
-				Sys_menu ll_sys_menu = Sys_menu_cache.getOneMenuFromCache(ll_sys_rmenu.getMenu_id());
+			for (SysRmenu ll_sys_rmenu : list) {
+				SysMenu ll_sys_menu = SysMenuCache.getOneMenuFromCache(ll_sys_rmenu.getMenuId());
 				if(ll_sys_menu == null){
 					continue;
 				}
-				Sys_menu first = Sys_menu_cache.getOneMenuFromCache(ll_sys_menu.getMenufatherid());
+				SysMenu first = SysMenuCache.getOneMenuFromCache(ll_sys_menu.getMenufatherid());
 				if(first == null){
 					continue;
 				}
@@ -107,21 +107,21 @@ public class UserUtil {
 	 * 获取当前用户的菜单列表
 	 * @return
 	 */
-	public static Map<Long,List<Sys_menu>> getUserSecondMenus(){
-		Sys_user user = getCurUser();
+	public static Map<Long,List<SysMenu>> getUserSecondMenus(){
+		SysUser user = getCurUser();
 		if(user == null){
-			return new HashMap<Long,List<Sys_menu>>();
+			return new HashMap<Long,List<SysMenu>>();
 		}
-		List<Sys_rmenu> list = Sys_role_cache.getOneRoleMenusFromCache(user.getRoleid());
-		Map<Long,List<Sys_menu>> menus = new HashMap<Long,List<Sys_menu>>();
-		for (Sys_rmenu Ll_sys_rmenu_entiy : list) {
-			Sys_menu ll_sys_menu = Sys_menu_cache.getOneMenuFromCache(Ll_sys_rmenu_entiy.getMenu_id());
+		List<SysRmenu> list = SysRoleCache.getOneRoleMenusFromCache(user.getRoleid());
+		Map<Long,List<SysMenu>> menus = new HashMap<Long,List<SysMenu>>();
+		for (SysRmenu Ll_sys_rmenu_entiy : list) {
+			SysMenu ll_sys_menu = SysMenuCache.getOneMenuFromCache(Ll_sys_rmenu_entiy.getMenuId());
 			if(ll_sys_menu == null){
 				continue;
 			}
-			List<Sys_menu> temp = menus.get(ll_sys_menu.getMenufatherid());
+			List<SysMenu> temp = menus.get(ll_sys_menu.getMenufatherid());
 			if(temp == null){
-				temp = new ArrayList<Sys_menu>();
+				temp = new ArrayList<SysMenu>();
 				menus.put(ll_sys_menu.getMenufatherid(), temp);
 			}
 			temp.add(ll_sys_menu);

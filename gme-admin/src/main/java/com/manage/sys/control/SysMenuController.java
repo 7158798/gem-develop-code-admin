@@ -1,6 +1,7 @@
-package com.manage.biz.control;
+package com.manage.sys.control;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,56 +14,53 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
-import com.manage.biz.service.EntrustOrderUsdtService;
-import com.manage.biz.vo.EntrustOrderUsdtVO;
+import com.manage.sys.entity.SysMenu;
+import com.manage.sys.service.SysMenuService;
+import com.manage.sys.vo.SysMenuVO;
+
 /**
- * 委托订单表（g_entrustOrderUsdt）
-功能描述：存储币币交易的委托单历史记录。每个交易区生成一张委托订单表。entrustOrderId
-控制类
+ * 菜单控制类
  */
 @Controller
-@RequestMapping(value = "${adminPath}/biz/entrustOrderUsdt")
-public class EntrustOrderUsdtController{
-	private static final Log log = LogFactory.getLog(EntrustOrderUsdtController.class);
+@RequestMapping(value = "${adminPath}/sys/sysMenu")
+public class SysMenuController{
+	private static final Log log = LogFactory.getLog(SysMenuController.class);
 
-    @Resource(name = "EntrustOrderUsdtService")
-    private EntrustOrderUsdtService entrustOrderUsdtService;
+    @Resource(name = "sysMenuService")
+    private SysMenuService sysMenuService;
 
 	/**
-     * 去分页
+     * 去菜单列表页
      */
-    @RequiresPermissions("biz:entrustOrderUsdt:view")
+    @RequiresPermissions("sys:sysMenu:view")
     @RequestMapping(value = "toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-    	return "modules/biz/entrustOrderUsdtList";
+    	return "modules/sys/sysMenuList";
     }
+    
     /**
-     * 分页
+     * 获取所有菜单数据
      */
-    @RequiresPermissions("biz:entrustOrderUsdt:view")
+    @RequiresPermissions("sys:sysMenu:view")
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("entrustOrderUsdtVO") EntrustOrderUsdtVO entrustOrderUsdtVO) throws Exception {
-        if (entrustOrderUsdtVO == null) {
-            entrustOrderUsdtVO = new EntrustOrderUsdtVO();
+                       @FormModel("sysMenuVO") SysMenuVO sysMenuVO) throws Exception {
+        if (sysMenuVO == null) {
+            sysMenuVO = new SysMenuVO();
         }
         if (request.getParameter("page") != null) {
-            entrustOrderUsdtVO.setPage(Integer.parseInt(request.getParameter("page")));
+            sysMenuVO.setPage(Integer.parseInt(request.getParameter("page")));
         }if (request.getParameter("rows") != null) {
-            entrustOrderUsdtVO.setRows(Integer.parseInt(request.getParameter("rows")));
+            sysMenuVO.setRows(Integer.parseInt(request.getParameter("rows")));
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = entrustOrderUsdtService.selectPage(request,entrustOrderUsdtVO);
-	        jsonMap.put("total", pageInfo.getTotalCount());
-	        jsonMap.put("pages", pageInfo.getTotalPageCount());
-	        jsonMap.put("rows", pageInfo.getData());
+        	List<SysMenu> list = sysMenuService.selectTree();
+	        jsonMap.put("rows", list);
         }catch (Exception e) {
         	log.error("系统异常",e);
 		}
@@ -72,23 +70,26 @@ public class EntrustOrderUsdtController{
     /**
      * 去新增
      */
-   /* @RequiresPermissions("biz:entrustOrderUsdt:add")
+    @RequiresPermissions("sys:sysMenu:add")
     @RequestMapping(value = "toAdd")
     public String toAdd(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        return "modules/biz/entrustOrderUsdtAdd";
-    }*/
+    	List<SysMenu> list=sysMenuService.selectAllFather();
+    	request.setAttribute("result", list);
+        return "modules/sys/sysMenuAdd";
+    }
 
     /**
-     * 新增
+     * 新增菜单
      */
-    /*@RequiresPermissions("biz:entrustOrderUsdt:add")
+    @RequiresPermissions("sys:sysMenu:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                      @FormModel("g_entrustOrderUsdt") GEntrustOrderUsdt g_entrustOrderUsdt) throws Exception {
+                      @FormModel("sysMenu") SysMenu sysMenu) throws Exception {
+    	sysMenu.setType(0);
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = entrustOrderUsdtService.add(g_entrustOrderUsdt);
+        	boolean result = sysMenuService.add(sysMenu);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -102,29 +103,31 @@ public class EntrustOrderUsdtController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }*/
+    }
 
     /**
      * 去修改
      */
-    /*@RequiresPermissions("biz:entrustOrderUsdt:update")
+    @RequiresPermissions("sys:sysMenu:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.String entrustOrderId) throws Exception {
-        model.addAttribute("item", entrustOrderUsdtService.get(entrustOrderId));
-        return "modules/biz/entrustOrderUsdtUpdate";
-    }*/
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.Long id) throws Exception {
+        model.addAttribute("item", sysMenuService.get(id));
+        List<SysMenu> list=sysMenuService.selectAllFather();
+    	request.setAttribute("result", list);
+        return "modules/sys/sysMenuUpdate";
+    }
 
     /**
-     * 修改
+     * 修改菜单信息
      */
-    /*@RequiresPermissions("biz:entrustOrderUsdt:update")
+    @RequiresPermissions("sys:sysMenu:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
-                         @FormModel("g_entrustOrderUsdt") GEntrustOrderUsdt g_entrustOrderUsdt) throws Exception {
+                         @FormModel("sysMenu") SysMenu sysMenu) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = entrustOrderUsdtService.update(g_entrustOrderUsdt);
+        	boolean result = sysMenuService.update(sysMenu);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -138,41 +141,43 @@ public class EntrustOrderUsdtController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }*/
-
-	/**
-     * 删除
-     */
-    /*@RequiresPermissions("biz:entrustOrderUsdt:delete")
-    @RequestMapping(value = "delete")
-    @ResponseBody
-    public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-                         java.lang.String entrustOrderId) throws Exception {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
-        try{
-        	boolean result = entrustOrderUsdtService.delete(entrustOrderId);
-	        if (result) {
-	            jsonMap.put("success", true);
-	            jsonMap.put("msg", "操作成功");
-	        } else {
-	            jsonMap.put("success", false);
-	            jsonMap.put("msg", "操作失败");
-	        }
-        }catch (Exception e) {
-        	log.error("系统异常",e);
-        	jsonMap.put("success", false);
-            jsonMap.put("msg", "操作失败");
-		}
-        return jsonMap;
-    }*/
+    }
     
     /**
-     * 查看详情
+     * 删除菜单信息
      */
-    @RequiresPermissions("biz:entrustOrderUsdt:view")
-    @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entrustOrderId) throws Exception {
-        model.addAttribute("item", entrustOrderUsdtService.get(request,entrustOrderId));
-        return "modules/biz/entrustOrderUsdtInfo";
+    @RequiresPermissions("sys:sysMenu:delete")
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,java.lang.Long id) throws Exception {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        try{
+        	boolean result = sysMenuService.delete(id);
+	        if (result) {
+	            jsonMap.put("success", true);
+	            jsonMap.put("msg", "操作成功");
+	        } else {
+	            jsonMap.put("success", false);
+	            jsonMap.put("msg", "操作失败");
+	        }
+        }catch (Exception e) {
+        	log.error("系统异常",e);
+        	jsonMap.put("success", false);
+            jsonMap.put("msg", "操作失败");
+		}
+        return jsonMap;
     }
+    
+    /**
+     * 查看菜单详情
+     */
+    @RequiresPermissions("sys:sysMenu:view")
+    @RequestMapping(value = "info")
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.Long id) throws Exception {
+        model.addAttribute("item", sysMenuService.get(id));
+        List<SysMenu> list = sysMenuService.selectAllFather();
+    	request.setAttribute("result", list);
+        return "modules/sys/sysMenuInfo";
+    }
+    
 }
