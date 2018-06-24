@@ -105,7 +105,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm{
 	 */
 	public SysUserService getService() {
 		if (service == null){
-			service = (SysUserService)SpringContextUtil.getBean("Sys_user_Service");
+			service = (SysUserService)SpringContextUtil.getBean("sysUserService");
 		}
 		return service;
 	}

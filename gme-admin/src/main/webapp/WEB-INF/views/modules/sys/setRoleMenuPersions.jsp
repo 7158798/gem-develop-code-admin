@@ -77,9 +77,9 @@
 			</c:if>
 			</div>
 		</div>
-		<form id="formobj" action="${ctx}/sys/sys_role/addRoleMenu" name="formobj" method="post">
+		<form id="formobj" action="${ctx}/sys/sysRole/addRoleMenu" name="formobj" method="post">
 	 		<input type="hidden" id="btn_sub" class="btn_sub">
-			<input type="hidden" name="sys_role_vo.id" value="${rid}"/>
+			<input type="hidden" name="sysRoleVO.id" value="${rid}"/>
 			<div id="otherP"></div>
 		</form>
 		<script type="text/javascript">
@@ -108,7 +108,7 @@
 		  					j++;
 		  				}
 		  			});
-		  			$("#otherP").append("<input type='hidden' name='sys_role_vo.menuIds' value='"+val+"'/>");
+		  			$("#otherP").append("<input type='hidden' name='sysRoleVO.menuIds' value='"+val+"'/>");
 		  			return true;
 				},
 				callback:function(data){
