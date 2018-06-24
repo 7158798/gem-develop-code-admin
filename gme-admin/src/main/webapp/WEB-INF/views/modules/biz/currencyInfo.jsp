@@ -91,7 +91,7 @@
 	        	<c:if test="${item.isOpen == '0201'}">
 	        		<input disabled="disabled" value="提现" class="inputxt" type="text">
 	        	</c:if>
-	        	<c:if test="${item.is_open == '0101'}">
+	        	<c:if test="${item.isOpen == '0101'}">
 	        		<input disabled="disabled" value="充值&提现" class="inputxt" type="text">
 	        	</c:if>
 	        </div>
