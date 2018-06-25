@@ -125,14 +125,13 @@ public class CommonUtil {
                 JSONObject resultObject = JSONObject.fromObject(response);
                 String msg = resultObject.getString("message");
                 resultJson.setMessage(msg);
-                resultJson.setCode("200");
+                resultJson.setCode(resultObject.getString("code"));
                 resultJson.setData(resultObject);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
             JSONObject resultObject = new JSONObject();
-            resultObject.put("code", "-2");
+            resultObject.put("code", "500");
             resultObject.put("message", "系统繁忙，请稍后再试");
             resultObject.put("data", "");
             resultJson.setMessage("系统繁忙，请稍后再试");

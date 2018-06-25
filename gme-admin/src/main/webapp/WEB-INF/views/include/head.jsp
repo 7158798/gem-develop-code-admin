@@ -36,3 +36,4 @@
 <script src="${pageContext.request.contextPath}/static/kindeditor-4.1.10/kindeditor-all-min.js"></script>  
 <script charset="utf-8" src="${pageContext.request.contextPath}/static/kindeditor-4.1.10/kindeditor-min.js"></script>  
 <script charset="utf-8" src="${pageContext.request.contextPath}/static/kindeditor-4.1.10/lang/zh_CN.js"></script> 
+<script charset="utf-8" src="${pageContext.request.contextPath}/static/kindeditor-4.1.10/common.js"></script> 

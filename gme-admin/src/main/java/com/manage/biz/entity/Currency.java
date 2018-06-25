@@ -49,6 +49,17 @@ public class Currency implements Serializable{
 	private java.sql.Timestamp createTime;
 	/**更新时间格式:yyyy-MM-dd HH:ss:mm*/	
 	private java.sql.Timestamp updatedTime;
+	
+	/** 币种图标上传*/
+	private String iconIdImg;
+	
+	
+	public String getIconIdImg() {
+		return iconIdImg;
+	}
+	public void setIconIdImg(String iconIdImg) {
+		this.iconIdImg = iconIdImg;
+	}
 	public java.lang.String getCurrencyId() {
 		return currencyId;
 	}

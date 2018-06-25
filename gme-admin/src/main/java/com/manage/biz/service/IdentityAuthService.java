@@ -227,6 +227,7 @@ public class IdentityAuthService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("authId", authId);
+    		map.put("name", "张三");
     		// admin-web的url
 			String method = SERVICE_BASE_PARAM + "identityAuth/getById.json";
 			ResponseResult result = SendRequestUtil.sendRequestReceiveResponse(request, map, method);

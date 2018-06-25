@@ -74,7 +74,7 @@
 		<div class="control-group">
 			<label class="control-label Validform_label">证件背面图片：</label>
 			<div class="controls">
-				<a href="${item.reverseImgUrl}" target="_blank"><img src="${item.reverseImgPreview}" width="100px"
+				<a href="${item.reverseImgUrl}" target="_blank"><img src="${item.reverseImgPreviewUrl}" width="100px"
 					height="100px" ></a>
 			</div>
 		</div>
@@ -88,7 +88,7 @@
 		<div class="control-group">
 			<label class="control-label Validform_label">证件正面图片：</label>
 			<div class="controls">
-				<a href="${item.frontImgUrl}" target="_blank"><img src="${item.frontImgPreview}" width="100px"
+				<a href="${item.frontImgUrl}" target="_blank"><img src="${item.frontImgPreviewUrl}" width="100px"
 					height="100px"></a>
 			</div>
 		</div>
@@ -102,7 +102,7 @@
 		<div class="control-group">
 			<label class="control-label Validform_label">手持证件图片：</label>
 			<div class="controls">
-				<a href="${item.inHandImgUrl}" target="_blank"><img src="${item.inHandImgPreview}" width="100px"
+				<a href="${item.inHandImgUrl}" target="_blank"><img src="${item.inHandImgPreviewUrl}" width="100px"
 					height="100px"></a>
 			</div>
 		</div>

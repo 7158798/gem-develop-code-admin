@@ -109,7 +109,8 @@ public final class HttpTookit {
 			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 			NameValuePair temp = null;
 			for (Map.Entry<String, String> entry : params.entrySet()) {
-				temp = new NameValuePair(entry.getKey(), new String(entry.getValue().getBytes("utf-8"), "iso-8859-1"));
+//				temp = new NameValuePair(entry.getKey(), new String(entry.getValue().getBytes("utf-8"), "iso-8859-1"));
+				temp = new NameValuePair(entry.getKey(), entry.getValue());
 				nvps.add(temp);
 			}
 			NameValuePair[] ddd = new NameValuePair[nvps.size()];

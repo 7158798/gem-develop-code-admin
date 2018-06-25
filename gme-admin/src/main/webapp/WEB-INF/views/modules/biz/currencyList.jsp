@@ -51,12 +51,6 @@
 						align : 'center'
 					},
 					{
-						title : '币种图标',
-						field : 'iconId',
-						width : 150,
-						align : 'center'
-					},
-					{
 						title : '中文名',
 						field : 'nameCN',
 						width : 150,
@@ -198,7 +192,7 @@
 					formatter:function (value, row, index){
                         var a = '';var b = '';var c = '';
                         var div = '<div class="dropdown-table" data-row="'+index+'"><a class="dropdown-toggle" href="javascript:;"><i class="fa fa-gear"></i></a>';
-						<shiro:hasPermission name="biz:currency:view">
+                        <shiro:hasPermission name="biz:currency:view">
 							a = '<li><a href="javaScript:void(0);" onclick="detail(\'详情\',\'${ctx}/biz/currency/info?id='+row.currencyId+'\',null,null)"><i class="fa fa-info-circle"></i>详情</a></li>';
 						</shiro:hasPermission>
 						<shiro:hasPermission name="biz:currency:update">

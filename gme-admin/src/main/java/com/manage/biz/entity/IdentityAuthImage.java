@@ -7,7 +7,7 @@ public class IdentityAuthImage extends IdentityAuth{
 	/**
 	 * 证件背面图片 预览地址
 	 */
-	private String reverseImgPreview;
+	private String reverseImgPreviewUrl;
 	/**
 	 * 证件背面图片 引用地址
 	 */
@@ -15,7 +15,7 @@ public class IdentityAuthImage extends IdentityAuth{
 	/**
 	 * 证件正面图片 预览地址
 	 */
-	private String frontImgPreview;
+	private String frontImgPreviewUrl;
 	/**
 	 * 证件正面图片 引用地址
 	 */
@@ -23,16 +23,16 @@ public class IdentityAuthImage extends IdentityAuth{
 	/**
 	 * 手持证件图片 预览地址
 	 */
-	private String inHandImgPreview;
+	private String inHandImgPreviewUrl;
 	/**
 	 * 手持证件图片 引用地址
 	 */
 	private String inHandImgUrl;
-	public String getReverseImgPreview() {
-		return reverseImgPreview;
+	public String getReverseImgPreviewUrl() {
+		return reverseImgPreviewUrl;
 	}
-	public void setReverseImgPreview(String reverseImgPreview) {
-		this.reverseImgPreview = reverseImgPreview;
+	public void setReverseImgPreviewUrl(String reverseImgPreviewUrl) {
+		this.reverseImgPreviewUrl = reverseImgPreviewUrl;
 	}
 	public String getReverseImgUrl() {
 		return reverseImgUrl;
@@ -40,11 +40,11 @@ public class IdentityAuthImage extends IdentityAuth{
 	public void setReverseImgUrl(String reverseImgUrl) {
 		this.reverseImgUrl = reverseImgUrl;
 	}
-	public String getFrontImgPreview() {
-		return frontImgPreview;
+	public String getFrontImgPreviewUrl() {
+		return frontImgPreviewUrl;
 	}
-	public void setFrontImgPreview(String frontImgPreview) {
-		this.frontImgPreview = frontImgPreview;
+	public void setFrontImgPreviewUrl(String frontImgPreviewUrl) {
+		this.frontImgPreviewUrl = frontImgPreviewUrl;
 	}
 	public String getFrontImgUrl() {
 		return frontImgUrl;
@@ -52,11 +52,11 @@ public class IdentityAuthImage extends IdentityAuth{
 	public void setFrontImgUrl(String frontImgUrl) {
 		this.frontImgUrl = frontImgUrl;
 	}
-	public String getInHandImgPreview() {
-		return inHandImgPreview;
+	public String getInHandImgPreviewUrl() {
+		return inHandImgPreviewUrl;
 	}
-	public void setInHandImgPreview(String inHandImgPreview) {
-		this.inHandImgPreview = inHandImgPreview;
+	public void setInHandImgPreviewUrl(String inHandImgPreviewUrl) {
+		this.inHandImgPreviewUrl = inHandImgPreviewUrl;
 	}
 	public String getInHandImgUrl() {
 		return inHandImgUrl;
@@ -64,4 +64,5 @@ public class IdentityAuthImage extends IdentityAuth{
 	public void setInHandImgUrl(String inHandImgUrl) {
 		this.inHandImgUrl = inHandImgUrl;
 	}
+	
 }

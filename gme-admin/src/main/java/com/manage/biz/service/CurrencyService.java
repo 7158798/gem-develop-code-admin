@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.manage.base.entity.PageInfo;
 import com.manage.biz.entity.Currency;
 import com.manage.biz.entity.CurrencyData;
+import com.manage.biz.entity.CurrencyExtImg;
 import com.manage.biz.vo.CurrencyVO;
 
 /**
@@ -183,15 +184,15 @@ public class CurrencyService{
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
-				Currency gCurrency = JSON.parseObject(json, Currency.class);
-				return gCurrency;
+				CurrencyExtImg currencyExtImg = JSON.parseObject(json, CurrencyExtImg.class);
+				return currencyExtImg;
 			}else {
-				return new Currency();
+				return new CurrencyExtImg();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种信息-查询一条记录]请求后台出错",e);
-			return new Currency();
+			return new CurrencyExtImg();
 		}
     }
 

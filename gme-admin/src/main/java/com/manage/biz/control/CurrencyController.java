@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageInfo;
@@ -107,11 +108,11 @@ public class CurrencyController{
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                     @FormModel("currency") Currency currency) throws Exception {
+                     /*@FormModel("currency") Currency currency*/MultipartFile iconIdImg) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	currency.setCurrencyId("1");
-        	boolean result = currencyService.add(request,currency);
+        	//boolean result = currencyService.add(request,currency);
+        	boolean result = false;
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
