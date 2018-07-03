@@ -65,7 +65,7 @@ public class SendRequestUtil {
 			resultJson = CommonUtil.getResultJson(data, request, method);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			log.error("发送请求失败:" + e.getMessage());
+			log.error("发送请求失败:" + e.toString());
 		}
 		if (null == resultJson) {
 			return null;
@@ -97,7 +97,7 @@ public class SendRequestUtil {
 			resultJson = CommonUtil.getResultJson(request, method);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			log.error("发送请求失败:" + e.getMessage());
+			log.error("发送请求失败:" + e.toString());
 		}
 		if (null == resultJson) {
 			return null;

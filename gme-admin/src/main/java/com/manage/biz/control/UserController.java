@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.User;
 import com.manage.biz.service.UserService;
 import com.manage.biz.vo.UserVO;
@@ -66,7 +66,7 @@ public class UserController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = userService.selectPage(request,userVO);
+        	PageBean pageInfo = userService.selectPage(request,userVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

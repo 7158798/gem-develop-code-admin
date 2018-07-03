@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.TradeRecordCoinUsdt;
 import com.manage.biz.vo.TradeRecordCoinUsdtVO;
 import com.manage.util.StringUtil;
@@ -36,8 +36,8 @@ public class TradeRecordCoinUsdtService{
 
 	private Logger logger = Logger.getLogger(TradeRecordCoinUsdtService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 	
 	
 	// 测试分页查询
@@ -70,7 +70,7 @@ public class TradeRecordCoinUsdtService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -103,7 +103,7 @@ public class TradeRecordCoinUsdtService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,TradeRecordCoinUsdtVO tradeRecordCoinUsdtVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,TradeRecordCoinUsdtVO tradeRecordCoinUsdtVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", tradeRecordCoinUsdtVO.getRows());
         map.put("BEGIN", (tradeRecordCoinUsdtVO.getPage() - 1) * tradeRecordCoinUsdtVO.getRows());
@@ -134,40 +134,40 @@ public class TradeRecordCoinUsdtService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_trade_record_coin_usdt_getPageCount";
+           /* String method = "g_trade_record_coin_usdt_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
+                	return new PageBean(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
                 }
         	}else {
-            	return new PageInfo(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
+            	return new PageBean(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-委托交易记录-查询总记录条数]请求后台出错",e);
-			return new PageInfo(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
+			return new PageBean(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), count, new ArrayList<TradeRecordCoinUsdt>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_trade_record_coin_usdt_getList";
+			/*String method = "g_trade_record_coin_usdt_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), 0, new ArrayList<TradeRecordCoinUsdt>());
+            	return new PageBean(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), 0, new ArrayList<TradeRecordCoinUsdt>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-委托交易记录-查询所有记录]请求后台出错",e);
-			return new PageInfo(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), 0, new ArrayList<TradeRecordCoinUsdt>());
+			return new PageBean(tradeRecordCoinUsdtVO.getRows(), tradeRecordCoinUsdtVO.getPage(), 0, new ArrayList<TradeRecordCoinUsdt>());
 		}
     }
 
@@ -187,7 +187,7 @@ public class TradeRecordCoinUsdtService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("id", id);
-			/*String method = SERVICE_BASE_PARAM + "g_trade_record_coin_usdt_getOne";
+			/*String method = "g_trade_record_coin_usdt_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {

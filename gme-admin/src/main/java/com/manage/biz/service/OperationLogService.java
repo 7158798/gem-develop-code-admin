@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.OperationLog;
 import com.manage.biz.vo.OperationLogVO;
 import com.manage.util.StringUtil;
@@ -34,8 +34,8 @@ public class OperationLogService{
 
 	private Logger logger = Logger.getLogger(OperationLogService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 	
 	// 测试分页查询
     public static String testPage() {
@@ -63,7 +63,7 @@ public class OperationLogService{
 		g1.setUid("2");
 		list.add(g);
 		list.add(g1);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -95,7 +95,7 @@ public class OperationLogService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,OperationLogVO operationLogVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,OperationLogVO operationLogVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", operationLogVO.getRows());
         map.put("BEGIN", (operationLogVO.getPage() - 1) * operationLogVO.getRows());
@@ -122,40 +122,40 @@ public class OperationLogService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_operation_log_getPageCount";
+           /* String method = "g_operation_log_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
+                	return new PageBean(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
                 }
         	}else {
-            	return new PageInfo(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
+            	return new PageBean(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-用户操作日记管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
+			return new PageBean(operationLogVO.getRows(), operationLogVO.getPage(), count, new ArrayList<OperationLog>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_operation_log_getList";
+			/*String method = "g_operation_log_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(operationLogVO.getRows(), operationLogVO.getPage(), 0, new ArrayList<OperationLog>());
+            	return new PageBean(operationLogVO.getRows(), operationLogVO.getPage(), 0, new ArrayList<OperationLog>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-用户操作日记管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(operationLogVO.getRows(), operationLogVO.getPage(), 0, new ArrayList<OperationLog>());
+			return new PageBean(operationLogVO.getRows(), operationLogVO.getPage(), 0, new ArrayList<OperationLog>());
 		}
     }
 
@@ -175,7 +175,7 @@ public class OperationLogService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("id", id);
-			/*String method = SERVICE_BASE_PARAM + "g_operation_log_getOne";
+			/*String method = "g_operation_log_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {

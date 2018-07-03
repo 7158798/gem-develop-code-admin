@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.CurrencyCirculateStatistics;
 import com.manage.biz.service.CurrencyCirculateStatisticsService;
 import com.manage.biz.vo.CurrencyCirculateStatisticsVO;
@@ -66,7 +66,7 @@ public class CurrencyCirculateStatisticsController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = currencyCirculateStatisticsService.selectPage(request,currencyCirculateStatisticsVO);
+        	PageBean pageInfo = currencyCirculateStatisticsService.selectPage(request,currencyCirculateStatisticsVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

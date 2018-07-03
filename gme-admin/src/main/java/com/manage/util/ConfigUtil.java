@@ -20,13 +20,14 @@ public class ConfigUtil {
 	private static final ResourceBundle bundle = ResourceBundle
 			.getBundle("sysConfig");
 
+	
 	/**
-	 * 通过键获取值
 	 * 
-	 * @author 彭彩云
-	 * @param key
-	 * @return [参数说明]
-	 * @return String [返回类型说明]
+	* @Title: get  
+	* @Description: 通过键获取值 
+	* @param key
+	* @return
+	* @return String
 	 */
 	public static final String get(String key) {
 		try {

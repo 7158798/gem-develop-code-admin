@@ -100,7 +100,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 					+ "成功!");
 			return true;
 		} catch (Exception e) {
-			log.debug("复制文件失败：" + e.getMessage());
+			log.debug("复制文件失败：" + e.toString());
 			return false;
 		} finally {
 			// 关闭输入输出流，首先关闭输出流，然后再关闭输入流
@@ -416,7 +416,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			zouts.close();
 			log.debug(descFileName + " 文件压缩成功!");
 		} catch (Exception e) {
-			log.debug("文件压缩失败：" + e.getMessage());
+			log.debug("文件压缩失败：" + e.toString());
 			e.printStackTrace();
 		}
 
@@ -472,7 +472,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			log.debug("文件解压成功!");
 			return true;
 		} catch (Exception e) {
-			log.debug("文件解压失败：" + e.getMessage());
+			log.debug("文件解压失败：" + e.toString());
 			return false;
 		}
 	}

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.sys.dao.SysUserDAO;
 import com.manage.sys.entity.SysUser;
 import com.manage.sys.vo.SysUserVO;
@@ -32,7 +32,7 @@ public class SysUserService{
     /**
      * 分页查询
      */
-    public PageInfo selectPage(SysUserVO llSysUserVO) throws Exception {
+    public PageBean selectPage(SysUserVO llSysUserVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", llSysUserVO.getRows());
         map.put("BEGIN", (llSysUserVO.getPage() - 1) * llSysUserVO.getRows());
@@ -47,10 +47,10 @@ public class SysUserService{
         }
         Integer count = this.sysUserDao.selectPageCount(map);
         if (count == 0) {
-            return new PageInfo(llSysUserVO.getRows(), llSysUserVO.getPage(), count, new ArrayList<SysUser>());
+            return new PageBean(llSysUserVO.getRows(), llSysUserVO.getPage(), count, new ArrayList<SysUser>());
         }
         List<SysUser> list = this.sysUserDao.selectPage(map);
-        PageInfo pageInfo = new PageInfo(llSysUserVO.getRows(), llSysUserVO.getPage(), count, list);
+        PageBean pageInfo = new PageBean(llSysUserVO.getRows(), llSysUserVO.getPage(), count, list);
         return pageInfo;
     }
 

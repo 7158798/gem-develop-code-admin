@@ -59,8 +59,8 @@ public class CommonUtil {
 //        Map<String, String> param = getCommonHead(request, method);
         Map<String,String> param = new HashMap<String,String>();
         String postUrl = "";
-        if ("".equals(reqUrl) && !"".equals(method)) {
-            postUrl = url + method;
+        if (!"".equals(method)) {
+            postUrl = method;
         } else {
             postUrl = reqUrl;
         }

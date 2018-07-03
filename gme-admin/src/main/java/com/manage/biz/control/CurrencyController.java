@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.Currency;
 import com.manage.biz.service.CurrencyService;
 import com.manage.biz.vo.CurrencyVO;
@@ -82,7 +82,7 @@ public class CurrencyController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = currencyService.selectPage(request,currencyVO);
+        	PageBean pageInfo = currencyService.selectPage(request,currencyVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

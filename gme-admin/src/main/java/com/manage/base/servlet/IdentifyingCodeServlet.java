@@ -79,7 +79,7 @@ public class IdentifyingCodeServlet extends HttpServlet{
 			sos.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(e.getMessage(), e);
+			log.error(e.toString(), e);
 		}finally{
 			if(sos!=null){
 				sos.close();

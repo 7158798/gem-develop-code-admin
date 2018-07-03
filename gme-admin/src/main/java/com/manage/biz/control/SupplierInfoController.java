@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.SupplierInfo;
 import com.manage.biz.service.SupplierInfoService;
 import com.manage.biz.vo.SupplierInfoVO;
@@ -59,7 +59,7 @@ public class SupplierInfoController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = supplierInfoService.selectPage(request,supplierInfoVO);
+        	PageBean pageInfo = supplierInfoService.selectPage(request,supplierInfoVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

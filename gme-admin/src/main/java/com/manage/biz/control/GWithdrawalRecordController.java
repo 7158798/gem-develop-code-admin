@@ -18,46 +18,49 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.entity.PageBean;
-import com.manage.biz.service.OtcOrderRecordService;
-import com.manage.biz.vo.OtcOrderRecordVO;
+import com.manage.biz.entity.GWithdrawalRecord;
+import com.manage.biz.service.GWithdrawalRecordService;
+import com.manage.biz.vo.GWithdrawalRecordVO;
 /**
- * OTC历史订单表（g_otcOrderRecord）控制类
+ * 钱包提现记录表（withdrawalRecord）
+功能描述：存储钱包提现记录信息。
+控制类
  */
 @Controller
-@RequestMapping(value = "${adminPath}/biz/otcOrderRecord")
-public class OtcOrderRecordController{
-	private static final Log log = LogFactory.getLog(OtcOrderRecordController.class);
+@RequestMapping(value = "${adminPath}/biz/withdrawalRecord")
+public class GWithdrawalRecordController{
+	private static final Log log = LogFactory.getLog(GWithdrawalRecordController.class);
 
-    @Resource(name = "OtcOrderRecordService")
-    private OtcOrderRecordService otcOrderRecordService;
+    @Resource(name = "GWithdrawalRecordService")
+    private GWithdrawalRecordService withdrawalRecordService;
 
 	/**
      * 去分页
      */
-    @RequiresPermissions("biz:otcOrderRecord:view")
+    @RequiresPermissions("biz:withdrawalRecord:view")
     @RequestMapping(value = "toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-    	return "modules/biz/otcOrderRecordList";
+    	return "modules/biz/withdrawalRecordList";
     }
     /**
      * 分页
      */
-    @RequiresPermissions("biz:otcOrderRecord:view")
+    @RequiresPermissions("biz:withdrawalRecord:view")
     @RequestMapping(value = "list")
     @ResponseBody
     public Map<String, Object> list(HttpServletRequest request, HttpServletResponse response, Model model,
-                       @FormModel("otcOrderRecordVO") OtcOrderRecordVO otcOrderRecordVO) throws Exception {
-        if (otcOrderRecordVO == null) {
-            otcOrderRecordVO = new OtcOrderRecordVO();
+                       @FormModel("withdrawalRecordVO") GWithdrawalRecordVO withdrawalRecordVO) throws Exception {
+        if (withdrawalRecordVO == null) {
+            withdrawalRecordVO = new GWithdrawalRecordVO();
         }
         if (request.getParameter("page") != null) {
-            otcOrderRecordVO.setPage(Integer.parseInt(request.getParameter("page")));
+            withdrawalRecordVO.setPage(Integer.parseInt(request.getParameter("page")));
         }if (request.getParameter("rows") != null) {
-            otcOrderRecordVO.setRows(Integer.parseInt(request.getParameter("rows")));
+            withdrawalRecordVO.setRows(Integer.parseInt(request.getParameter("rows")));
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageBean pageInfo = otcOrderRecordService.selectPage(request,otcOrderRecordVO);
+        	PageBean pageInfo = withdrawalRecordService.selectPage(request,withdrawalRecordVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());
@@ -70,23 +73,23 @@ public class OtcOrderRecordController{
     /**
      * 去新增
      */
-  /*  @RequiresPermissions("biz:otcOrderRecord:add")
+  /*  @RequiresPermissions("biz:withdrawalRecord:add")
     @RequestMapping(value = "toAdd")
     public String toAdd(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        return "modules/biz/otcOrderRecordAdd";
+        return "modules/biz/withdrawalRecordAdd";
     }*/
 
     /**
      * 新增
      */
-   /* @RequiresPermissions("biz:otcOrderRecord:add")
+   /* @RequiresPermissions("biz:withdrawalRecord:add")
     @RequestMapping(value = "add")
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request, HttpServletResponse response, Model model,
-                      @FormModel("g_otcOrderRecord") GOtcOrderRecord g_otcOrderRecord) throws Exception {
+                      @FormModel("withdrawalRecord") GWithdrawalRecord withdrawalRecord) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderRecordService.add(g_otcOrderRecord);
+        	boolean result = withdrawalRecordService.add(withdrawalRecord);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -105,24 +108,24 @@ public class OtcOrderRecordController{
     /**
      * 去修改
      */
-   /* @RequiresPermissions("biz:otcOrderRecord:update")
+    @RequiresPermissions("biz:withdrawalRecord:update")
     @RequestMapping(value = "toUpdate")
-    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, java.lang.String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderRecordService.get(entryOrderId));
-        return "modules/biz/otcOrderRecordUpdate";
-    }*/
+    public String toUpdate(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name="id") String id) throws Exception {
+        model.addAttribute("item", withdrawalRecordService.get(request,id));
+        return "modules/biz/withdrawalRecordUpdate";
+    }
 
     /**
      * 修改
      */
-    /*@RequiresPermissions("biz:otcOrderRecord:update")
+    @RequiresPermissions("biz:withdrawalRecord:update")
     @RequestMapping(value = "update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response, Model model,
-                         @FormModel("g_otcOrderRecord") GOtcOrderRecord g_otcOrderRecord) throws Exception {
+                         @FormModel("withdrawalRecord") GWithdrawalRecord withdrawalRecord) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderRecordService.update(g_otcOrderRecord);
+        	boolean result = withdrawalRecordService.update(request,withdrawalRecord);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -136,19 +139,19 @@ public class OtcOrderRecordController{
             jsonMap.put("msg", "操作失败");
 		}
         return jsonMap;
-    }*/
+    }
 
 	/**
      * 删除
      */
-   /* @RequiresPermissions("biz:otcOrderRecord:delete")
+    /*@RequiresPermissions("biz:withdrawalRecord:delete")
     @RequestMapping(value = "delete")
     @ResponseBody
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response, Model model,
-                         java.lang.String entryOrderId) throws Exception {
+                         java.lang.String id) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	boolean result = otcOrderRecordService.delete(entryOrderId);
+        	boolean result = withdrawalRecordService.delete(id);
 	        if (result) {
 	            jsonMap.put("success", true);
 	            jsonMap.put("msg", "操作成功");
@@ -163,13 +166,16 @@ public class OtcOrderRecordController{
 		}
         return jsonMap;
     }*/
+    
+    
+    
     /**
      * 查看详情
      */
-    @RequiresPermissions("biz:otcOrderRecord:view")
+    @RequiresPermissions("biz:withdrawalRecord:view")
     @RequestMapping(value = "info")
-    public String info(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(name = "id") String entryOrderId) throws Exception {
-        model.addAttribute("item", otcOrderRecordService.get(request,entryOrderId));
-        return "modules/biz/otcOrderRecordInfo";
+    public String info(HttpServletRequest request, HttpServletResponse response, Model model,@RequestParam(name="id") String id) throws Exception {
+        model.addAttribute("item", withdrawalRecordService.get(request,id));
+        return "modules/biz/withdrawalRecordInfo";
     }
 }

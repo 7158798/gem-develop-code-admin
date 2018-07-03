@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.LoginLog;
 import com.manage.biz.vo.LoginLogVO;
 import com.manage.util.StringUtil;
@@ -33,8 +33,8 @@ public class LoginLogService{
 
 	private Logger logger = Logger.getLogger(LoginLogService.class);
 	
-   	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+   	
+    
    	
  // 测试分页查询
     public static String testPage() {
@@ -61,7 +61,7 @@ public class LoginLogService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -91,7 +91,7 @@ public class LoginLogService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,LoginLogVO loginLogVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,LoginLogVO loginLogVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", loginLogVO.getRows());
         map.put("BEGIN", (loginLogVO.getPage() - 1) * loginLogVO.getRows());
@@ -115,40 +115,40 @@ public class LoginLogService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_login_log_getPageCount";
+           /* String method = "g_login_log_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
+                	return new PageBean(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
                 }
         	}else {
-            	return new PageInfo(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
+            	return new PageBean(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-登录日志管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
+			return new PageBean(loginLogVO.getRows(), loginLogVO.getPage(), count, new ArrayList<LoginLog>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_login_log_getList";
+			/*String method = "g_login_log_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(loginLogVO.getRows(), loginLogVO.getPage(), 0, new ArrayList<LoginLog>());
+            	return new PageBean(loginLogVO.getRows(), loginLogVO.getPage(), 0, new ArrayList<LoginLog>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-登录日志管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(loginLogVO.getRows(), loginLogVO.getPage(), 0, new ArrayList<LoginLog>());
+			return new PageBean(loginLogVO.getRows(), loginLogVO.getPage(), 0, new ArrayList<LoginLog>());
 		}
     }
 
@@ -168,7 +168,7 @@ public class LoginLogService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("logId", logId);
-			/*String method = SERVICE_BASE_PARAM + "g_login_log_getOne";
+			/*String method = "g_login_log_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.service.OtcOrderService;
 import com.manage.biz.vo.OtcOrderVO;
 /**
@@ -59,7 +59,7 @@ public class OtcOrderController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = otcOrderService.selectPage(request,otcOrderVO);
+        	PageBean pageInfo = otcOrderService.selectPage(request,otcOrderVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

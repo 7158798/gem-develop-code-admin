@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.TradeRecordOtcUsdt;
 import com.manage.biz.vo.TradeRecordOtcUsdtVO;
 import com.manage.util.StringUtil;
@@ -34,8 +34,8 @@ public class TradeRecordOtcUsdtService{
 
 	private Logger logger = Logger.getLogger(TradeRecordOtcUsdtService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 
 	
 	// 测试分页查询
@@ -66,7 +66,7 @@ public class TradeRecordOtcUsdtService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -97,7 +97,7 @@ public class TradeRecordOtcUsdtService{
 	 * @return PageInfo
 	 * @throws
 	 */
-    public PageInfo selectPage(HttpServletRequest request,TradeRecordOtcUsdtVO tradeRecordOtcUsdtVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,TradeRecordOtcUsdtVO tradeRecordOtcUsdtVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", tradeRecordOtcUsdtVO.getRows());
         map.put("BEGIN", (tradeRecordOtcUsdtVO.getPage() - 1) * tradeRecordOtcUsdtVO.getRows());
@@ -128,40 +128,40 @@ public class TradeRecordOtcUsdtService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_trade_record_otc_usdt_getPageCount";
+           /* String method = "g_trade_record_otc_usdt_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
+                	return new PageBean(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
                 }
         	}else {
-            	return new PageInfo(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
+            	return new PageBean(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-otc交易记录-查询总记录条数]请求后台出错",e);
-			return new PageInfo(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
+			return new PageBean(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), count, new ArrayList<TradeRecordOtcUsdt>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_trade_record_otc_usdt_getList";
+			/*String method = "g_trade_record_otc_usdt_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), 0, new ArrayList<TradeRecordOtcUsdt>());
+            	return new PageBean(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), 0, new ArrayList<TradeRecordOtcUsdt>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[交易中心-otc交易记录-查询所有记录]请求后台出错",e);
-			return new PageInfo(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), 0, new ArrayList<TradeRecordOtcUsdt>());
+			return new PageBean(tradeRecordOtcUsdtVO.getRows(), tradeRecordOtcUsdtVO.getPage(), 0, new ArrayList<TradeRecordOtcUsdt>());
 		}
     }
 
@@ -181,7 +181,7 @@ public class TradeRecordOtcUsdtService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("id", id);
-			/*String method = SERVICE_BASE_PARAM + "g_trade_record_otc_usdt_getOne";
+			/*String method = "g_trade_record_otc_usdt_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.base.cache.SysMenuCache;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.sys.dao.SysPersionDAO;
 import com.manage.sys.entity.SysPersion;
 import com.manage.sys.vo.SysPersionVO;
@@ -32,16 +32,16 @@ public class SysPersionService{
     /**
      * 分页查询
      */
-    public PageInfo selectPage(SysPersionVO llSysPersionVO) throws Exception {
+    public PageBean selectPage(SysPersionVO llSysPersionVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", llSysPersionVO.getRows());
         map.put("BEGIN", (llSysPersionVO.getPage() - 1) * llSysPersionVO.getRows());
         Integer count = this.sysPersionDAO.selectPageCount(map);
         if (count == 0) {
-            return new PageInfo(llSysPersionVO.getRows(), llSysPersionVO.getPage(), count, new ArrayList<SysPersion>());
+            return new PageBean(llSysPersionVO.getRows(), llSysPersionVO.getPage(), count, new ArrayList<SysPersion>());
         }
         List<SysPersion> list = this.sysPersionDAO.selectPage(map);
-        PageInfo pageInfo = new PageInfo(llSysPersionVO.getRows(), llSysPersionVO.getPage(), count, list);
+        PageBean pageInfo = new PageBean(llSysPersionVO.getRows(), llSysPersionVO.getPage(), count, list);
         return pageInfo;
     }
 

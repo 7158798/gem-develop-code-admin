@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.EntrustOrderRecordUsdt;
 import com.manage.biz.service.EntrustOrderRecordUsdtService;
 import com.manage.biz.vo.EntrustOrderRecordUsdtVO;
@@ -60,7 +60,7 @@ public class EntrustOrderRecordUsdtController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = entrustOrderRecordUsdtService.selectPage(request,entrustOrderRecordUsdtVO);
+        	PageBean pageInfo = entrustOrderRecordUsdtService.selectPage(request,entrustOrderRecordUsdtVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

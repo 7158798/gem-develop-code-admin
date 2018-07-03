@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.CurrencyCirculateStatistics;
 import com.manage.biz.vo.CurrencyCirculateStatisticsVO;
 import com.manage.util.StringUtil;
@@ -34,8 +34,8 @@ public class CurrencyCirculateStatisticsService{
 
 	private Logger logger = Logger.getLogger(CurrencyCirculateStatisticsService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 			
     
     // 测试分页查询
@@ -45,7 +45,7 @@ public class CurrencyCirculateStatisticsService{
 		g.setCurrencyId("1");
 		g.setCurrencySymbol("ltc");
 		list.add(g);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -85,7 +85,7 @@ public class CurrencyCirculateStatisticsService{
      * @return 分页结果
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,CurrencyCirculateStatisticsVO currencyCirculateStatisticsVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,CurrencyCirculateStatisticsVO currencyCirculateStatisticsVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", currencyCirculateStatisticsVO.getRows());
         map.put("BEGIN", (currencyCirculateStatisticsVO.getPage() - 1) * currencyCirculateStatisticsVO.getRows());
@@ -103,40 +103,40 @@ public class CurrencyCirculateStatisticsService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_getPageCount";
+           /* String method = "currencyCirculateStatistics_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
+                	return new PageBean(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
                 }
         	}else {
-            	return new PageInfo(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
+            	return new PageBean(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种流通统计-查询总记录条数]请求后台出错",e);
-			return new PageInfo(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
+			return new PageBean(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), count, new ArrayList<CurrencyCirculateStatistics>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_getList";
+			/*String method = "currencyCirculateStatistics_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), 0, new ArrayList<CurrencyCirculateStatistics>());
+            	return new PageBean(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), 0, new ArrayList<CurrencyCirculateStatistics>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种流通统计-查询所有记录]请求后台出错",e);
-			return new PageInfo(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), 0, new ArrayList<CurrencyCirculateStatistics>());
+			return new PageBean(currencyCirculateStatisticsVO.getRows(), currencyCirculateStatisticsVO.getPage(), 0, new ArrayList<CurrencyCirculateStatistics>());
 		}
     }
 
@@ -157,7 +157,7 @@ public class CurrencyCirculateStatisticsService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("volumeId", volumeId);
-			/*String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_getOfne";
+			/*String method = "currencyCirculateStatistics_getOfne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = CurrencyCirculateStatisticsService.testOne();
 			if (null != json) {
@@ -189,7 +189,7 @@ public class CurrencyCirculateStatisticsService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GCurrencyCirculateStatistics", currencyCirculateStatistics);
-			/*String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_add";
+			/*String method = "currencyCirculateStatistics_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testAdd();
 			if (null != json) {
@@ -221,7 +221,7 @@ public class CurrencyCirculateStatisticsService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GCurrencyCirculateStatistics", currencyCirculateStatistics);
-			/*String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_update";
+			/*String method = "currencyCirculateStatistics_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -253,7 +253,7 @@ public class CurrencyCirculateStatisticsService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("volumeId", volumeId);
-			/*String method = SERVICE_BASE_PARAM + "currencyCirculateStatistics_delete";
+			/*String method = "currencyCirculateStatistics_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testDelete();
 			if (null != json) {

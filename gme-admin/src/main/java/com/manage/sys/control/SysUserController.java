@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
 import com.manage.base.cache.SysRoleCache;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.base.util.Constants;
 import com.manage.base.util.UserUtil;
 import com.manage.sys.entity.SysUser;
@@ -67,7 +67,7 @@ public class SysUserController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = sysUserService.selectPage(sysUserVO);
+        	PageBean pageInfo = sysUserService.selectPage(sysUserVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

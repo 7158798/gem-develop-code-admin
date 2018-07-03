@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.IdentityAuth;
 import com.manage.biz.entity.IdentityAuthImage;
 import com.manage.biz.vo.IdentityAuthVO;
@@ -37,8 +37,8 @@ public class IdentityAuthService{
 
     private  Logger logger = Logger.getLogger(IdentityAuthService.class);
     
-    @Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+    
+    
     
     // 测试分页查询
     public static String testPage() {
@@ -62,7 +62,7 @@ public class IdentityAuthService{
 		g1.setStatus(1);
 		list.add(g);
 		list.add(g1);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -146,7 +146,7 @@ public class IdentityAuthService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,IdentityAuthVO identityAuthVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,IdentityAuthVO identityAuthVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", identityAuthVO.getRows());
         map.put("BEGIN", (identityAuthVO.getPage() - 1) * identityAuthVO.getRows());
@@ -171,40 +171,40 @@ public class IdentityAuthService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "identityAuth_getPageCount";
+           /* String method = "identityAuth_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
+                	return new PageBean(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
                 }
         	}else {
-            	return new PageInfo(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
+            	return new PageBean(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-实名认证-查询记录条数]请求后台出错",e);
-			return new PageInfo(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
+			return new PageBean(identityAuthVO.getRows(), identityAuthVO.getPage(), count, new ArrayList<IdentityAuth>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "identityAuth_getList";
+			/*String method = "identityAuth_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(identityAuthVO.getRows(), identityAuthVO.getPage(), 0, new ArrayList<IdentityAuth>());
+            	return new PageBean(identityAuthVO.getRows(), identityAuthVO.getPage(), 0, new ArrayList<IdentityAuth>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-实名认证-查询所有记录]请求后台出错",e);
-			return new PageInfo(identityAuthVO.getRows(), identityAuthVO.getPage(), 0, new ArrayList<IdentityAuth>());
+			return new PageBean(identityAuthVO.getRows(), identityAuthVO.getPage(), 0, new ArrayList<IdentityAuth>());
 		}
     }
 
@@ -229,7 +229,7 @@ public class IdentityAuthService{
     		map.put("authId", authId);
     		map.put("name", "张三");
     		// admin-web的url
-			String method = SERVICE_BASE_PARAM + "identityAuth/getById.json";
+			String method = "identityAuth/getById.json";
 			ResponseResult result = SendRequestUtil.sendRequestReceiveResponse(request, map, method);
 			if (null != result && null != result.getData()) {
 				Object obj = result.getData();
@@ -261,7 +261,7 @@ public class IdentityAuthService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GCurrencyData", g_currency_data);
-			String method = SERVICE_BASE_PARAM + "g_currency_data_add";
+			String method = "g_currency_data_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);
 			String json = this.testAdd();
 			if (null != json) {
@@ -293,7 +293,7 @@ public class IdentityAuthService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GIdentityAuth", identityAuth);
-			/*String method = SERVICE_BASE_PARAM + "identityAuth_update";
+			/*String method = "identityAuth_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {

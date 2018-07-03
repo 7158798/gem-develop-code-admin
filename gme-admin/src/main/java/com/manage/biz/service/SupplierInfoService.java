@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.SupplierInfo;
 import com.manage.biz.vo.SupplierInfoVO;
 
@@ -33,8 +33,8 @@ public class SupplierInfoService{
 
 	private Logger logger = Logger.getLogger(SupplierInfoService.class);
 	
-   	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+   	
+    
 
  // 测试分页查询
     public static String testPage() {
@@ -60,7 +60,7 @@ public class SupplierInfoService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -95,7 +95,7 @@ public class SupplierInfoService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,SupplierInfoVO supplierInfoVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,SupplierInfoVO supplierInfoVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", supplierInfoVO.getRows());
         map.put("BEGIN", (supplierInfoVO.getPage() - 1) * supplierInfoVO.getRows());
@@ -116,40 +116,40 @@ public class SupplierInfoService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "supplierInfo_getPageCount";
+           /* String method = "supplierInfo_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
+                	return new PageBean(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
                 }
         	}else {
-            	return new PageInfo(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
+            	return new PageBean(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-商家信息管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
+			return new PageBean(supplierInfoVO.getRows(), supplierInfoVO.getPage(), count, new ArrayList<SupplierInfo>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "supplierInfo_getList";
+			/*String method = "supplierInfo_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(supplierInfoVO.getRows(), supplierInfoVO.getPage(), 0, new ArrayList<SupplierInfo>());
+            	return new PageBean(supplierInfoVO.getRows(), supplierInfoVO.getPage(), 0, new ArrayList<SupplierInfo>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-商家信息管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(supplierInfoVO.getRows(), supplierInfoVO.getPage(), 0, new ArrayList<SupplierInfo>());
+			return new PageBean(supplierInfoVO.getRows(), supplierInfoVO.getPage(), 0, new ArrayList<SupplierInfo>());
 		}
     }
 
@@ -169,7 +169,7 @@ public class SupplierInfoService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("uid", uid);
-			/*String method = SERVICE_BASE_PARAM + "supplierInfo_getOne";
+			/*String method = "supplierInfo_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
@@ -209,7 +209,7 @@ public class SupplierInfoService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GSupplierInfo", supplierInfo);
-			/*String method = SERVICE_BASE_PARAM + "supplierInfo_update";
+			/*String method = "supplierInfo_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {

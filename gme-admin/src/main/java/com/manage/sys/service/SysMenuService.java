@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.base.cache.SysMenuCache;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.sys.dao.SysMenuDAO;
 import com.manage.sys.entity.SysMenu;
 import com.manage.sys.vo.SysMenuVO;
@@ -30,16 +30,16 @@ public class SysMenuService{
     /**
      * 分页查询
      */
-    public PageInfo selectPage(SysMenuVO llSysMenuVO) throws Exception {
+    public PageBean selectPage(SysMenuVO llSysMenuVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", llSysMenuVO.getRows());
         map.put("BEGIN", (llSysMenuVO.getPage() - 1) * llSysMenuVO.getRows());
         Integer count = this.sysMenuDAO.selectPageCount(map);
         if (count == 0) {
-            return new PageInfo(llSysMenuVO.getRows(), llSysMenuVO.getPage(), count, new ArrayList<SysMenu>());
+            return new PageBean(llSysMenuVO.getRows(), llSysMenuVO.getPage(), count, new ArrayList<SysMenu>());
         }
         List<SysMenu> list = this.sysMenuDAO.selectPage(map);
-        PageInfo pageInfo = new PageInfo(llSysMenuVO.getRows(), llSysMenuVO.getPage(), count, list);
+        PageBean pageInfo = new PageBean(llSysMenuVO.getRows(), llSysMenuVO.getPage(), count, list);
         return pageInfo;
     }
 

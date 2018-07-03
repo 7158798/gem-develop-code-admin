@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.User;
 import com.manage.biz.vo.UserVO;
 
@@ -33,8 +33,8 @@ public class UserService{
 
 	private  Logger logger = Logger.getLogger(UserService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 	
 
     
@@ -48,7 +48,7 @@ public class UserService{
 		g.setStatus(1);
 		g.setIsSecondVerify(2);
 		list.add(g);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -93,7 +93,7 @@ public class UserService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,UserVO userVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,UserVO userVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", userVO.getRows());
         map.put("BEGIN", (userVO.getPage() - 1) * userVO.getRows());
@@ -115,40 +115,40 @@ public class UserService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "user_getPageCount";
+           /* String method = "user_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = UserService.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
+                	return new PageBean(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
                 }
         	}else {
-            	return new PageInfo(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
+            	return new PageBean(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-用户信息-查询总记录条数]请求后台出错",e);
-			return new PageInfo(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
+			return new PageBean(userVO.getRows(), userVO.getPage(), count, new ArrayList<User>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "user_getList";
+			/*String method = "user_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = UserService.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(userVO.getRows(), userVO.getPage(), 0, new ArrayList<User>());
+            	return new PageBean(userVO.getRows(), userVO.getPage(), 0, new ArrayList<User>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-用户信息-查询所有记录]请求后台出错",e);
-			return new PageInfo(userVO.getRows(), userVO.getPage(), 0, new ArrayList<User>());
+			return new PageBean(userVO.getRows(), userVO.getPage(), 0, new ArrayList<User>());
 		}
     }
 
@@ -168,7 +168,7 @@ public class UserService{
         try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("uid", uid);
-			/*String method = SERVICE_BASE_PARAM + "user_getOne";
+			/*String method = "user_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = UserService.testOne();
 			if (null != json) {
@@ -200,7 +200,7 @@ public class UserService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GUser", user);
-			String method = SERVICE_BASE_PARAM + "user_add";
+			String method = "user_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);
 			String json = this.testAdd();
 			if (null != json) {
@@ -232,7 +232,7 @@ public class UserService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GUser", user);
-			/*String method = SERVICE_BASE_PARAM + "user_update";
+			/*String method = "user_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -264,7 +264,7 @@ public class UserService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("uid", uid);
-			String method = SERVICE_BASE_PARAM + "user_delete";
+			String method = "user_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);
 			String json = GUserService.testDelete();
 			if (null != json) {

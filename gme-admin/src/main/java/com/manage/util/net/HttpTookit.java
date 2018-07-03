@@ -137,7 +137,7 @@ public final class HttpTookit {
 			httpdata.setResponse(response.toString());
 		} catch (Exception e) {
 			httpdata.setStatusCode(999);
-			httpdata.setStatusText(e.getMessage());
+			httpdata.setStatusText(e.toString());
 			log.error("执行HTTP Post请求" + url + "时，发生异常！", e);
 			throw e;
 		} finally {

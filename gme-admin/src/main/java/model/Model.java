@@ -22,60 +22,80 @@ import freemarker.template.Template;
 
 
 public class Model {
+	
+	
+	/**
+	 * 
+	 * @Title: turnTableName
+	 * @Description: 将数据库表名命名格式转换成对应的java规范
+	 * @param @param tableName
+	 * @param @return  
+	 * @return String 
+	 * @throws
+	 */
+	private static String turnTableName(String tableName) {
+		String[] names = tableName.split("_");
+		StringBuffer sb = new StringBuffer();
+		for (String s :names) {
+			String first = s.substring(0, 1).toUpperCase();
+			String surplus = s.substring(1, s.length());
+			sb.append(first + surplus);
+		}
+		return sb.toString();
+	}
+	
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
 		String driver="com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://111.230.184.218:3306/gme_db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
+		String url="jdbc:mysql://192.168.0.194:3306/gme_db_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true";
 		String username="yyctdbuser";
+
 		String password="Ab1234567.";
-		String basePath="D:";//工程 路径
-//		String password="root";
-//		String basePath="E:/workspace/bijiuManger/";//工程 路径
+		String basePath="F:\\opsigte\\data\\yyct\\gme-develop-code\\admin\\gme-admin-repository\\gme-admin\\";//工程 路径
 
  
-		String tableName="g_currency";//表名
-		String modelName="svin";//模块名称
-//		String tableName="sys_ip_manager";//表名
-//		String modelName="bus";//模块名称
+		String tableName="g_withdrawal_record";//表名
+		String modelName="biz";//模块名称
 
-		boolean isCEntity=false;//是否生成实体 
+		boolean isCEntity=true;//是否生成实体 
 		boolean isCDao=false;//是否生成dao
-		boolean isCService=false;//是否生成服务 
-		boolean isCController=false;//是否生成控制器 
-		boolean isCVo=false;//是否生成查询实体
-		boolean isCListJsp=false;//是否生成查询jsp
+		boolean isCService=true;//是否生成服务 
+		boolean isCController=true;//是否生成控制器 
+		boolean isCVo=true;//是否生成查询实体
+		boolean isCListJsp=true;//是否生成查询jsp
 		boolean isCAddJsp=true;//是否生成新增jsp
-		boolean isCUpdateJsp=false;//是否生成修改jsp
-		boolean isCInfoJsp=false;//是否生成详情jsp322
+		boolean isCUpdateJsp=true;//是否生成修改jsp
+		boolean isCInfoJsp=true;//是否生成详情jsp322
 
 		
-		String entityName=tableName.substring(0, 1).toUpperCase()+tableName.substring(1, tableName.length());
-		String daoName=entityName+"_DAO";
-		String controllerName=entityName+"_Controller";
-		String voName=entityName+"_VO";
-		String serviceName=entityName+"_Service";
+		String entityName=turnTableName(tableName);
+		String daoName=entityName+"DAO";
+		String controllerName=entityName+"Controller";
+		String voName=entityName+"VO";
+		String serviceName=entityName+"Service";
 		
-		String entityPackage="com."+modelName+".entity";
-		String entityPath=basePath+"src/com/"+modelName+"/entity/";
+		String entityPackage="com.manage."+modelName+".entity";
+		String entityPath=basePath+"src/main/java/com/manage/"+modelName+"/entity/";
 		
-		String voPackage="com."+modelName+".vo";
-		String voPath=basePath+"src/com/"+modelName+"/vo/";
+		String voPackage="com.manage."+modelName+".vo";
+		String voPath=basePath+"src/main/java/com/manage/"+modelName+"/vo/";
 		
-		String daoPackage="com."+modelName+".dao";
-		String daoPath=basePath+"src/com/"+modelName+"/dao/";
+		String daoPackage="com.manage."+modelName+".dao";
+		String daoPath=basePath+"src/main/java/com/manage/"+modelName+"/dao/";
 		
-		String servicePackage="com."+modelName+".service";
-		String servicePath=basePath+"src/com/"+modelName+"/service/";
+		String servicePackage="com.manage."+modelName+".service";
+		String servicePath=basePath+"src/main/java/com/manage/"+modelName+"/service/";
 		
-		String controlPackage="com."+modelName+".control";
-		String controlPath=basePath+"src/com/"+modelName+"/control/";
+		String controlPackage="com.manage."+modelName+".control";
+		String controlPath=basePath+"src/main/java/com/manage/"+modelName+"/control/";
 		
-		String jspPath=basePath+"WebRoot/WEB-INF/views/modules/"+modelName+"/";
+		String jspPath=basePath+"src/main/webapp/WEB-INF/views/modules/"+modelName+"/";
 		
-		String mybatisPath = basePath + "resources/mappings/";
-        String mybatisNameSpace = "com." + modelName + ".dao." + daoName;
+		String mybatisPath = basePath + "src/main/resources/mappings/";
+        String mybatisNameSpace = "com.manage." + modelName + ".dao." + daoName;
         
 		String tableComment="";//表注解
 		List<String[]> fields=new ArrayList<String[]>();//字段集合
@@ -152,7 +172,7 @@ public class Model {
 		connection.close();
 		
 		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(new File("F:/opsigte/data/yyct/gme-develop-code/admin/gme-admin-repository/gme-admin/src/main/java/model/"));
+		cfg.setDirectoryForTemplateLoading(new File(basePath+"src/main/java/model/"));
 		
 		
 		Map<String, Object> modelParam = new HashMap<String, Object>();

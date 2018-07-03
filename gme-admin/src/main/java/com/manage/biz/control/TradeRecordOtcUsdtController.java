@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.service.TradeRecordOtcUsdtService;
 import com.manage.biz.vo.TradeRecordOtcUsdtVO;
 
@@ -64,7 +64,7 @@ public class TradeRecordOtcUsdtController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = tradeRecordOtcUsdtService.selectPage(request,tradeRecordOtcUsdtVO);
+        	PageBean pageInfo = tradeRecordOtcUsdtService.selectPage(request,tradeRecordOtcUsdtVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

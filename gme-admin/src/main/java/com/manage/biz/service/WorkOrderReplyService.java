@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.WorkOrderReply;
 import com.manage.biz.entity.WorkOrderReplyImage;
 import com.manage.biz.vo.WorkOrderReplyVO;
@@ -36,8 +36,8 @@ public class WorkOrderReplyService{
 	
 	private Logger logger = Logger.getLogger(WorkOrderReplyService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 	
 	
 	// 测试分页查询
@@ -67,7 +67,7 @@ public class WorkOrderReplyService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -104,7 +104,7 @@ public class WorkOrderReplyService{
 	 * @return PageInfo
 	 * @throws
 	 */
-    public PageInfo selectPage(HttpServletRequest request,WorkOrderReplyVO workOrderReplyVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,WorkOrderReplyVO workOrderReplyVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", workOrderReplyVO.getRows());
         map.put("BEGIN", (workOrderReplyVO.getPage() - 1) * workOrderReplyVO.getRows());
@@ -126,40 +126,40 @@ public class WorkOrderReplyService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "workOrderReply_getPageCount";
+           /* String method = "workOrderReply_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
+                	return new PageBean(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
                 }
         	}else {
-            	return new PageInfo(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
+            	return new PageBean(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-工单答复管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
+			return new PageBean(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), count, new ArrayList<WorkOrderReply>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "workOrderReply_getList";
+			/*String method = "workOrderReply_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), 0, new ArrayList<WorkOrderReply>());
+            	return new PageBean(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), 0, new ArrayList<WorkOrderReply>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-工单答复管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), 0, new ArrayList<WorkOrderReply>());
+			return new PageBean(workOrderReplyVO.getRows(), workOrderReplyVO.getPage(), 0, new ArrayList<WorkOrderReply>());
 		}
     }
 
@@ -180,7 +180,7 @@ public class WorkOrderReplyService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("replyId",replyId);
-			/*String method = SERVICE_BASE_PARAM + "workOrderReply_getOne";
+			/*String method = "workOrderReply_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
@@ -212,7 +212,7 @@ public class WorkOrderReplyService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GWorkOrderReply", workOrderReply);
-			/*String method = SERVICE_BASE_PARAM + "workOrderReply_add";
+			/*String method = "workOrderReply_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testAdd();
 			if (null != json) {

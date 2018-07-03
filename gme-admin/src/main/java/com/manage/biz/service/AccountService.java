@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.Account;
 import com.manage.biz.vo.AccountVO;
 
@@ -32,8 +32,8 @@ public class AccountService{
 
     private Logger logger = Logger.getLogger(AccountService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
 
 	
 	
@@ -58,7 +58,7 @@ public class AccountService{
 		g1.setBankBranchName("西乡");
 		list.add(g);
 		list.add(g1);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -105,7 +105,7 @@ public class AccountService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,AccountVO accountVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,AccountVO accountVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", accountVO.getRows());
         map.put("BEGIN", (accountVO.getPage() - 1) * accountVO.getRows());
@@ -127,40 +127,40 @@ public class AccountService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_account_getPageCount";
+           /* String method = "g_account_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
+                	return new PageBean(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
                 }
         	}else {
-            	return new PageInfo(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
+            	return new PageBean(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-用户账户支付管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
+			return new PageBean(accountVO.getRows(), accountVO.getPage(), count, new ArrayList<Account>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_account_getList";
+			/*String method = "g_account_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(accountVO.getRows(), accountVO.getPage(), 0, new ArrayList<Account>());
+            	return new PageBean(accountVO.getRows(), accountVO.getPage(), 0, new ArrayList<Account>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[用户管理-用户账户支付管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(accountVO.getRows(), accountVO.getPage(), 0, new ArrayList<Account>());
+			return new PageBean(accountVO.getRows(), accountVO.getPage(), 0, new ArrayList<Account>());
 		}
     }
 
@@ -180,7 +180,7 @@ public class AccountService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("uid", uid);
-			/*String method = SERVICE_BASE_PARAM + "g_account_getOfne";
+			/*String method = "g_account_getOfne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
@@ -220,7 +220,7 @@ public class AccountService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GAccount", g_account);
-			/*String method = SERVICE_BASE_PARAM + "g_account_update";
+			/*String method = "g_account_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {

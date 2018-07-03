@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.base.cache.SysRoleCache;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.sys.dao.SysRoleDAO;
 import com.manage.sys.entity.SysRole;
 import com.manage.sys.vo.SysRoleVO;
@@ -35,16 +35,16 @@ public class SysRoleService{
     /**
      * 分页查询
      */
-    public PageInfo selectPage(SysRoleVO llSysRoleVO) throws Exception {
+    public PageBean selectPage(SysRoleVO llSysRoleVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", llSysRoleVO.getRows());
         map.put("BEGIN", (llSysRoleVO.getPage() - 1) * llSysRoleVO.getRows());
         Integer count = this.sysRoleDao.selectPageCount(map);
         if (count == 0) {
-            return new PageInfo(llSysRoleVO.getRows(), llSysRoleVO.getPage(), count, new ArrayList<SysRole>());
+            return new PageBean(llSysRoleVO.getRows(), llSysRoleVO.getPage(), count, new ArrayList<SysRole>());
         }
         List<SysRole> list = this.sysRoleDao.selectPage(map);
-        PageInfo pageInfo = new PageInfo(llSysRoleVO.getRows(), llSysRoleVO.getPage(), count, list);
+        PageBean pageInfo = new PageBean(llSysRoleVO.getRows(), llSysRoleVO.getPage(), count, list);
         return pageInfo;
     }
 

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.Notice;
 import com.manage.biz.vo.NoticeVO;
 
@@ -34,8 +34,8 @@ public class NoticeService{
 
 	private  Logger logger = Logger.getLogger(NoticeService.class);
     
-    @Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+    
+    
     
     
  // 测试分页查询
@@ -62,7 +62,7 @@ public class NoticeService{
 		g1.setType(2);
 		list.add(g);
 		list.add(g1);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -112,7 +112,7 @@ public class NoticeService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,NoticeVO noticeVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,NoticeVO noticeVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", noticeVO.getRows());
         map.put("BEGIN", (noticeVO.getPage() - 1) * noticeVO.getRows());
@@ -128,40 +128,40 @@ public class NoticeService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "notice_getPageCount";
+           /* String method = "notice_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
+                	return new PageBean(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
                 }
         	}else {
-            	return new PageInfo(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
+            	return new PageBean(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-公告管理-查询记录条数]请求后台出错",e);
-			return new PageInfo(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
+			return new PageBean(noticeVO.getRows(), noticeVO.getPage(), count, new ArrayList<Notice>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "notice_getList";
+			/*String method = "notice_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(noticeVO.getRows(), noticeVO.getPage(), 0, new ArrayList<Notice>());
+            	return new PageBean(noticeVO.getRows(), noticeVO.getPage(), 0, new ArrayList<Notice>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-公告管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(noticeVO.getRows(), noticeVO.getPage(), 0, new ArrayList<Notice>());
+			return new PageBean(noticeVO.getRows(), noticeVO.getPage(), 0, new ArrayList<Notice>());
 		}
     }
 
@@ -180,7 +180,7 @@ public class NoticeService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("noticeId", noticeId);
-			/*String method = SERVICE_BASE_PARAM + "notice_getOne";
+			/*String method = "notice_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
@@ -211,7 +211,7 @@ public class NoticeService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GNotice", notice);
-//			String method = SERVICE_BASE_PARAM + "notice_add";
+//			String method = "notice_add";
 //			String json = SendRequestUtil.sendMapRequest(request, map, method);
 			String json = this.testAdd();
 			if (null != json) {
@@ -242,7 +242,7 @@ public class NoticeService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GNotice", notice);
-			/*String method = SERVICE_BASE_PARAM + "notice_update";
+			/*String method = "notice_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -273,7 +273,7 @@ public class NoticeService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("noticeId", noticeId);
-			/*String method = SERVICE_BASE_PARAM + "notice_delete";
+			/*String method = "notice_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testDelete();
 			if (null != json) {

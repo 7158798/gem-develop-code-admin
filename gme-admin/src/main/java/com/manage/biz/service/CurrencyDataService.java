@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.CurrencyData;
 import com.manage.biz.vo.CurrencyDataVO;
 
@@ -33,8 +33,8 @@ public class CurrencyDataService{
 	
 	private  Logger logger = Logger.getLogger(CurrencyDataService.class);
 	
-	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+	
+    
     
     // 测试分页查询
     public static String testPage() {
@@ -45,7 +45,7 @@ public class CurrencyDataService{
 		g.setRemark("备注");
 		g.setDataBrief("aaaadafdfdasfd");
 		list.add(g);
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -88,7 +88,7 @@ public class CurrencyDataService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,CurrencyDataVO currencyDataVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,CurrencyDataVO currencyDataVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", currencyDataVO.getRows());
         map.put("BEGIN", (currencyDataVO.getPage() - 1) * currencyDataVO.getRows());
@@ -96,40 +96,40 @@ public class CurrencyDataService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "currencyData_getPageCount";
+           /* String method = "currencyData_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
+                	return new PageBean(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
                 }
         	}else {
-            	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
+            	return new PageBean(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种资料-查询记录条数]请求后台出错",e);
-			return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
+			return new PageBean(currencyDataVO.getRows(), currencyDataVO.getPage(), count, new ArrayList<CurrencyData>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "currencyData_getList";
+			/*String method = "currencyData_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
+            	return new PageBean(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[币种管理-币种资料-查询所有记录]请求后台出错",e);
-			return new PageInfo(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
+			return new PageBean(currencyDataVO.getRows(), currencyDataVO.getPage(), 0, new ArrayList<CurrencyData>());
 		}
     }
 
@@ -148,7 +148,7 @@ public class CurrencyDataService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("dataId", dataId);
-			/*String method = SERVICE_BASE_PARAM + "currencyData_getOne";
+			/*String method = "currencyData_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = CurrencyDataService.testOne();
 			if (null != json) {
@@ -179,7 +179,7 @@ public class CurrencyDataService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GCurrencyData", currencyData);
-			/*String method = SERVICE_BASE_PARAM + "currencyData_add";
+			/*String method = "currencyData_add";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testAdd();
 			if (null != json) {
@@ -210,7 +210,7 @@ public class CurrencyDataService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GCurrencyData", currencyData);
-			/*String method = SERVICE_BASE_PARAM + "currencyData_update";
+			/*String method = "currencyData_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {
@@ -241,7 +241,7 @@ public class CurrencyDataService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("dataId", dataId);
-			/*String method = SERVICE_BASE_PARAM + "currencyData_delete";
+			/*String method = "currencyData_delete";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = CurrencyDataService.testDelete();
 			if (null != json) {

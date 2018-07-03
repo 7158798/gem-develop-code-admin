@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.WorkOrder;
 import com.manage.biz.service.WorkOrderService;
 import com.manage.biz.vo.WorkOrderVO;
@@ -66,7 +66,7 @@ public class WorkOrderController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = workOrderService.selectPage(request,workOrderVO);
+        	PageBean pageInfo = workOrderService.selectPage(request,workOrderVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

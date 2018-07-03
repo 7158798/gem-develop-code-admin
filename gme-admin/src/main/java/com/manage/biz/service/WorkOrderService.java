@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.WorkOrder;
 import com.manage.biz.entity.WorkOrderImage;
 import com.manage.biz.vo.WorkOrderVO;
@@ -37,8 +37,8 @@ public class WorkOrderService{
 	private  Logger logger = Logger.getLogger(WorkOrderService.class);
 	
     
-    @Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+    
+    
     
     
  // 测试分页查询
@@ -71,7 +71,7 @@ public class WorkOrderService{
 		list.add(g);
 		list.add(g1);
 		
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
     
@@ -123,7 +123,7 @@ public class WorkOrderService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,WorkOrderVO workOrderVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,WorkOrderVO workOrderVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", workOrderVO.getRows());
         map.put("BEGIN", (workOrderVO.getPage() - 1) * workOrderVO.getRows());
@@ -154,40 +154,40 @@ public class WorkOrderService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "workOrder_getPageCount";
+           /* String method = "workOrder_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
+                	return new PageBean(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
                 }
         	}else {
-            	return new PageInfo(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
+            	return new PageBean(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-工单管理-查询记录条数]请求后台出错",e);
-			return new PageInfo(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
+			return new PageBean(workOrderVO.getRows(), workOrderVO.getPage(), count, new ArrayList<WorkOrder>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "workOrder_getList";
+			/*String method = "workOrder_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(workOrderVO.getRows(), workOrderVO.getPage(), 0, new ArrayList<WorkOrder>());
+            	return new PageBean(workOrderVO.getRows(), workOrderVO.getPage(), 0, new ArrayList<WorkOrder>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[运营管理-工单管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(workOrderVO.getRows(), workOrderVO.getPage(), 0, new ArrayList<WorkOrder>());
+			return new PageBean(workOrderVO.getRows(), workOrderVO.getPage(), 0, new ArrayList<WorkOrder>());
 		}
     }
 
@@ -207,7 +207,7 @@ public class WorkOrderService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("subjectId", subjectId);
-			/*String method = SERVICE_BASE_PARAM + "workOrder_getOne";
+			/*String method = "workOrder_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {
@@ -246,7 +246,7 @@ public class WorkOrderService{
     	try {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("GWorkOrder", workOrder);
-			/*String method = SERVICE_BASE_PARAM + "workOrder_update";
+			/*String method = "workOrder_update";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
 			String json = this.testUpdate();
 			if (null != json) {

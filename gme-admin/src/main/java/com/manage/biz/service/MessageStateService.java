@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.MessageState;
 import com.manage.biz.vo.MessageStateVO;
 import com.manage.util.StringUtil;
@@ -34,8 +34,8 @@ public class MessageStateService{
 	
 	private Logger logger = Logger.getLogger(MessageStateService.class);
 	
-   	@Value("${SERVICE_BASE_PARAM}")
-    private String SERVICE_BASE_PARAM;
+   	
+    
 
  // 测试分页查询
     public static String testPage() {
@@ -65,7 +65,7 @@ public class MessageStateService{
 		list.add(g);
 		list.add(g1);
 
-		PageInfo pageInfo = new PageInfo(1, 1,1, list);
+		PageBean pageInfo = new PageBean(1, 1,1, list);
 		return JSON.toJSONString(pageInfo);
 	}
 
@@ -96,7 +96,7 @@ public class MessageStateService{
      * @return PageInfo
      * @throws
      */
-    public PageInfo selectPage(HttpServletRequest request,MessageStateVO messageStateVO) throws Exception {
+    public PageBean selectPage(HttpServletRequest request,MessageStateVO messageStateVO) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PSIZE", messageStateVO.getRows());
         map.put("BEGIN", (messageStateVO.getPage() - 1) * messageStateVO.getRows());
@@ -119,40 +119,40 @@ public class MessageStateService{
         Integer count = 0;
         // 查询总记录数
         try {
-           /* String method = SERVICE_BASE_PARAM + "g_message_state_getPageCount";
+           /* String method = "g_message_state_getPageCount";
             String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 count = pageInfo.getTotalCount();
                 if (count == 0) {
-                	return new PageInfo(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
+                	return new PageBean(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
                 }
         	}else {
-            	return new PageInfo(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
+            	return new PageBean(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-短信邮件日志管理-查询总记录条数]请求后台出错",e);
-			return new PageInfo(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
+			return new PageBean(messageStateVO.getRows(), messageStateVO.getPage(), count, new ArrayList<MessageState>());
 		}
         
         
         // 查询列表
         try {
-			/*String method = SERVICE_BASE_PARAM + "g_message_state_getList";
+			/*String method = "g_message_state_getList";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
         	String json = this.testPage();
         	if (null != json) {
-        		PageInfo pageInfo = JSON.parseObject(json, PageInfo.class);
+        		PageBean pageInfo = JSON.parseObject(json, PageBean.class);
                 return pageInfo;
             }else {
-            	return new PageInfo(messageStateVO.getRows(), messageStateVO.getPage(), 0, new ArrayList<MessageState>());
+            	return new PageBean(messageStateVO.getRows(), messageStateVO.getPage(), 0, new ArrayList<MessageState>());
             }
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("[日志管理-短信邮件日志管理-查询所有记录]请求后台出错",e);
-			return new PageInfo(messageStateVO.getRows(), messageStateVO.getPage(), 0, new ArrayList<MessageState>());
+			return new PageBean(messageStateVO.getRows(), messageStateVO.getPage(), 0, new ArrayList<MessageState>());
 		}
     }
 
@@ -173,7 +173,7 @@ public class MessageStateService{
     	try {
     		Map<String,Object> map = new HashMap<String, Object>();
     		map.put("id", id);
-			/*String method = SERVICE_BASE_PARAM + "g_message_state_getOne";
+			/*String method = "g_message_state_getOne";
 			String json = SendRequestUtil.sendMapRequest(request, map, method);*/
     		String json = this.testOne();
 			if (null != json) {

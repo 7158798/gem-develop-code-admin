@@ -31,8 +31,8 @@
 		$(function(){
 			//创建富文本编辑器
 			//itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
-			//itemAddEditor = KindEditor.create("#formobj [name=iconIdImg]", TT.kingEditorParams);
-			itemAddEditor = KindEditor.create("#formobj [name=iconIdImg]", {
+			//itemAddEditor = KindEditor.create("#formobj [name=iconImgUpload]", TT.kingEditorParams);
+			itemAddEditor = KindEditor.create("#formobj [name=iconImgUpload]", {
 							items:["multiimage"]
 							});
 			//初始化类目选择和图片上传器
@@ -106,7 +106,7 @@
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">币种图标<font color='red'>*</font>：</label>
-	        	<input name="iconIdImg" type="file"/>
+	        	<input name="iconImgUpload" type="file"/>
       	</div>
  		<div class="control-group">
         	<label class="control-label Validform_label">中文名<font color='red'>*</font>：</label>

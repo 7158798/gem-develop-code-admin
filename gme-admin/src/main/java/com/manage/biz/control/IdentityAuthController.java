@@ -2,7 +2,7 @@ package com.manage.biz.control;
 
 import java.sql.Timestamp;
 import com.manage.base.annotation.FormModel;
-import com.manage.base.entity.PageInfo;
+import com.manage.base.entity.PageBean;
 import com.manage.biz.entity.IdentityAuth;
 import com.manage.biz.service.IdentityAuthService;
 import com.manage.biz.vo.IdentityAuthVO;
@@ -59,7 +59,7 @@ public class IdentityAuthController{
         }
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         try{
-        	PageInfo pageInfo = identityAuthService.selectPage(request,identityAuthVO);
+        	PageBean pageInfo = identityAuthService.selectPage(request,identityAuthVO);
 	        jsonMap.put("total", pageInfo.getTotalCount());
 	        jsonMap.put("pages", pageInfo.getTotalPageCount());
 	        jsonMap.put("rows", pageInfo.getData());

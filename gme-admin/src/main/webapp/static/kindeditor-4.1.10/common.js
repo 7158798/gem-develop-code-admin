@@ -23,9 +23,9 @@ var TT = TAOTAO = {
 	// 编辑器参数
 	kingEditorParams : {
 		//指定上传文件参数名称
-		filePostName  : "uploadFile",
+		filePostName  : "iconImgUpload",
 		//指定上传文件请求的url。
-		uploadJson : '/pic/upload',
+		uploadJson : '/gme-admin/api/biz/uploadImage/test',
 		//上传类型，分别为image、flash、media、file
 		dir : "image"
 	},
